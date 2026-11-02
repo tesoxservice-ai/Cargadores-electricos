@@ -1,0 +1,11 @@
+{
+  "name": "centro-de-operaciones-ev",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Centro de operaciones para validar, lanzar y escalar un negocio de carga para vehículos eléctricos (sitio estático de un solo archivo).",
+  "scripts": {
+    "test": "node --test tests/logic.test.mjs",
+    "start": "node tests/serve.mjs"
+  },
+  "engines": { "node": ">=20" }
+}

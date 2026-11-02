@@ -1,0 +1,2605 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Centro de operaciones para validar, lanzar y escalar un negocio de instalación de cargadores para vehículos eléctricos en Argentina.">
+<title>Centro de Operaciones · Carga para vehículos eléctricos</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%234f46e5'/%3E%3Cpath d='M18 5 9 18h6l-1 9 9-13h-6z' fill='white'/%3E%3C/svg%3E">
+<style>
+/* ==========================================================================
+   1. TOKENS (variables CSS) — claro, oscuro automático y oscuro manual
+   ========================================================================== */
+:root {
+  color-scheme: light;
+  --bg: #fbfbfc; --surface: #ffffff; --surface-2: #f4f4f6;
+  --border: #e4e4e8; --border-strong: #cfcfd6;
+  --text: #16161a; --text-2: #50505a; --text-3: #686873;
+  --accent: #4f46e5; --accent-fg: #ffffff; --accent-soft: rgba(79,70,229,.09);
+  --crit: #b42318; --crit-bg: rgba(180,35,24,.09);
+  --imp: #9a5806; --imp-bg: rgba(217,119,6,.12);
+  --sec: #475467; --sec-bg: rgba(71,84,103,.10);
+  --pend: #596273; --pend-bg: rgba(102,112,133,.13);
+  --proc: #1d4ed8; --proc-bg: rgba(29,78,216,.10);
+  --comp: #146c34; --comp-bg: rgba(21,128,61,.11);
+  --bar-comp: #1f9d55; --bar-proc: #7da2f3;
+  --shadow: 0 1px 2px rgba(16,16,24,.04), 0 6px 20px rgba(16,16,24,.06);
+  --backdrop: rgba(10,10,16,.42);
+  --radius: 10px; --radius-sm: 7px;
+  --t: 160ms ease;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0c0c0f; --surface: #141418; --surface-2: #1b1b21;
+    --border: #26262e; --border-strong: #3a3a45;
+    --text: #ececf0; --text-2: #a8a8b3; --text-3: #8e8e9a;
+    --accent: #8b8df8; --accent-fg: #0c0c0f; --accent-soft: rgba(139,141,248,.15);
+    --crit: #f87171; --crit-bg: rgba(248,113,113,.15);
+    --imp: #fbbf24; --imp-bg: rgba(251,191,36,.14);
+    --sec: #a3b0c2; --sec-bg: rgba(163,176,194,.14);
+    --pend: #9aa3b2; --pend-bg: rgba(154,163,178,.15);
+    --proc: #7aa7ff; --proc-bg: rgba(122,167,255,.15);
+    --comp: #4ade80; --comp-bg: rgba(74,222,128,.14);
+    --bar-comp: #34c26b; --bar-proc: #4a6fb8;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+    --backdrop: rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0c0c0f; --surface: #141418; --surface-2: #1b1b21;
+  --border: #26262e; --border-strong: #3a3a45;
+  --text: #ececf0; --text-2: #a8a8b3; --text-3: #8e8e9a;
+  --accent: #8b8df8; --accent-fg: #0c0c0f; --accent-soft: rgba(139,141,248,.15);
+  --crit: #f87171; --crit-bg: rgba(248,113,113,.15);
+  --imp: #fbbf24; --imp-bg: rgba(251,191,36,.14);
+  --sec: #a3b0c2; --sec-bg: rgba(163,176,194,.14);
+  --pend: #9aa3b2; --pend-bg: rgba(154,163,178,.15);
+  --proc: #7aa7ff; --proc-bg: rgba(122,167,255,.15);
+  --comp: #4ade80; --comp-bg: rgba(74,222,128,.14);
+  --bar-comp: #34c26b; --bar-proc: #4a6fb8;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.35);
+  --backdrop: rgba(0,0,0,.6);
+}
+
+/* ==========================================================================
+   2. BASE
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 76px; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+h1, h2, h3, p, ul, ol, dl, dd { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+h1 { font-size: 26px; line-height: 1.2; font-weight: 650; letter-spacing: -.02em; }
+h2 { font-size: 15px; font-weight: 620; letter-spacing: -.005em; }
+a { color: var(--accent); text-underline-offset: 2px; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+main:focus { outline: none; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 12px; top: -60px; background: var(--accent); color: var(--accent-fg); padding: 8px 14px; border-radius: 8px; z-index: 100; text-decoration: none; transition: top var(--t); }
+.skip:focus { top: 10px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+.ico { flex: none; vertical-align: -3px; }
+.muted { color: var(--text-3); }
+.lead { color: var(--text-2); max-width: 70ch; }
+
+/* ==========================================================================
+   3. ENCABEZADO Y NAVEGACIÓN
+   ========================================================================== */
+.top { position: sticky; top: 0; z-index: 30; background: color-mix(in srgb, var(--bg) 88%, transparent); -webkit-backdrop-filter: saturate(1.4) blur(10px); backdrop-filter: saturate(1.4) blur(10px); border-bottom: 1px solid var(--border); }
+.top-in { display: flex; align-items: center; gap: 16px; min-height: 56px; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 650; letter-spacing: -.01em; color: var(--text); text-decoration: none; white-space: nowrap; }
+.brand-logo { width: 24px; height: 24px; border-radius: 7px; background: var(--accent); color: var(--accent-fg); display: grid; place-items: center; }
+.nav { display: flex; gap: 2px; margin-left: 8px; overflow-x: auto; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a { padding: 7px 12px; border-radius: 8px; color: var(--text-2); text-decoration: none; font-weight: 500; white-space: nowrap; transition: background var(--t), color var(--t); }
+.nav a:hover { background: var(--surface-2); color: var(--text); }
+.nav a[aria-current="page"] { background: var(--surface-2); color: var(--text); }
+.top-right { margin-left: auto; display: flex; align-items: center; gap: 6px; position: relative; }
+.save { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--text-3); padding: 0 8px; white-space: nowrap; transition: color var(--t); }
+.save.is-ok .ico { color: var(--comp); }
+.save.is-flash { color: var(--comp); }
+.save.is-err { color: var(--crit); font-weight: 600; }
+.icon-btn { display: inline-grid; place-items: center; min-width: 36px; height: 36px; padding: 0 8px; border: 1px solid transparent; background: transparent; border-radius: 8px; color: var(--text-2); transition: background var(--t), color var(--t), border-color var(--t); }
+.icon-btn:hover { background: var(--surface-2); color: var(--text); }
+.menu { position: absolute; right: 0; top: 44px; min-width: 244px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); padding: 6px; z-index: 40; }
+.menu button { display: block; width: 100%; text-align: left; border: 0; background: transparent; padding: 9px 12px; border-radius: 8px; color: var(--text); }
+.menu button:hover { background: var(--surface-2); }
+.menu hr { border: 0; border-top: 1px solid var(--border); margin: 6px 4px; }
+.menu .danger { color: var(--crit); }
+
+#banner:empty { display: none; }
+.banner { background: var(--imp-bg); color: var(--imp); border-bottom: 1px solid var(--border); padding: 9px 0; font-size: 13.5px; font-weight: 500; }
+
+main { padding: 30px 0 64px; }
+.page-head { display: grid; gap: 6px; margin-bottom: 22px; }
+.foot { border-top: 1px solid var(--border); padding: 18px 0 28px; color: var(--text-3); font-size: 13px; }
+
+/* ==========================================================================
+   4. COMPONENTES BASE
+   ========================================================================== */
+.btn { display: inline-flex; align-items: center; gap: 6px; justify-content: center; padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text); font-weight: 550; line-height: 1.2; transition: background var(--t), border-color var(--t), transform var(--t), opacity var(--t); }
+.btn:hover { background: var(--surface-2); }
+.btn:active { transform: translateY(1px); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+.btn.primary:hover { filter: brightness(1.08); background: var(--accent); }
+.btn.danger { color: var(--crit); border-color: color-mix(in srgb, var(--crit) 45%, var(--border)); }
+.btn.danger.solid { background: var(--crit); color: #fff; border-color: var(--crit); }
+.btn.ghost { border-color: transparent; background: transparent; color: var(--text-2); }
+.btn.ghost:hover { background: var(--surface-2); color: var(--text); }
+.btn.sm { padding: 5px 10px; font-size: 13.5px; }
+.btn[disabled] { opacity: .45; cursor: not-allowed; }
+
+.field { display: grid; gap: 5px; min-width: 0; }
+.field > label, .lbl { font-size: 12.5px; font-weight: 600; color: var(--text-2); }
+input[type="text"], input[type="search"], input[type="date"], select, textarea {
+  width: 100%; padding: 8px 10px; border: 1px solid var(--border-strong); border-radius: 8px; background: var(--surface); color: var(--text);
+  transition: border-color var(--t), box-shadow var(--t), background var(--t);
+}
+input::placeholder, textarea::placeholder { color: var(--text-3); opacity: 1; }
+input:hover, select:hover, textarea:hover { border-color: var(--text-3); }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+textarea { resize: vertical; min-height: 64px; line-height: 1.5; }
+textarea.auto { resize: none; overflow: hidden; min-height: 0; }
+select { appearance: none; -webkit-appearance: none; padding-right: 30px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%238a8a96' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 4.5 3 3 3-3'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+.form-error { color: var(--crit); font-size: 13px; font-weight: 550; }
+
+.badge { display: inline-flex; align-items: center; gap: 4px; padding: 1px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; line-height: 1.6; white-space: nowrap; }
+.badge .ico { width: 12px; height: 12px; vertical-align: -2px; }
+.p-crit { color: var(--crit); background: var(--crit-bg); }
+.p-imp  { color: var(--imp);  background: var(--imp-bg); }
+.p-sec  { color: var(--sec);  background: var(--sec-bg); }
+.s-pend { color: var(--pend); background: var(--pend-bg); }
+.s-proc { color: var(--proc); background: var(--proc-bg); }
+.s-comp { color: var(--comp); background: var(--comp-bg); }
+.c-hip { color: var(--imp);  background: var(--imp-bg); }
+.c-inv { color: var(--proc); background: var(--proc-bg); }
+.c-pv  { color: var(--pend); background: var(--pend-bg); }
+.c-dec { color: var(--accent); background: var(--accent-soft); }
+.c-eje { color: var(--comp); background: var(--comp-bg); }
+.chip { display: inline-flex; align-items: center; gap: 4px; font-size: 12.5px; color: var(--text-2); white-space: nowrap; }
+.chip.over { color: var(--crit); font-weight: 600; }
+.chip.warn { color: var(--imp); font-weight: 600; }
+
+.bar { display: flex; height: 6px; border-radius: 999px; background: var(--surface-2); overflow: hidden; border: 1px solid var(--border); }
+.bar > i { display: block; height: 100%; transition: width 200ms ease; }
+.bar .c { background: var(--bar-comp); }
+.bar .p { background: var(--bar-proc); }
+.bar.lg { height: 8px; }
+
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+.card-h { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.card-h .hint { font-size: 12.5px; color: var(--text-3); }
+.empty { color: var(--text-3); padding: 14px 4px; font-size: 14px; }
+.count { display: inline-block; min-width: 20px; text-align: center; padding: 0 6px; border-radius: 999px; background: var(--surface-2); color: var(--text-2); font-size: 12px; font-weight: 650; margin-left: 6px; }
+.count.over { background: var(--crit-bg); color: var(--crit); }
+
+/* ==========================================================================
+   5. RESUMEN
+   ========================================================================== */
+.stack { display: grid; gap: 18px; }
+.grid2 { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; align-items: start; }
+.hero { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; }
+.ring { position: relative; width: 132px; height: 132px; }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring circle { fill: none; stroke-width: 10; }
+.ring .trk { stroke: var(--surface-2); }
+.ring .prg { stroke: var(--bar-comp); stroke-linecap: round; transition: stroke-dasharray 300ms ease; }
+.ring .num { position: absolute; inset: 0; display: grid; place-items: center; text-align: center; font-size: 28px; font-weight: 680; letter-spacing: -.03em; line-height: 1; }
+.ring .num small { display: block; font-size: 11.5px; font-weight: 500; color: var(--text-3); letter-spacing: 0; margin-top: 4px; }
+.hero h2 { font-size: 18px; margin-bottom: 4px; }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+.stat { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; background: var(--bg); }
+.stat b { display: block; font-size: 22px; font-weight: 650; letter-spacing: -.02em; line-height: 1.2; }
+.stat span { font-size: 12.5px; color: var(--text-2); display: inline-flex; align-items: center; gap: 5px; }
+.stat .dotc { width: 8px; height: 8px; border-radius: 50%; }
+
+.row { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; width: 100%; text-align: left; padding: 10px 10px; border: 0; border-radius: 9px; background: transparent; transition: background var(--t); }
+.row:hover { background: var(--surface-2); }
+.row + .row { margin-top: 1px; }
+.row .rank { width: 22px; height: 22px; border-radius: 50%; background: var(--surface-2); display: grid; place-items: center; font-size: 12px; font-weight: 650; color: var(--text-2); margin-top: 1px; }
+.row .r-title { display: block; font-weight: 550; line-height: 1.35; }
+.row .r-meta { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; margin-top: 4px; }
+.row .when { min-width: 22px; margin-top: 1px; color: var(--text-3); }
+.row.over .when { color: var(--crit); }
+.sub-h { font-size: 12px; font-weight: 650; letter-spacing: .04em; text-transform: uppercase; color: var(--text-3); margin: 14px 4px 4px; }
+.sub-h.over { color: var(--crit); }
+
+.goals li { display: flex; gap: 8px; align-items: center; padding: 3px 0; }
+.goals input { flex: 1; border-color: transparent; background: transparent; padding: 7px 8px; }
+.goals input:hover { border-color: var(--border); }
+.goals input:focus-visible { background: var(--surface); }
+.goals .bullet { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex: none; margin-left: 4px; }
+.add-line { display: flex; gap: 8px; margin-top: 10px; }
+
+.map { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.tile { text-align: left; padding: 12px 12px 11px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); display: grid; gap: 8px; transition: border-color var(--t), background var(--t), transform var(--t); }
+.tile:hover { border-color: var(--border-strong); background: var(--surface-2); transform: translateY(-1px); }
+.tile .tn { display: flex; align-items: center; justify-content: space-between; font-size: 12px; font-weight: 650; color: var(--text-3); }
+.tile .tt { font-weight: 560; line-height: 1.3; font-size: 14px; min-height: 2.6em; }
+.tile .tp { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-2); }
+.tile .tp .bar { flex: 1; }
+.tile.done { border-color: color-mix(in srgb, var(--comp) 40%, var(--border)); }
+.tile.done .tn { color: var(--comp); }
+
+/* ==========================================================================
+   6. ETAPAS
+   ========================================================================== */
+.toolbar { display: flex; flex-wrap: wrap; gap: 10px; align-items: end; margin-bottom: 18px; }
+.toolbar .field { width: 160px; }
+.toolbar .field.grow { flex: 1 1 240px; width: auto; }
+.toolbar-actions { display: flex; gap: 6px; margin-left: auto; }
+.etapas { display: grid; gap: 10px; }
+.etapa { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; transition: border-color var(--t); }
+.etapa.is-done { border-color: color-mix(in srgb, var(--comp) 40%, var(--border)); }
+.etapa-h { font-size: inherit; font-weight: inherit; }
+.etapa-btn { display: grid; grid-template-columns: auto 1fr minmax(150px, 230px) auto; gap: 16px; align-items: center; width: 100%; text-align: left; padding: 15px 18px; background: transparent; border: 0; transition: background var(--t); }
+.etapa-btn:hover { background: var(--surface-2); }
+.e-num { width: 30px; height: 30px; border-radius: 9px; background: var(--surface-2); display: grid; place-items: center; font-weight: 680; font-size: 13.5px; color: var(--text-2); }
+.is-done .e-num { background: var(--comp-bg); color: var(--comp); }
+.e-name { display: block; font-weight: 620; font-size: 15.5px; letter-spacing: -.01em; }
+.e-obj { display: block; color: var(--text-3); font-size: 13px; line-height: 1.4; margin-top: 2px; }
+.e-prog { display: grid; gap: 5px; font-size: 12.5px; color: var(--text-2); }
+.e-prog .e-cnt { display: flex; justify-content: space-between; gap: 8px; }
+.etapa-btn .chev { transition: transform var(--t); color: var(--text-3); }
+.etapa-btn[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.etapa-body { border-top: 1px solid var(--border); padding: 6px 10px 14px; }
+.etapa-desc { color: var(--text-2); font-size: 14px; padding: 10px 8px 6px; max-width: 80ch; }
+.trow { display: grid; grid-template-columns: 1fr 170px; gap: 18px; align-items: center; width: 100%; text-align: left; padding: 11px 8px; border: 0; border-radius: 9px; background: transparent; transition: background var(--t); }
+.trow:hover { background: var(--surface-2); }
+.trow + .trow { border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent); border-top-left-radius: 0; border-top-right-radius: 0; }
+.t-title { display: block; font-weight: 540; line-height: 1.35; }
+.t-meta { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; margin-top: 5px; }
+.t-prog { display: grid; gap: 5px; font-size: 12.5px; color: var(--text-2); }
+.t-prog .t-cnt { display: flex; justify-content: space-between; }
+.etapa-add { margin: 8px 8px 0; }
+
+/* ==========================================================================
+   7. VENCIMIENTOS Y BITÁCORA
+   ========================================================================== */
+.vgroup { margin-bottom: 22px; }
+.vgroup > h2 { margin: 0 4px 6px; display: flex; align-items: center; }
+.vgroup .card { padding: 6px; }
+.vdate { font-size: 12.5px; color: var(--text-2); line-height: 1.3; text-align: center; min-width: 68px; }
+.vdate b { display: block; font-size: 15px; color: var(--text); }
+.row.over .vdate b { color: var(--crit); }
+.row.done .r-title { color: var(--text-3); text-decoration: line-through; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.fchip { padding: 5px 12px; border-radius: 999px; border: 1px solid var(--border-strong); background: var(--surface); color: var(--text-2); font-size: 13.5px; font-weight: 550; transition: background var(--t), color var(--t), border-color var(--t); }
+.fchip:hover { background: var(--surface-2); }
+.fchip[aria-pressed="true"] { background: var(--text); color: var(--bg); border-color: var(--text); }
+.entry { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+.entry + .entry { margin-top: 10px; }
+.entry-h { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-bottom: 8px; font-size: 12.5px; color: var(--text-2); }
+.entry-body { white-space: pre-wrap; overflow-wrap: anywhere; }
+.entry-src { margin-top: 6px; font-size: 13px; color: var(--text-2); overflow-wrap: anywhere; }
+.entry-f { margin-top: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; font-size: 13px; color: var(--text-3); }
+.linklike { border: 0; background: none; padding: 0; color: var(--accent); text-align: left; text-decoration: underline; text-underline-offset: 2px; }
+
+/* ==========================================================================
+   8. PANEL DE TAREA (dialog lateral) Y DIÁLOGOS
+   ========================================================================== */
+dialog { color: var(--text); }
+dialog::backdrop { background: var(--backdrop); animation: fade 200ms ease; }
+dialog.panel { margin: 0 0 0 auto; padding: 0; border: 0; width: min(680px, 100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
+dialog.panel[open] { animation: slide 200ms ease; display: flex; flex-direction: column; }
+.panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px 12px 22px; border-bottom: 1px solid var(--border); flex: none; }
+.crumb { font-size: 13px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.panel-body { overflow-y: auto; padding: 20px 22px 40px; flex: 1; display: grid; gap: 24px; align-content: start; overscroll-behavior: contain; }
+.title-input { font-size: 21px; font-weight: 650; letter-spacing: -.02em; line-height: 1.3; border-color: transparent !important; background: transparent; padding: 6px 8px; margin: 0 -8px; resize: none; }
+.title-input:hover { border-color: var(--border) !important; }
+.title-input:focus-visible { background: var(--surface); border-color: var(--accent) !important; }
+.p-sec-h { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.p-sec-h h3 { font-size: 13px; font-weight: 650; letter-spacing: .03em; text-transform: uppercase; color: var(--text-2); }
+.meta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px 8px; align-items: center; }
+.prog-line { display: grid; gap: 7px; font-size: 13.5px; color: var(--text-2); }
+.deps li { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+.deps li:last-child { border-bottom: 0; }
+.deps .d-t { flex: 1; min-width: 0; }
+.deps .d-t .linklike { color: var(--text); text-decoration: none; font-weight: 520; }
+.deps .d-t .linklike:hover { text-decoration: underline; }
+.sub { padding: 12px 0; border-bottom: 1px solid var(--border); }
+.sub:last-child { border-bottom: 0; }
+.sub-main { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start; }
+.seg { display: inline-flex; border: 1px solid var(--border-strong); border-radius: 9px; overflow: hidden; background: var(--surface); }
+.seg button { display: grid; place-items: center; width: 34px; height: 34px; border: 0; background: transparent; color: var(--text-3); transition: background var(--t), color var(--t); }
+.seg button + button { border-left: 1px solid var(--border-strong); }
+.seg button:hover { background: var(--surface-2); color: var(--text); }
+.seg button[aria-pressed="true"].s-pend { background: var(--pend-bg); color: var(--pend); }
+.seg button[aria-pressed="true"].s-proc { background: var(--proc-bg); color: var(--proc); }
+.seg button[aria-pressed="true"].s-comp { background: var(--comp-bg); color: var(--comp); }
+.seg button:focus-visible { outline-offset: -3px; }
+.sub-title { width: 100%; border-color: transparent; background: transparent; padding: 6px 8px; line-height: 1.45; }
+.sub-title:hover { border-color: var(--border); }
+.sub-title:focus-visible { background: var(--surface); }
+.sub.is-comp .sub-title { color: var(--text-3); }
+.sub-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 10px; margin: 2px 0 0 44px; }
+.sub-tools .grow { flex: 1; }
+.sub-tools .icon-btn { height: 30px; min-width: 30px; }
+.sub-det { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 8px 0 0 44px; }
+.sub-det .full { grid-column: 1 / -1; }
+.sub-add { display: flex; gap: 8px; margin-top: 10px; }
+.sub-add input { flex: 1; }
+.doc-form { display: grid; gap: 12px; padding: 14px; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--bg); margin-top: 12px; }
+.doc-form .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.doc-form .three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.doc-actions { display: flex; gap: 8px; justify-content: flex-end; }
+.danger-zone { border-top: 1px solid var(--border); padding-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; }
+
+dialog.dlg { margin: auto; padding: 0; border: 1px solid var(--border); border-radius: 14px; width: min(520px, calc(100vw - 32px)); background: var(--surface); box-shadow: var(--shadow); }
+dialog.dlg[open] { animation: pop 180ms ease; }
+.dlg-in { padding: 22px; display: grid; gap: 14px; }
+.dlg-in h2 { font-size: 17px; }
+.dlg-body { display: grid; gap: 12px; color: var(--text-2); }
+.dlg-body strong { color: var(--text); }
+.dlg-body ul { list-style: disc; padding-left: 20px; display: grid; gap: 3px; }
+.dlg-actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; margin-top: 4px; }
+
+.toasts { position: fixed; z-index: 200; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom)); transform: translateX(-50%); display: grid; gap: 8px; width: min(440px, calc(100vw - 24px)); pointer-events: none; }
+.toast { pointer-events: auto; display: flex; align-items: center; gap: 12px; justify-content: space-between; padding: 11px 14px; border-radius: 10px; background: var(--text); color: var(--bg); font-size: 14px; box-shadow: var(--shadow); animation: rise 180ms ease; }
+.toast button { border: 0; background: transparent; color: inherit; font-weight: 700; text-decoration: underline; padding: 2px 4px; }
+
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide { from { transform: translateX(36px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes pop { from { transform: scale(.97); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes rise { from { transform: translateY(8px); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes flash { 0% { background: var(--comp-bg); } 100% { background: transparent; } }
+.save.is-flash { animation: flash 700ms ease; border-radius: 8px; }
+
+/* ==========================================================================
+   9. RESPONSIVE
+   ========================================================================== */
+@media (max-width: 900px) {
+  .grid2 { grid-template-columns: 1fr; }
+  .map { grid-template-columns: repeat(3, 1fr); }
+  .etapa-btn { grid-template-columns: auto 1fr auto; }
+  .e-prog { grid-column: 2 / 3; grid-row: 2; }
+  .etapa-btn .chev { grid-row: 1; grid-column: 3; }
+}
+@media (max-width: 640px) {
+  body { font-size: 15px; }
+  .wrap { padding: 0 16px; }
+  main { padding-top: 22px; }
+  h1 { font-size: 23px; }
+  .top-in { flex-wrap: wrap; gap: 4px 10px; padding-top: 8px; padding-bottom: 4px; }
+  .nav { order: 3; width: 100%; margin: 0 -4px; }
+  .brand-full { display: none; }
+  .save span { display: none; }
+  .hero { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .ring { width: 116px; height: 116px; }
+  .map { grid-template-columns: repeat(2, 1fr); }
+  .toolbar .field { width: calc(50% - 5px); }
+  .toolbar .field.grow { flex-basis: 100%; width: 100%; }
+  .toolbar-actions { margin-left: 0; width: 100%; }
+  .trow { grid-template-columns: 1fr; gap: 8px; }
+  .etapa-btn { padding: 13px 14px; gap: 12px; }
+  .meta-grid { grid-template-columns: 1fr; }
+  .sub-det, .doc-form .two, .doc-form .three, .sub-main { grid-template-columns: 1fr; }
+  .sub-tools, .sub-det { margin-left: 0; }
+  .panel-body { padding: 18px 16px 40px; }
+  .panel-head { padding-left: 16px; }
+  dialog.panel { width: 100vw; }
+  .stats { gap: 8px; }
+  .stat b { font-size: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<div id="banner"></div>
+<header class="top" id="top"></header>
+<main id="main" tabindex="-1"><div class="wrap"><p class="muted">Cargando…</p></div></main>
+<footer class="foot"><div class="wrap">Tus datos se guardan solo en este navegador. Para compartirlos con tu socio o pasarlos a otra computadora, usá <strong>Datos → Exportar JSON</strong> e importalo del otro lado.</div></footer>
+<dialog id="panel" class="panel" aria-label="Detalle de tarea"></dialog>
+<dialog id="dlg" class="dlg" aria-labelledby="dlgTitle"></dialog>
+<div id="toasts" class="toasts" role="status" aria-live="polite"></div>
+<input type="file" id="fileImport" accept="application/json,.json" hidden>
+<noscript><div class="wrap" style="padding:40px 20px"><strong>Esta herramienta necesita JavaScript.</strong> Activalo en tu navegador para usarla.</div></noscript>
+
+<script>
+'use strict';
+/* ============================================================================
+ * CENTRO DE OPERACIONES — carga para vehículos eléctricos (Argentina)
+ * Un solo archivo, sin dependencias. Organización del código:
+ *   0. Constantes          5. Persistencia (localStorage, export/import, migración)
+ *   1. Utilidades          6. Acciones (mutaciones del estado)
+ *   2. Plan precargado     7. Vistas (HTML puro a partir del estado)
+ *   3. Estado + validación 8. Interfaz (render, diálogos, eventos)
+ *   4. Cálculo (progreso)  9. Arranque
+ * El progreso nunca se guarda: siempre se calcula a partir de las subtareas.
+ * ========================================================================== */
+
+/* ================================ 0. CONSTANTES ============================ */
+const APP_ID = 'ev-ops';
+const SCHEMA_VERSION = 1;
+const STORAGE_KEY = 'ev-ops-v1';
+const PREFS_KEY = 'ev-ops-v1-prefs';
+const PRIORIDADES = ['Crítica', 'Importante', 'Secundaria'];
+const ESTADOS = ['Pendiente', 'En proceso', 'Completada'];
+const RESPONSABLES = ['Comercial', 'Técnico', 'Ambos'];
+const TIPOS_DOC = ['Nota', 'Enlace', 'Contacto', 'Presupuesto', 'Conclusión'];
+const CERTEZAS = ['Hipótesis', 'Investigado', 'Pendiente de validar', 'Decisión tomada', 'Ejecutado'];
+const SLUG_P = { 'Crítica': 'crit', 'Importante': 'imp', 'Secundaria': 'sec' };
+const SLUG_E = { 'Pendiente': 'pend', 'En proceso': 'proc', 'Completada': 'comp' };
+const SLUG_C = { 'Hipótesis': 'hip', 'Investigado': 'inv', 'Pendiente de validar': 'pv', 'Decisión tomada': 'dec', 'Ejecutado': 'eje' };
+const RANK_P = { 'Crítica': 0, 'Importante': 1, 'Secundaria': 2 };
+const VISTAS = [['resumen', 'Resumen'], ['etapas', 'Etapas'], ['vencimientos', 'Vencimientos'], ['bitacora', 'Bitácora']];
+
+/* ================================ 1. UTILIDADES ============================ */
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const clone = (o) => JSON.parse(JSON.stringify(o));
+const uid = (p) => p + '-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const norm = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const isStr = (v) => typeof v === 'string';
+const plural = (n, uno, varios) => (n === 1 ? uno : varios);
+
+/** Fechas: se guardan como 'AAAA-MM-DD' (hora local, sin husos) y se muestran DD/MM/AAAA. */
+const Fecha = {
+  pad: (n) => String(n).padStart(2, '0'),
+  iso(d) { return d.getFullYear() + '-' + this.pad(d.getMonth() + 1) + '-' + this.pad(d.getDate()); },
+  hoy() { return this.iso(new Date()); },
+  valida(s) { return s === '' || (/^\d{4}-\d{2}-\d{2}$/.test(s) && !isNaN(Date.parse(s))); },
+  /** Días de diferencia entre s y base (default hoy). Negativo = ya pasó. */
+  diff(s, base) {
+    const [y, m, d] = s.split('-').map(Number);
+    const [y2, m2, d2] = (base || this.hoy()).split('-').map(Number);
+    return Math.round((Date.UTC(y, m - 1, d) - Date.UTC(y2, m2 - 1, d2)) / 864e5);
+  },
+  fmt(s) { if (!s) return ''; const [y, m, d] = s.split('-'); return d + '/' + m + '/' + y; },
+  corta(s) { if (!s) return ''; const [, m, d] = s.split('-'); return d + '/' + m; },
+  rel(s) {
+    const n = this.diff(s);
+    if (n === 0) return 'hoy';
+    if (n === 1) return 'mañana';
+    if (n === -1) return 'ayer';
+    return n > 0 ? 'en ' + n + ' días' : 'hace ' + (-n) + ' días';
+  },
+  hora(d) { return this.pad(d.getHours()) + ':' + this.pad(d.getMinutes()); }
+};
+
+/* ================================ 2. PLAN PRECARGADO ======================= */
+/* ------------------------------------------------------------------
+ * SEED_DATA — plan original precargado.
+ * Formato compacto (se expande a objetos completos en buildSeedState):
+ *   etapas: [numero, nombre, objetivo, descripcion]
+ *   tareas: [clave, prioridad(C|I|S), responsable(Com|Tec|Amb), [claves deps],
+ *            titulo, descripcion, criterioTerminado, [subtareas]]
+ * Prefijo opcional en una subtarea para asignar responsable propio:
+ *   «C|» Comercial · «T|» Técnico · «A|» Ambos. Sin prefijo hereda el de la tarea.
+ * Todo lo que depende de investigación está formulado como acción a realizar:
+ * este archivo NO contiene datos, precios ni estadísticas presentados como verificados.
+ * ------------------------------------------------------------------ */
+const SEED_DATA = {
+  etapas: [
+    [1, "Validación de mercado", "Confirmar con evidencia propia que hay demanda suficiente para decidir si seguimos.", "Dimensionar el parque de vehículos electrificados, entender cómo cargan hoy sus dueños (en casa y en departamento) y probar interés real con una inversión mínima, antes de gastar en el resto."],
+    [2, "Análisis de competencia", "Saber quién hace hoy este trabajo, a qué precio y dónde hay un hueco para diferenciarnos.", "Mapear instaladores, empresas y proveedores de equipos, relevar precios y paquetes publicados, y definir un diferencial concreto y demostrable."],
+    [3, "Validación técnica y legal", "Asegurar que podemos instalar de forma legal, segura y respaldada, y que los socios están alineados.", "Acuerdo de socios, normativa eléctrica, requisitos de distribuidoras, matrícula, seguros, forma societaria e impositiva y esquemas de instalación tipo."],
+    [4, "Modelo financiero y rentabilidad", "Saber cuánto cuesta instalar, cuánto capital hace falta y si el negocio cierra.", "Costeo de la instalación tipo, costos fijos, escenarios conservador/realista/optimista, punto de equilibrio y una decisión financiera explícita de avanzar o no."],
+    [5, "Definición de servicios y precios", "Tener una oferta clara, con alcance, precio y condiciones definidos.", "Paquetes de servicio, política de precios y márgenes, checklist de relevamiento técnico domiciliario y condiciones comerciales."],
+    [6, "Desarrollo de marca", "Contar con un nombre verificado y materiales profesionales para presentarnos con confianza.", "Nombre y posicionamiento, verificación y registro de marca y dominio, identidad visual, sitio web y presencia en redes."],
+    [7, "Alianzas comerciales", "Cerrar los primeros acuerdos con concesionarias que nos deriven clientes.", "Priorizar concesionarias, diseñar el esquema de acuerdo, armar la propuesta formal y ejecutar la primera ronda de reuniones."],
+    [8, "Captación de primeros clientes", "Conseguir entre 5 y 10 clientes piloto por canales medibles.", "Definir canales, armar el proceso de atención, lanzar los canales priorizados y calificar a los clientes piloto con una oferta de lanzamiento."],
+    [9, "Ejecución de instalaciones piloto", "Instalar los primeros equipos, medir costos y tiempos reales y aprender de cada caso.", "Logística, relevamientos, instalaciones, certificación y documentación de entrega, y comparación de lo estimado contra lo real."],
+    [10, "Estandarización operativa", "Convertir lo aprendido en procesos repetibles que no dependan de una sola persona.", "Protocolo de instalación, garantía y posventa, plantillas, sistema de gestión, incorporación de técnicos y modelo financiero actualizado con datos reales."],
+    [11, "Escalamiento comercial", "Crecer en volumen sin perder margen ni calidad.", "Más alianzas, canales rentables con presupuesto, estructura de equipo, expansión geográfica e indicadores mensuales."],
+    [12, "Expansión hacia edificios y empresas", "Abrir los segmentos de mayor ticket: consorcios, empresas, comercios y flotas.", "Marco legal de consorcios, gestión de carga, medición individual, propuesta para administradores, relevamiento de empresas y servicios recurrentes."]
+  ],
+  tareas: [
+    /* ========================= ETAPA 1 ========================= */
+    ["1.1", "C", "Amb", [],
+      "Dimensionar el parque de vehículos electrificados y su evolución",
+      "Cuantificar cuántos eléctricos e híbridos enchufables se patentan y circulan, por marca, zona y año, para estimar cuántas instalaciones por año son posibles.",
+      "Hay una planilla con patentamientos por tipo, marca, año y zona, con fuente y fecha de consulta, y una estimación fundamentada de instalaciones potenciales por año en AMBA.",
+      [
+        "Identificar qué organismos o cámaras publican patentamientos de vehículos electrificados (DNRPA, ACARA, ADEFA u otros) y cuáles son de acceso libre.",
+        "Descargar o solicitar la serie de patentamientos de los últimos años y guardarla en una planilla propia.",
+        "Separar por tipo (100 % eléctrico, híbrido enchufable, híbrido no enchufable) para descartar lo que no necesita cargador.",
+        "Desagregar por marca, modelo y año de patentamiento.",
+        "Desagregar por provincia y partido o comuna, con foco en CABA y AMBA.",
+        "Averiguar si hay vehículos no captados por el patentamiento regular (importación particular, cupos especiales) y cómo contabilizarlos.",
+        "Estimar cuántos propietarios podrían instalar un cargador domiciliario por año, explicitando los supuestos (por ejemplo, proporción con cochera propia).",
+        "Registrar fuentes, supuestos y conclusiones en la documentación de la tarea, marcando cada dato como «Investigado» con su fuente."
+      ]],
+    ["1.2", "C", "Com", [],
+      "Investigar las concesionarias que comercializan vehículos eléctricos",
+      "Mapear las marcas y concesionarias oficiales de eléctricos e híbridos enchufables, quién instala hoy los cargadores y si estarían abiertas a un acuerdo.",
+      "Hay una lista de marcas y concesionarias con contacto, qué cargador incluyen, quién instala hoy y su apertura a trabajar con terceros.",
+      [
+        "Identificar todas las marcas de vehículos eléctricos e híbridos enchufables comercializadas oficialmente en Argentina.",
+        "Listar sus concesionarias oficiales, priorizando AMBA, con dirección y contacto de ventas y posventa.",
+        "Investigar qué modelos incluyen cargador domiciliario o cable de carga, y de qué tipo.",
+        "Averiguar quién realiza hoy las instalaciones (la marca, un proveedor homologado, el cliente por su cuenta).",
+        "Contactar a los responsables comerciales o de posventa de al menos 5 concesionarias de AMBA y registrar quién instala hoy.",
+        "Consultar si trabajan con instaladores externos y bajo qué condiciones (homologación, seguros, comisiones).",
+        "Identificar posibles esquemas de acuerdo comercial (comisión por derivación, instalación incluida en el precio del auto, otros).",
+        "Registrar resultados y conclusiones en la documentación de la tarea."
+      ]],
+    ["1.3", "C", "Amb", [],
+      "Entrevistar propietarios actuales de eléctricos e híbridos enchufables",
+      "Entender cómo resuelven hoy la carga, qué les costó, qué los frustra y cuánto pagarían por una solución llave en mano.",
+      "Hay al menos 15 entrevistas realizadas y una tabla de patrones con conclusiones sobre dolores, obstáculos y disposición a pagar.",
+      [
+        "Armar una guía de entrevista de 10 preguntas (cómo cargan, quién instaló, cuánto tardó, cuánto costó, qué salió mal).",
+        "Identificar dónde encontrar propietarios: comunidades en redes, foros, eventos, concesionarias y contactos personales.",
+        "Contactar y agendar al menos 15 entrevistas de 20 minutos, por videollamada o presencial.",
+        "Preguntar cómo cargan hoy (enchufe común, instalación dedicada, carga pública) y con qué frecuencia.",
+        "Preguntar a quienes ya instalaron: quién lo hizo, cuánto tardó, cuánto pagó y qué problemas tuvo.",
+        "Preguntar a quienes no instalaron qué los frena (costo, trámites, edificio, desconfianza).",
+        "Consultar cuánto pagarían por una instalación llave en mano y qué consideran indispensable que incluya.",
+        "Consolidar las respuestas en una tabla de patrones y registrar conclusiones en la documentación."
+      ]],
+    ["1.4", "C", "Amb", [],
+      "Validar la demanda en departamentos y edificios",
+      "Verificar si el problema de cargar en departamento es más fuerte que en casa y si justifica adelantar el foco en edificios.",
+      "Hay entrevistas a propietarios de departamento y a administradores, una comparación casa vs. departamento y una conclusión escrita sobre el impacto en la secuencia de etapas.",
+      [
+        "Entrevistar al menos 8 propietarios de eléctricos o híbridos enchufables que viven en departamento: dónde estacionan y cómo cargan hoy.",
+        "Preguntarles qué obstáculos enfrentaron con el consorcio (autorización, asamblea, uso de cocheras, instalación eléctrica del edificio).",
+        "Contactar a entre 3 y 5 administradores de consorcios y preguntar cuántas consultas sobre carga de vehículos eléctricos recibieron.",
+        "Preguntarles cómo se resolvieron esos pedidos (aprobados, rechazados, en espera) y qué los frenó.",
+        "Averiguar si algún edificio ya instaló infraestructura de carga y quién la hizo.",
+        "Comparar la intensidad del problema (frecuencia, frustración, disposición a pagar) entre quienes viven en casa y en departamento.",
+        "Estimar qué proporción de la demanda relevada vive en edificios.",
+        "Registrar si la demanda de edificios es un dolor más fuerte que la de casas y qué implica para el orden de las etapas."
+      ]],
+    ["1.5", "I", "Com", [],
+      "Prueba de demanda de bajo costo",
+      "Medir interés real con una landing simple y una campaña paga de presupuesto acotado, antes de invertir en marca y estructura.",
+      "Hay consultas reales medidas, costo por consulta calculado y una conclusión escrita sobre si se alcanzó la meta definida de antemano.",
+      [
+        "Definir la hipótesis a testear y la meta de éxito (cantidad de consultas y costo por consulta que justificarían avanzar) antes de gastar.",
+        "Armar una landing simple con propuesta de valor y formulario (nombre, zona, tipo de vivienda, modelo de auto).",
+        "Verificar que el formulario registre los datos y avise al socio comercial por correo o mensaje.",
+        "Definir un presupuesto máximo y una duración (por ejemplo, 2 semanas) y dejarlos asentados en la documentación.",
+        "Lanzar una campaña paga segmentada a AMBA con 2 o 3 variantes de mensaje.",
+        "Medir semanalmente impresiones, clics, consultas reales y costo por consulta.",
+        "Contactar a quienes dejaron sus datos para distinguir curiosidad de intención real de instalar.",
+        "Registrar conclusiones: si se alcanzó la meta, qué mensaje funcionó mejor y qué se aprendió."
+      ]],
+    ["1.6", "I", "Com", ["1.1"],
+      "Identificar zonas y perfiles de demanda inicial en AMBA",
+      "Elegir las 2 o 3 zonas de arranque según concentración de vehículos, tipo de vivienda y distribuidora.",
+      "Hay 2 o 3 zonas elegidas con justificación y un perfil de cliente inicial definido.",
+      [
+        "Cruzar los patentamientos por partido o comuna (tarea 1.1) para identificar los 5 a 10 con mayor concentración.",
+        "Relevar el tipo de vivienda predominante en esas zonas (casas con cochera, barrios cerrados, torres).",
+        "Identificar barrios cerrados y countries de zona norte y oeste con presencia de eléctricos.",
+        "Averiguar qué distribuidora atiende cada zona (Edenor, Edesur u otra).",
+        "Estimar distancias y tiempos de traslado desde el punto base del equipo técnico a cada zona.",
+        "Definir el perfil de cliente inicial (tipo de vivienda, uso del auto, marca y modelo típicos).",
+        "Elegir 2 o 3 zonas de arranque y justificar la elección.",
+        "Registrar la conclusión en la documentación de la tarea."
+      ]],
+    ["1.7", "C", "Amb", ["1.1", "1.2", "1.3", "1.4", "1.5"],
+      "Definir criterios de go/no-go de mercado y decidir",
+      "Fijar de antemano qué evidencia alcanza para seguir y tomar la decisión de mercado entre los dos socios.",
+      "Hay umbrales escritos, cada criterio evaluado con evidencia y una decisión registrada como «Decisión tomada».",
+      [
+        "Releer los resultados de dimensionamiento, concesionarias, entrevistas, edificios y prueba de demanda.",
+        "Definir en conjunto los umbrales mínimos para avanzar (mercado anual de instalaciones, consultas, interés de concesionarias).",
+        "Definir qué señales harían replantear el enfoque (pivotar a edificios o flotas, o frenar).",
+        "Listar los riesgos principales del mercado.",
+        "Evaluar cada criterio contra la evidencia y asentar «cumple», «no cumple» o «dudoso».",
+        "Debatir y decidir entre los dos socios: avanzar, ajustar el enfoque o no avanzar.",
+        "Registrar la decisión como entrada «Decisión tomada» con su fundamento.",
+        "Si la decisión es avanzar, listar los supuestos de mercado que alimentarán el modelo financiero."
+      ]],
+
+    /* ========================= ETAPA 2 ========================= */
+    ["2.1", "C", "Com", [],
+      "Mapear instaladores y empresas de carga existentes",
+      "Identificar quién ofrece hoy instalación de cargadores para vehículos eléctricos en AMBA y cómo se posiciona.",
+      "Hay una planilla de competidores con tipo, zona, oferta, reputación y calidad de atención, y una clasificación por nivel de amenaza.",
+      [
+        "Buscar en Google, redes, MercadoLibre y directorios «instalación de cargador para auto eléctrico» en AMBA.",
+        "Registrar en una planilla cada competidor: nombre, zona, tipo (electricista independiente, empresa, importador-instalador, concesionaria) y redes.",
+        "Identificar cuáles están homologados o recomendados por las marcas de vehículos.",
+        "Revisar si publican matrícula, certificaciones y seguros.",
+        "Relevar qué marcas de equipos instalan y si también los venden.",
+        "Leer reseñas y opiniones públicas para detectar las quejas más frecuentes.",
+        "Pedir presupuesto como cliente a 5 competidores y registrar tiempos de respuesta y calidad de atención.",
+        "Clasificar a los competidores por nivel de amenaza y registrar conclusiones."
+      ]],
+    ["2.2", "C", "Com", ["2.1"],
+      "Relevar precios y paquetes publicados",
+      "Conocer qué se cobra y qué incluye cada oferta para posicionar nuestros precios con datos propios.",
+      "Hay una tabla comparativa de precios y alcances con fuente y fecha, y los huecos de mercado identificados.",
+      [
+        "Recopilar los precios publicados de instalación y de equipos de los competidores relevados, con fecha y captura.",
+        "Distinguir qué incluye cada precio (equipo, materiales, mano de obra, trámite ante la distribuidora, garantía).",
+        "Pedir presupuestos reales para 3 casos tipo: casa con cochera junto al tablero, casa con tablero lejano y departamento con cochera propia.",
+        "Comparar plazos de ejecución prometidos y condiciones de pago.",
+        "Identificar paquetes, servicios adicionales y garantías que ofrecen.",
+        "Armar una tabla comparativa con rangos mínimo, medio y máximo, marcados como «Investigado» con su fuente.",
+        "Detectar huecos de mercado: qué nadie ofrece o lo ofrece mal.",
+        "Registrar conclusiones en la documentación de la tarea."
+      ]],
+    ["2.3", "I", "Tec", [],
+      "Relevar modelos de wallbox disponibles e importadores",
+      "Conocer qué equipos se consiguen en el país, con qué condiciones y soporte, para armar un catálogo inicial.",
+      "Hay una comparativa de 3 a 5 equipos y una preselección de 2 o 3 para el catálogo inicial.",
+      [
+        "Listar los modelos de wallbox disponibles en Argentina (importadores, distribuidores, venta online).",
+        "Registrar de cada uno potencia, monofásico o trifásico, tipo de conector, conectividad, protecciones incluidas y garantía.",
+        "Verificar compatibilidad de conectores con los modelos de vehículos relevados en la tarea 1.2.",
+        "Verificar qué certificaciones tienen y cuáles se aceptan en el país (a validar con la normativa y los importadores).",
+        "Contactar a importadores y consultar condiciones para instaladores, stock y tiempos de entrega.",
+        "Consultar servicio técnico y reposición local ante fallas.",
+        "Comparar 3 a 5 candidatos y preseleccionar 2 o 3 para el catálogo inicial.",
+        "Registrar conclusiones en la documentación de la tarea."
+      ]],
+    ["2.4", "S", "Com", [],
+      "Mapear redes de carga pública y operadores",
+      "Entender cuánto compite o complementa la carga pública con la carga domiciliaria y quiénes podrían ser aliados futuros.",
+      "Hay un mapa de redes y operadores en las zonas objetivo y una conclusión sobre su rol como complemento o sustituto.",
+      [
+        "Relevar las redes de carga pública en AMBA y corredores: ubicación, operador, tipo de carga (AC o DC).",
+        "Identificar quiénes las operan (petroleras, concesionarias, municipios, privados) y su modelo de cobro.",
+        "Contar los puntos disponibles en las zonas objetivo definidas en la tarea 1.6.",
+        "Preguntar en las entrevistas cuánto dependen de la carga pública.",
+        "Evaluar si la carga pública es sustituto o complemento de la domiciliaria.",
+        "Identificar operadores que podrían necesitar un instalador en etapas futuras.",
+        "Registrar conclusiones en la documentación de la tarea."
+      ]],
+    ["2.5", "I", "Amb", ["2.1", "2.2"],
+      "Definir diferenciales competitivos",
+      "Elegir qué nos hace distintos de forma concreta y demostrable, a partir de la competencia y de los dolores de los clientes.",
+      "Hay 2 o 3 diferenciales validados con clientes, una propuesta de valor en una frase y una lista de lo que no vamos a hacer.",
+      [
+        "Listar las fortalezas propias reales (matrícula, experiencia técnica, tiempos, garantía, acompañamiento en trámites).",
+        "Cruzarlas con los huecos detectados en la competencia y con los dolores de las entrevistas.",
+        "Redactar 3 diferenciales candidatos y la prueba concreta de cada uno (cómo se lo demostramos al cliente).",
+        "Validar los candidatos con 3 a 5 clientes potenciales o propietarios entrevistados.",
+        "Definir qué no vamos a hacer (segmentos o servicios descartados).",
+        "Redactar la propuesta de valor en una sola frase.",
+        "Registrar la decisión en la documentación de la tarea."
+      ]],
+
+    /* ========================= ETAPA 3 ========================= */
+    ["3.1", "C", "Amb", [],
+      "Definir el acuerdo de socios",
+      "Dejar por escrito cómo se reparten participación, aportes, utilidades, decisiones y salida, antes de poner plata o trabajo.",
+      "Hay un acuerdo escrito, revisado por contador y abogado, y firmado por ambos socios.",
+      [
+        "Definir el porcentaje de participación de cada socio y el criterio que lo justifica.",
+        "Definir los aportes de capital y de trabajo de cada socio (monto, forma, dedicación horaria) y cómo se valoriza el trabajo.",
+        "Definir el reparto de utilidades y los retiros de cada socio (cuándo, cuánto y qué se reinvierte).",
+        "Definir roles y toma de decisiones: qué decide cada uno solo, qué requiere acuerdo y cómo se desempata.",
+        "Definir qué pasa ante la salida o el incumplimiento de un socio (compra de participación, valuación, plazos, no competencia).",
+        "Consultar con contador y abogado para revisar el borrador.",
+        "Firmar el acuerdo."
+      ]],
+    ["3.2", "C", "Tec", [],
+      "Relevar la normativa eléctrica aplicable a la carga de vehículos",
+      "Identificar los requisitos de la reglamentación AEA 90364 y su sección sobre carga de vehículos eléctricos (a verificar), y otras normas relacionadas.",
+      "Hay una síntesis de una página con los requisitos que condicionan la instalación tipo, con referencias a la versión vigente consultada.",
+      [
+        "Obtener la versión vigente de la reglamentación AEA 90364 y ubicar la sección sobre instalaciones de carga de vehículos eléctricos (a verificar número y alcance).",
+        "Listar los requisitos de circuito dedicado, protecciones (diferencial y termomagnética), puesta a tierra y cables para carga domiciliaria.",
+        "Identificar requisitos de ubicación, ventilación y protección mecánica en cocheras, garajes y exteriores.",
+        "Verificar las normas de seguridad aplicables a los equipos de carga y qué certificaciones exigir al proveedor.",
+        "Consultar con la AEA o con un colega matriculado si hay interpretaciones o actualizaciones recientes sobre el tema.",
+        "Identificar requisitos específicos para edificios y estacionamientos compartidos (insumo de la etapa 12).",
+        "Elaborar la síntesis de una página con los requisitos que condicionan el diseño.",
+        "Registrar fuentes y versión consultada en la documentación de la tarea."
+      ]],
+    ["3.3", "C", "Tec", [],
+      "Relevar requisitos de las distribuidoras (Edenor, Edesur y provinciales)",
+      "Saber qué trámites, aprobaciones y límites de potencia impone cada distribuidora para instalar un cargador.",
+      "Hay una tabla por distribuidora con trámites, plazos, costos y documentación exigida, con fuente y fecha.",
+      [
+        "Identificar qué distribuidora atiende cada zona objetivo (Edenor, Edesur y distribuidoras provinciales o cooperativas).",
+        "Consultar si exigen aviso, solicitud o aprobación previa para instalar un cargador domiciliario.",
+        "Averiguar límites de potencia contratada y qué trámite, plazo y costo implica aumentarla.",
+        "Averiguar requisitos de medidor y acometida (monofásico o trifásico) para cargas de mayor potencia.",
+        "Averiguar si existe tarifa o franja horaria diferencial aplicable a la carga de vehículos (a verificar).",
+        "Consultar qué documentación técnica debe presentar el instalador (planos, certificados, firma de profesional matriculado).",
+        "Documentar trámites, plazos y costos por distribuidora en una tabla.",
+        "Registrar conclusiones y dudas abiertas en la documentación de la tarea."
+      ]],
+    ["3.4", "C", "Tec", [],
+      "Verificar matrícula, habilitaciones y responsabilidad profesional",
+      "Confirmar que podemos firmar y ejecutar las instalaciones previstas y cómo se reparte la responsabilidad.",
+      "Hay una conclusión escrita sobre matrícula, habilitaciones requeridas, quién firma cada obra y la responsabilidad asumida.",
+      [
+        "Consultar al colegio o consejo profesional y a los entes locales qué matrícula habilita a firmar este tipo de instalaciones (a verificar categoría).",
+        "Confirmar si la matrícula del socio técnico cubre las potencias y tipos de instalación previstos.",
+        "Averiguar si se requiere habilitación de la empresa (no solo del profesional) en CABA, provincia y municipios objetivo.",
+        "Definir quién firma cada instalación y con qué responsabilidad frente al cliente y a la distribuidora.",
+        "Averiguar qué se exige para sumar técnicos o ayudantes (matrícula de quien ejecuta frente a quien firma).",
+        "Averiguar obligaciones de higiene y seguridad y de ART si hay personal.",
+        "Consultar con un abogado la responsabilidad civil y penal ante un siniestro eléctrico.",
+        "Registrar conclusiones en la documentación de la tarea."
+      ]],
+    ["3.5", "I", "Amb", [],
+      "Cotizar seguro de responsabilidad civil y definir coberturas",
+      "Elegir una cobertura adecuada para daños a terceros y a la propiedad antes del primer trabajo.",
+      "Hay al menos 3 cotizaciones comparadas y una cobertura recomendada, cargada como costo fijo.",
+      [
+        "Definir los riesgos a cubrir (daños a la propiedad del cliente y al vehículo, lesiones, incendio por falla de instalación).",
+        "Pedir cotización a entre 3 y 5 aseguradoras o brokers para responsabilidad civil de instalaciones eléctricas.",
+        "Preguntar qué exigen (matrícula, antigüedad, certificaciones) y qué exclusiones tienen.",
+        "Consultar por ART si hay personal y por seguro de herramientas y vehículo.",
+        "Comparar sumas aseguradas, franquicias, primas y vigencia.",
+        "Averiguar si marcas o concesionarias exigen coberturas mínimas a los instaladores.",
+        "Elegir la cobertura recomendada y asentarla como costo fijo para el modelo financiero.",
+        "Registrar la comparación en la documentación de la tarea."
+      ]],
+    ["3.6", "C", "Com", ["3.1"],
+      "Definir forma societaria e impositiva (monotributo vs. sociedad)",
+      "Elegir cómo vamos a facturar y operar legalmente, con asesoramiento de un contador.",
+      "Hay una decisión registrada sobre la forma societaria e impositiva, con costos estimados y una fecha objetivo de inscripción.",
+      [
+        "Listar las alternativas (monotributo de cada socio, sociedad de hecho, SAS, SRL) y sus implicancias para dos socios.",
+        "Consultar con un contador cuál conviene según la facturación proyectada y el tipo de clientes (consumidor final o empresas que piden factura A).",
+        "Averiguar qué exigen concesionarias y consorcios para contratar proveedores (CUIT, tipo de factura, retenciones, seguros).",
+        "Estimar costos de constitución y mantenimiento de cada alternativa (a cotizar con contador o escribano).",
+        "Averiguar las inscripciones necesarias (ARCA, ingresos brutos, habilitación municipal) y sus plazos.",
+        "Evaluar la responsabilidad patrimonial de los socios en cada forma.",
+        "Decidir forma y fecha objetivo de inscripción, y registrar la decisión.",
+        "Iniciar los trámites de inscripción elegidos."
+      ]],
+    ["3.7", "I", "Tec", ["3.2", "3.3"],
+      "Definir esquemas de instalación tipo",
+      "Estandarizar los casos de instalación más frecuentes para poder costearlos y presupuestarlos.",
+      "Hay 3 o 4 casos tipo con esquema unifilar, lista de materiales y horas estimadas, revisados por otro profesional.",
+      [
+        "Definir 3 o 4 casos tipo (cochera junto al tablero, tablero lejano, instalación antigua, departamento con cochera propia).",
+        "Para cada caso, definir circuito, sección de cable, canalización, protecciones y puesta a tierra según la normativa relevada.",
+        "Definir qué condiciones del cliente obligan a adecuaciones previas (tablero, tierra, cableado) y cómo se comunican.",
+        "Armar la lista de materiales de cada caso, sin precios.",
+        "Estimar las horas de trabajo de cada caso y los factores que las alteran.",
+        "Dibujar un esquema unifilar simple de cada caso.",
+        "Revisar los esquemas con otro profesional matriculado de confianza.",
+        "Registrar la versión 1 en la documentación de la tarea."
+      ]],
+
+    /* ========================= ETAPA 4 ========================= */
+    ["4.1", "C", "Tec", ["3.7"],
+      "Costear la instalación tipo",
+      "Calcular el costo directo real de cada caso tipo: materiales, mano de obra, traslados y trámites.",
+      "Hay una planilla con costo directo por caso tipo, con cotizaciones fechadas y un criterio de actualización.",
+      [
+        "Cotizar con al menos 3 proveedores cada ítem de la lista de materiales de los casos tipo.",
+        "Calcular la mano de obra de cada caso con las horas estimadas y un valor hora de referencia justificado.",
+        "Incluir costos de traslado, estacionamiento y tiempos improductivos.",
+        "Incluir costos de trámites y certificaciones (matrícula, distribuidora, ingeniería si aplica).",
+        "Incluir una previsión para imprevistos y garantía, con porcentaje a definir.",
+        "Calcular el costo directo total por caso, con y sin equipo.",
+        "Definir el criterio de actualización de costos (fecha de cotización, validez, referencia en dólares o indexación) dada la inflación.",
+        "Registrar la planilla y las fuentes en la documentación de la tarea."
+      ]],
+    ["4.2", "I", "Amb", [],
+      "Cotizar proveedores de wallbox y materiales eléctricos",
+      "Conseguir condiciones comerciales de proveedores para costear y asegurar el abastecimiento.",
+      "Hay listas de precios y condiciones de al menos 2 proveedores por categoría, y 2 proveedores principales elegidos.",
+      [
+        "Armar una lista de proveedores candidatos (importadores, distribuidores eléctricos, mayoristas).",
+        "Pedir a cada uno su lista de precios y condiciones (precio por volumen, plazos de pago, validez).",
+        "Consultar si ofrecen precio para instaladores y condiciones de cuenta corriente.",
+        "Consultar tiempos de entrega, garantía y política de devolución.",
+        "Evaluar riesgos de abastecimiento (importación, faltantes) y alternativas.",
+        "Elegir 2 proveedores principales por categoría.",
+        "Registrar la comparación en la documentación de la tarea."
+      ]],
+    ["4.3", "I", "Tec", [],
+      "Definir el kit de herramientas e instrumental y su costo",
+      "Saber qué hay que tener para trabajar de forma segura y cuánto hay que invertir.",
+      "Hay una lista del kit con lo que ya existe, lo que falta, su costo cotizado y la inversión inicial.",
+      [
+        "Listar herramientas manuales y eléctricas necesarias para los casos tipo.",
+        "Listar el instrumental de medición y verificación necesario (por ejemplo, medición de tierra y aislación, verificación de diferenciales), a confirmar con la normativa.",
+        "Listar elementos de protección personal y de señalización.",
+        "Definir cuáles ya posee el socio técnico y cuáles hay que comprar o alquilar.",
+        "Cotizar lo faltante en al menos 2 proveedores.",
+        "Averiguar si los instrumentos requieren calibración o certificación periódica.",
+        "Calcular la inversión inicial y la vida útil estimada.",
+        "Registrar la lista y el costo en la documentación de la tarea."
+      ]],
+    ["4.4", "I", "Com", ["3.6"],
+      "Estimar costos fijos y de estructura",
+      "Calcular cuánto cuesta mantener el negocio funcionando cada mes, sin vender nada.",
+      "Hay un costo fijo mensual total y su peso por instalación según el volumen.",
+      [
+        "Listar los costos fijos mensuales (contador, seguros, herramientas, vehículo, telefonía, software, hosting y dominio).",
+        "Cotizar contador y trámites societarios e impositivos según la forma elegida.",
+        "Estimar el costo del vehículo de trabajo: combustible o carga, seguro, patente y mantenimiento.",
+        "Estimar un presupuesto mínimo mensual de marketing.",
+        "Definir el retiro mínimo mensual de cada socio durante el arranque, según el acuerdo de socios.",
+        "Estimar impuestos y cargas variables (ingresos brutos, monotributo o ganancias según la forma, comisiones a concesionarias).",
+        "Calcular el costo fijo mensual total y su peso por instalación según distintos volúmenes.",
+        "Registrar la planilla en la documentación de la tarea."
+      ]],
+    ["4.5", "C", "Amb", ["1.1", "4.1", "4.2", "4.4"],
+      "Construir escenarios financieros: conservador, realista y optimista",
+      "Modelar el negocio con supuestos explícitos y modificables para ver qué tan sensible es a precio, volumen y costos.",
+      "Hay un modelo en planilla con tres escenarios, flujo de caja a 12 y 24 meses y supuestos documentados.",
+      [
+        "Definir los supuestos de cada escenario (instalaciones por mes, precio medio, margen, estacionalidad) con fuente o razonamiento.",
+        "Armar el modelo en planilla con supuestos separados de los cálculos.",
+        "Incorporar ingresos por instalación y por venta de equipos, si corresponde, y comisiones a concesionarias.",
+        "Incorporar costos variables por instalación, costos fijos y retiros de los socios.",
+        "Modelar el flujo de caja mensual a 12 y 24 meses, con capital de trabajo (stock, anticipos, plazos de cobro).",
+        "Incorporar inflación y tipo de cambio como variables.",
+        "Contrastar los supuestos con la información de mercado (1.1) y de competencia (2.2).",
+        "Registrar el modelo y sus supuestos en la documentación de la tarea."
+      ]],
+    ["4.6", "C", "Amb", ["4.5"],
+      "Calcular punto de equilibrio y capital inicial necesario",
+      "Saber cuántas instalaciones hay que hacer para no perder plata y cuánto capital hace falta para llegar ahí.",
+      "Hay punto de equilibrio y capital inicial calculados por escenario, con análisis de sensibilidad y pérdida máxima aceptada.",
+      [
+        "Calcular el punto de equilibrio mensual (instalaciones por mes) en cada escenario.",
+        "Calcular el margen de contribución por instalación tipo.",
+        "Calcular el capital inicial: herramientas, stock, seguros, trámites, marketing y colchón de meses sin ingresos.",
+        "Estimar los meses hasta recuperar la inversión en cada escenario.",
+        "Hacer un análisis de sensibilidad: variaciones de precio, costo de equipos y volumen.",
+        "Definir de dónde sale el capital y cuánto riesgo asume cada socio.",
+        "Definir el máximo que los socios están dispuestos a perder si el negocio no funciona.",
+        "Registrar los resultados en la documentación de la tarea."
+      ]],
+    ["4.7", "C", "Amb", ["4.6"],
+      "Decisión go/no-go financiera",
+      "Tomar de forma explícita la decisión de invertir o no, con criterios fijados de antemano.",
+      "Hay una decisión registrada como «Decisión tomada», con criterios, riesgos y presupuesto inicial aprobado si es «avanzar».",
+      [
+        "Revisar el modelo con un contador o asesor externo antes de decidir.",
+        "Definir los criterios financieros mínimos (punto de equilibrio alcanzable, recuperación de la inversión, margen, capital máximo).",
+        "Evaluar cada criterio contra el escenario conservador y el realista.",
+        "Listar los riesgos financieros principales y cómo mitigarlos.",
+        "Decidir entre avanzar, avanzar con ajustes (precio, alcance, segmento) o no avanzar.",
+        "Registrar la decisión con su fundamento como entrada «Decisión tomada».",
+        "Si la decisión es avanzar, fijar el presupuesto inicial aprobado y una fecha de revisión."
+      ]],
+
+    /* ========================= ETAPA 5 ========================= */
+    ["5.1", "C", "Amb", ["4.1", "2.2"],
+      "Definir los paquetes de servicio",
+      "Armar una oferta simple, con alcance claro, que cubra los casos más frecuentes.",
+      "Hay paquetes definidos con alcance, exclusiones, plazos y descripción en lenguaje de cliente, validados con clientes potenciales.",
+      [
+        "Definir el alcance de un paquete básico (relevamiento, instalación hasta cierta distancia, protecciones, puesta en marcha, certificado).",
+        "Definir paquetes superiores (mayor distancia, adecuación de tablero, tendido de tierra, equipo incluido, trifásico).",
+        "Definir los adicionales cotizables por separado (metro extra, obra civil, canalización especial, tablero nuevo).",
+        "Definir los casos que no se aceptan o se derivan (por ejemplo, instalaciones existentes inseguras que el cliente no quiere adecuar).",
+        "Definir plazos de ejecución estándar de cada paquete.",
+        "Definir si el equipo se vende, se recomienda o se instala el que trae el cliente, y qué implica para la garantía.",
+        "Ponerle nombre y una descripción de dos líneas a cada paquete, en lenguaje de cliente.",
+        "Validar los paquetes con 3 a 5 clientes potenciales o concesionarias."
+      ]],
+    ["5.2", "C", "Amb", ["5.1", "4.6"],
+      "Definir la política de precios y márgenes",
+      "Fijar precios que cubran costos y margen, y que sean competitivos frente a lo relevado.",
+      "Hay precios de lista por paquete, márgenes piso, precio de canal y una regla de actualización.",
+      [
+        "Definir el margen objetivo por paquete y el piso por debajo del cual no se vende.",
+        "Calcular el precio de lista de cada paquete con el costeo (4.1) y compararlo con el rango relevado en 2.2.",
+        "Definir el precio para concesionarias (comisión o precio mayorista) y cómo impacta en el margen.",
+        "Definir la política de actualización de precios (frecuencia, referencia, validez del presupuesto) ante inflación.",
+        "Definir la política de descuentos y promociones.",
+        "Definir la moneda de cotización (pesos o dólar de referencia) y los medios de pago aceptados.",
+        "Probar la sensibilidad: qué pasa con el margen si el costo de los materiales sube.",
+        "Registrar la decisión en la documentación de la tarea."
+      ]],
+    ["5.3", "C", "Tec", ["3.7"],
+      "Diseñar el checklist de relevamiento técnico domiciliario",
+      "Tener un formulario de visita que garantice que no se olvida nada y permita presupuestar con precisión.",
+      "Hay una versión 1 del checklist usable en celular, probada en al menos una visita real o simulada.",
+      [
+        "Definir los datos del cliente y del vehículo a recabar (modelo, conector, potencia de carga a bordo, uso diario).",
+        "Definir qué relevar del tablero (tipo, estado, espacio libre, protecciones existentes, diferencial).",
+        "Definir qué relevar de la acometida y el medidor (monofásico o trifásico, potencia contratada, distribuidora).",
+        "Definir qué medir en sitio (tensión, tierra, distancia tablero-cochera, canalización posible).",
+        "Definir las fotos obligatorias y cómo se nombran.",
+        "Definir criterios de aprobación, adecuaciones necesarias o rechazo.",
+        "Pasar el checklist a un formato usable en celular (formulario o PDF rellenable) y probarlo en una visita real o simulada.",
+        "Ajustar tras la prueba y registrar la versión 1."
+      ]],
+    ["5.4", "I", "Com", ["5.2"],
+      "Definir las condiciones comerciales",
+      "Dejar claras las reglas de presupuesto, pago, cancelación y garantía.",
+      "Hay un modelo de presupuesto y términos y condiciones revisados por un abogado.",
+      [
+        "Redactar el modelo de presupuesto (alcance, exclusiones, plazo, validez, precio).",
+        "Definir la forma de pago (anticipo, saldo al finalizar, medios) y cómo se cubre la inflación entre presupuesto y ejecución.",
+        "Definir la política de cancelación y de visitas técnicas que no se concretan (se cobra o no la visita).",
+        "Definir condiciones de garantía de trabajo y de equipo (se completa en la tarea 10.2).",
+        "Redactar términos y condiciones simples y hacerlos revisar por un abogado.",
+        "Definir qué documentación recibe el cliente al terminar (certificado, fotos, manual, garantía).",
+        "Definir el tipo de comprobante de facturación según la forma societaria elegida.",
+        "Registrar los documentos en la documentación de la tarea."
+      ]],
+    ["5.5", "S", "Amb", ["5.1"],
+      "Definir servicios adicionales opcionales",
+      "Evaluar servicios complementarios que aumenten el ticket o den ingresos recurrentes.",
+      "Hay 1 o 2 servicios adicionales priorizados con costo, capacidad y precio estimados.",
+      [
+        "Listar servicios adicionales posibles (mantenimiento anual, revisión periódica, mudanza del cargador, ampliación).",
+        "Preguntar a los entrevistados cuáles les interesarían y cuánto pagarían.",
+        "Evaluar costo y capacidad operativa de cada uno.",
+        "Priorizar 1 o 2 para incluir en la oferta o dejar para etapas futuras.",
+        "Registrar la decisión en la documentación de la tarea."
+      ]],
+
+    /* ========================= ETAPA 6 ========================= */
+    ["6.1", "I", "Com", ["4.7", "2.5"],
+      "Definir nombre, posicionamiento y propuesta de valor",
+      "Elegir candidatos de nombre y el mensaje central de la marca, a partir de los diferenciales definidos.",
+      "Hay un nombre principal y dos alternativos para verificar en la tarea 6.2, y una propuesta de valor en una frase.",
+      [
+        "Redactar los atributos de marca (a quién le hablamos, tono, promesa) a partir de los diferenciales de la tarea 2.5.",
+        "Generar una lista de 10 a 15 nombres candidatos fáciles de pronunciar y recordar en español.",
+        "Preseleccionar de 3 a 5 nombres y descartar los parecidos a marcas del rubro.",
+        "Testear los preseleccionados con 5 a 10 personas del público objetivo: qué entienden y qué confianza transmiten.",
+        "Elegir el candidato principal y dos alternativos para verificar su disponibilidad.",
+        "Redactar la propuesta de valor en una frase y un eslogan tentativo.",
+        "Registrar la decisión en la documentación de la tarea."
+      ]],
+    ["6.2", "C", "Com", ["6.1"],
+      "Verificar y registrar marca y dominio",
+      "Confirmar que el nombre se puede usar y proteger antes de emplearlo en cualquier material.",
+      "El nombre definitivo pasó todos los chequeos, dominio y usuarios están reservados y el trámite de marca está iniciado.",
+      [
+        "Buscar los nombres candidatos en el buscador de marcas del INPI y registrar coincidencias y similares en las clases pertinentes.",
+        "Buscar disponibilidad de dominio (.com.ar y .com) y de usuario en redes y Google Business.",
+        "Buscar el nombre en Google, redes y MercadoLibre para detectar usos en el rubro o posibles confusiones.",
+        "Consultar con un agente de la propiedad industrial o abogado el riesgo de oposición.",
+        "Consultar costos y plazos del registro de marca en las clases que correspondan.",
+        "Elegir el nombre definitivo solo si pasa todos los chequeos y registrar la decisión.",
+        "Reservar el dominio y los usuarios en redes.",
+        "Iniciar el trámite de registro de marca."
+      ]],
+    ["6.3", "I", "Com", ["6.2"],
+      "Crear identidad visual y materiales base",
+      "Contar con logo y materiales profesionales para presentaciones, presupuestos y vehículo.",
+      "Hay logo, plantillas y presentación institucional en una carpeta compartida y versionada.",
+      [
+        "Definir paleta, tipografías y reglas de uso del logo.",
+        "Diseñar el logo (propio, freelancer o estudio) con versiones para fondo claro y oscuro.",
+        "Diseñar la plantilla de presupuesto y la de propuesta para concesionarias.",
+        "Diseñar una presentación institucional corta de 8 a 10 diapositivas.",
+        "Diseñar tarjeta digital y firma de correo.",
+        "Diseñar la identificación del vehículo y credencial del técnico para presentarse ante clientes.",
+        "Diseñar la plantilla de certificado o acta de entrega de obra.",
+        "Reunir todo en una carpeta compartida con control de versiones."
+      ]],
+    ["6.4", "I", "Com", ["6.3"],
+      "Publicar el sitio web con formulario de contacto",
+      "Tener una presencia propia que explique el servicio y reciba solicitudes de relevamiento.",
+      "El sitio está publicado en el dominio propio, el formulario funciona de punta a punta y hay métricas básicas configuradas.",
+      [
+        "Definir la estructura mínima (inicio, paquetes, cómo trabajamos, preguntas frecuentes, contacto).",
+        "Redactar textos orientados al cliente, con las preguntas frecuentes surgidas de las entrevistas.",
+        "Reutilizar o mejorar la landing de la prueba de demanda (tarea 1.5) con la identidad definitiva.",
+        "Incluir un formulario de solicitud de relevamiento con campos clave (zona, vivienda, modelo de auto).",
+        "Configurar dominio, correo profesional y HTTPS.",
+        "Configurar métricas básicas de visitas y conversiones, con aviso de privacidad.",
+        "Probar en celular y en distintos navegadores, y probar el formulario de punta a punta.",
+        "Publicar el sitio."
+      ]],
+    ["6.5", "S", "Com", ["6.3"],
+      "Abrir perfiles en redes y Google Business",
+      "Estar presentes donde nos van a buscar y dar confianza antes del primer contacto.",
+      "Hay perfiles creados, una ficha de Google Business verificada y un calendario de contenidos de 4 semanas.",
+      [
+        "Elegir las 2 redes prioritarias según dónde están los propietarios (a validar con las entrevistas).",
+        "Crear los perfiles con identidad y descripción consistentes.",
+        "Crear la ficha de Google Business con zona de cobertura.",
+        "Definir un calendario de contenidos simple de 4 semanas (casos, explicaciones, preguntas frecuentes).",
+        "Preparar de 8 a 10 publicaciones iniciales.",
+        "Definir quién responde los mensajes y en qué tiempo."
+      ]],
+
+    /* ========================= ETAPA 7 ========================= */
+    ["7.1", "C", "Com", ["1.2", "4.7"],
+      "Priorizar concesionarias y marcas objetivo",
+      "Elegir con qué concesionarias empezar según potencial, accesibilidad y apertura a terceros.",
+      "Hay una matriz de priorización, 5 concesionarias para la primera ronda y 5 de reserva, con el decisor identificado en cada una.",
+      [
+        "Definir los criterios de priorización (volumen de eléctricos e híbridos, ubicación, si ofrecen cargador, apertura a terceros).",
+        "Armar una matriz de puntuación con los datos de la tarea 1.2 y completar lo que falte.",
+        "Identificar quién decide en cada concesionaria y cómo llegar.",
+        "Averiguar si la decisión es de la concesionaria o de la marca o importador (por ejemplo, si homologa instaladores).",
+        "Elegir 5 concesionarias para la primera ronda y 5 de reserva.",
+        "Definir el orden de contacto: empezar con una de trato más amigable para ensayar la propuesta.",
+        "Registrar la matriz en la documentación de la tarea."
+      ]],
+    ["7.2", "C", "Com", ["5.2", "6.3", "7.3"],
+      "Armar la propuesta formal para concesionarias",
+      "Preparar el documento y el discurso para presentar la alianza de forma profesional.",
+      "Hay una propuesta en PDF y una versión de una página para vendedores, probada con un contacto amigable.",
+      [
+        "Estructurar la propuesta: problema del cliente de la concesionaria, solución, cómo trabajamos, precios y condiciones, próximos pasos.",
+        "Incluir el esquema de acuerdo comercial definido en la tarea 7.3.",
+        "Incluir los paquetes y el proceso paso a paso desde que el cliente compra el auto hasta que carga en casa.",
+        "Incluir garantías, seguros, matrícula y documentación que respaldan el trabajo.",
+        "Incluir una propuesta de piloto acotado y sin exclusividad (por ejemplo, 3 meses).",
+        "Armar una versión en PDF o presentación y una de una página para vendedores.",
+        "Hacer revisar por un asesor legal lo contractual.",
+        "Ensayarla con un contacto amigable y ajustarla con su devolución."
+      ]],
+    ["7.3", "C", "Amb", ["4.6"],
+      "Diseñar el esquema de acuerdo comercial",
+      "Definir qué le ofrecemos a una concesionaria, qué pedimos a cambio y con qué compromisos.",
+      "Hay un modelo de acuerdo (carta de intención o contrato simple) revisado legalmente y con su impacto en el margen calculado.",
+      [
+        "Definir los modelos posibles (comisión por derivación, precio mayorista para que revendan, instalación incluida en el precio del auto, referido sin comisión).",
+        "Calcular el impacto de cada modelo en el margen usando el modelo financiero.",
+        "Definir condiciones: exclusividad (sí o no, por zona o marca), plazo, renovación y salida.",
+        "Definir los tiempos de respuesta comprometidos y verificar que haya capacidad real de cumplirlos.",
+        "Definir quién factura al cliente final y cómo se paga la comisión.",
+        "Definir responsabilidades ante reclamos del cliente.",
+        "Redactar el modelo de acuerdo con revisión legal.",
+        "Registrar la decisión en la documentación de la tarea."
+      ]],
+    ["7.4", "C", "Com", ["7.1", "7.2"],
+      "Ejecutar la primera ronda de reuniones con concesionarias",
+      "Presentar la propuesta a los decisores, aprender de sus objeciones y cerrar los primeros pilotos.",
+      "Se realizaron las reuniones de la primera ronda y hay al menos 1 o 2 acuerdos piloto formalizados por escrito.",
+      [
+        "Contactar a los responsables de las concesionarias de la primera ronda con una presentación breve.",
+        "Agendar reuniones, preferentemente presenciales, con quienes toman la decisión.",
+        "Presentar la propuesta y registrar objeciones, preguntas y condiciones.",
+        "Hacer seguimiento a los 3 y a los 7 días de cada reunión.",
+        "Llevar un registro de estado por concesionaria (contactada, reunión, propuesta enviada, piloto, acuerdo, descartada).",
+        "Revisar semanalmente qué objeciones se repiten y ajustar la propuesta.",
+        "Cerrar al menos 1 o 2 acuerdos piloto y formalizarlos por escrito.",
+        "Registrar conclusiones en la documentación de la tarea."
+      ]],
+    ["7.5", "S", "Com", [],
+      "Explorar alianzas complementarias",
+      "Evaluar otros aliados que puedan derivar clientes a menor costo que los canales pagos.",
+      "Hay 3 a 5 aliados contactados y 1 o 2 priorizados para pilotear.",
+      [
+        "Identificar aliados posibles: importadores de equipos, aseguradoras, clubes y comunidades de propietarios, desarrolladores inmobiliarios, administradores de consorcios, estudios de arquitectura.",
+        "Definir qué ofrecemos y qué recibimos de cada tipo de aliado.",
+        "Contactar a 3 a 5 aliados de distintos tipos y registrar su interés.",
+        "Evaluar cuáles aportan clientes a menor costo que los canales pagos.",
+        "Priorizar 1 o 2 para pilotear.",
+        "Registrar conclusiones en la documentación de la tarea."
+      ]],
+
+    /* ========================= ETAPA 8 ========================= */
+    ["8.1", "C", "Com", ["4.7"],
+      "Definir y priorizar canales de captación",
+      "Elegir dónde concentrar el esfuerzo para conseguir los primeros clientes.",
+      "Hay 3 canales prioritarios con meta numérica, presupuesto y forma de medición.",
+      [
+        "Listar canales posibles (concesionarias, comunidades de propietarios, redes, buscadores, MercadoLibre, referidos, eventos, instaladores asociados).",
+        "Estimar para cada canal costo, esfuerzo, volumen potencial y tiempo hasta el primer cliente, usando lo aprendido en la tarea 1.5.",
+        "Puntuar los canales y elegir 3 prioritarios para los primeros 90 días.",
+        "Definir una meta numérica por canal (consultas, relevamientos, instalaciones) y cómo medirla.",
+        "Definir el presupuesto por canal dentro del presupuesto aprobado en la tarea 4.7.",
+        "Registrar la decisión en la documentación de la tarea."
+      ]],
+    ["8.2", "I", "Com", [],
+      "Armar el proceso de atención de consultas y seguimiento",
+      "Que ninguna consulta se pierda y que cada cliente reciba una respuesta rápida y ordenada.",
+      "Hay un recorrido definido, respuestas modelo y un tablero de leads probado con consultas simuladas.",
+      [
+        "Definir el recorrido del cliente (consulta, respuesta, relevamiento, presupuesto, aceptación, instalación, entrega, posventa) con responsables y tiempos.",
+        "Crear respuestas modelo para WhatsApp y correo (precio orientativo, qué necesitamos del cliente, cómo seguimos).",
+        "Armar un tablero simple para registrar leads y estados (planilla o CRM gratuito).",
+        "Definir el tiempo máximo de respuesta (por ejemplo, el mismo día) y quién atiende.",
+        "Definir cuándo se hace seguimiento a presupuestos sin respuesta.",
+        "Probar el proceso con 3 consultas simuladas y ajustarlo.",
+        "Registrar el proceso en la documentación de la tarea."
+      ]],
+    ["8.3", "I", "Com", ["8.1", "6.4"],
+      "Poner en marcha los canales priorizados",
+      "Lanzar los canales de forma escalonada y medir cuál funciona mejor.",
+      "Los 3 canales están activos, cada consulta tiene su origen registrado y hay conclusiones después de 4 semanas.",
+      [
+        "Preparar contenidos y materiales para cada canal.",
+        "Lanzar el primer canal y verificar que las consultas llegan al proceso de atención.",
+        "Lanzar los otros dos canales de forma escalonada para poder comparar resultados.",
+        "Registrar cada consulta con su origen.",
+        "Revisar cada semana consultas, costo y conversión por canal.",
+        "Ajustar mensajes y segmentación según los resultados.",
+        "Registrar conclusiones tras 4 semanas."
+      ]],
+    ["8.4", "I", "Amb", ["5.2"],
+      "Definir la oferta de lanzamiento para clientes piloto",
+      "Diseñar una oferta atractiva que no destruya el margen y que nos devuelva aprendizaje y testimonios.",
+      "Hay una oferta escrita con condiciones, cupo y fecha límite, con su costo calculado.",
+      [
+        "Definir quién califica como cliente piloto (zona, tipo de vivienda, caso tipo conocido).",
+        "Definir qué se ofrece (descuento, equipo, garantía extendida) y qué se pide a cambio (testimonio, fotos, feedback).",
+        "Calcular el costo de la oferta y verificar que no compromete el margen ni el flujo de caja.",
+        "Redactar condiciones claras y un compromiso simple por escrito.",
+        "Definir el cupo máximo de pilotos y la fecha límite.",
+        "Registrar la oferta en la documentación de la tarea."
+      ]],
+    ["8.5", "C", "Amb", ["8.2", "8.4"],
+      "Conseguir y calificar entre 5 y 10 clientes piloto",
+      "Convertir consultas en pilotos confirmados con variedad de casos tipo.",
+      "Hay al menos 5 pilotos confirmados por escrito, con fecha de relevamiento.",
+      [
+        "Difundir la oferta en los canales activos y entre los entrevistados de las tareas 1.3 y 1.4.",
+        "Registrar interesados en el tablero de leads y contactarlos dentro del tiempo definido.",
+        "Calificar cada lead con un checklist preliminar (tipo de vivienda, distancia, potencia, distribuidora).",
+        "Elegir a los pilotos buscando variedad de casos tipo.",
+        "Confirmar por escrito condiciones y fecha de relevamiento con cada uno.",
+        "Registrar los motivos de descarte y de rechazo.",
+        "Confirmar al menos 5 pilotos."
+      ]],
+
+    /* ========================= ETAPA 9 ========================= */
+    ["9.1", "C", "Tec", ["4.3"],
+      "Preparar la logística de las instalaciones piloto",
+      "Tener herramientas, materiales, seguros y documentación listos antes del primer trabajo.",
+      "Hay un simulacro completo hecho y todos los requisitos para trabajar (kit, stock, seguro, inscripción) verificados.",
+      [
+        "Comprar o reunir el kit de herramientas e instrumental definido y verificar su calibración.",
+        "Definir el stock mínimo de materiales y equipos para los casos tipo, y dónde se guarda.",
+        "Cerrar condiciones con los proveedores principales (cuenta, entrega, devoluciones).",
+        "Preparar el vehículo de trabajo con organización, señalización e identificación.",
+        "Contratar el seguro elegido y verificar su vigencia antes del primer trabajo.",
+        "Verificar inscripciones y habilitaciones al día para poder facturar.",
+        "Armar la carpeta de documentación de obra (plantilla de certificado, fotos, remito).",
+        "Hacer un simulacro integral en un domicilio propio o de un conocido."
+      ]],
+    ["9.2", "C", "Tec", ["5.3", "8.5"],
+      "Realizar los relevamientos técnicos de los pilotos",
+      "Visitar a cada cliente piloto, relevar con el checklist y emitir el presupuesto formal.",
+      "Cada piloto tiene relevamiento completo con fotos, caso tipo asignado y presupuesto emitido.",
+      [
+        "Agendar las visitas con ventana horaria y confirmación el día anterior.",
+        "Completar el checklist de relevamiento en cada visita, con fotos y mediciones.",
+        "Identificar adecuaciones necesarias (tablero, tierra, potencia contratada) y trámites previos.",
+        "Elegir el caso tipo y emitir el presupuesto formal con el modelo definido.",
+        "Registrar el tiempo de cada visita y los desvíos respecto de lo estimado.",
+        "Hacer seguimiento de las aceptaciones y registrar los motivos de rechazo.",
+        "Ajustar el checklist con lo aprendido (versión 2)."
+      ]],
+    ["9.3", "C", "Tec", ["9.1", "9.2"],
+      "Ejecutar las instalaciones piloto",
+      "Instalar cada equipo siguiendo el esquema tipo y registrar todo lo que ocurra.",
+      "Todas las instalaciones piloto están terminadas, probadas y con registro de horas, materiales e incidentes.",
+      [
+        "Programar las instalaciones según disponibilidad de materiales y del cliente.",
+        "Gestionar los trámites previos ante la distribuidora o el consorcio, si corresponde.",
+        "Ejecutar cada instalación siguiendo el esquema del caso tipo.",
+        "Realizar y registrar las pruebas finales (aislación, tierra, diferencial y carga real con el vehículo).",
+        "Tomar fotos del antes, durante y después de cada instalación.",
+        "Registrar horas reales, materiales usados y gastos de cada trabajo.",
+        "Registrar incidentes, retrabajos y mejoras detectadas.",
+        "Entregar el equipo funcionando y explicar su uso al cliente."
+      ]],
+    ["9.4", "C", "Amb", ["9.3"],
+      "Medir tiempos y costos reales frente a lo estimado",
+      "Comparar el modelo con la realidad para corregir precios, alcance y proceso.",
+      "Hay una planilla de estimado vs. real por instalación, margen real calculado y ajustes propuestos.",
+      [
+        "Armar la planilla comparativa de estimado y real (horas, materiales, traslados, imprevistos) por instalación.",
+        "Calcular el desvío promedio y sus causas principales.",
+        "Calcular el margen real por instalación y compararlo con el modelo.",
+        "Identificar qué casos tipo son rentables y cuáles no.",
+        "Detectar costos que no se habían contemplado.",
+        "Proponer ajustes de precio, alcance o proceso.",
+        "Registrar conclusiones en la documentación de la tarea."
+      ]],
+    ["9.5", "I", "Tec", ["9.3"],
+      "Gestionar certificaciones y documentación de entrega",
+      "Cerrar cada obra con respaldo documental para el cliente, la distribuidora y nosotros.",
+      "Cada piloto tiene su certificado emitido, documentación entregada y archivo ordenado.",
+      [
+        "Emitir el certificado o declaración de la instalación con firma del profesional matriculado en cada obra.",
+        "Presentar la documentación ante la distribuidora o el consorcio cuando se requiera.",
+        "Entregar al cliente el paquete de documentación (certificado, fotos, garantía, manual del equipo, contacto de posventa).",
+        "Registrar el número de serie del equipo y los datos de la garantía del fabricante.",
+        "Archivar la documentación de cada obra de forma ordenada y consultar por cuánto tiempo conviene conservarla.",
+        "Registrar demoras y problemas en los trámites."
+      ]],
+    ["9.6", "I", "Amb", ["9.3"],
+      "Recolectar feedback de clientes e incidencias",
+      "Aprender de la experiencia de los pilotos y conseguir testimonios y referidos.",
+      "Hay contacto posterior hecho con cada piloto, incidencias registradas y una reunión de cierre de pilotos con conclusiones.",
+      [
+        "Contactar a cada cliente a los 2 días y a los 30 días de la instalación para consultar funcionamiento y satisfacción.",
+        "Hacer una encuesta breve (satisfacción, qué mejorarían, si recomendarían, qué pagarían de nuevo).",
+        "Pedir autorización para usar testimonio, fotos y datos del caso.",
+        "Registrar incidencias o reclamos con su causa y resolución.",
+        "Preguntar a cada cliente si conoce a alguien que necesite el servicio.",
+        "Consolidar aprendizajes y priorizar mejoras.",
+        "Presentar las conclusiones en una reunión de cierre de pilotos entre los dos socios."
+      ]],
+
+    /* ========================= ETAPA 10 ========================= */
+    ["10.1", "C", "Tec", ["9.3", "9.4"],
+      "Redactar el protocolo de instalación estándar",
+      "Documentar la forma correcta de instalar para que sea repetible y transferible.",
+      "Hay un documento versionado que otro profesional matriculado puede seguir sin supervisión, probado en una instalación.",
+      [
+        "Documentar paso a paso el procedimiento de cada caso tipo, con fotos de los pilotos.",
+        "Definir los controles obligatorios antes, durante y después de la instalación.",
+        "Definir criterios de seguridad (corte de energía, bloqueo, protección personal) y de aceptación.",
+        "Definir qué hacer ante los imprevistos más comunes con un árbol de decisión simple.",
+        "Definir la lista de materiales aprobados y marcas homologadas.",
+        "Convertirlo en un documento corto que otra persona matriculada pueda seguir sin supervisión.",
+        "Probar el protocolo en una instalación con otro técnico o ayudante y ajustarlo.",
+        "Versionar el documento y definir quién lo mantiene."
+      ]],
+    ["10.2", "C", "Amb", ["9.6"],
+      "Definir garantía y posventa",
+      "Establecer qué garantizamos, cómo se reclama y cuánto cuesta cumplirlo.",
+      "Hay un documento de garantía revisado legalmente, un proceso de reclamo y el costo esperado incorporado al modelo.",
+      [
+        "Definir plazo y alcance de la garantía de mano de obra y materiales, y cómo se articula con la del fabricante.",
+        "Definir qué cubre y qué excluye (mal uso, intervención de terceros, problemas de la red).",
+        "Definir el proceso de reclamo: canal, tiempo de respuesta y de resolución, visita.",
+        "Estimar el costo esperado de garantía a partir de las incidencias de los pilotos y reflejarlo en precios.",
+        "Definir el servicio opcional de revisión periódica.",
+        "Redactar el documento de garantía y hacerlo revisar por un abogado.",
+        "Registrar en la documentación de la tarea."
+      ]],
+    ["10.3", "I", "Com", ["9.5"],
+      "Estandarizar presupuestos, contratos y documentación de entrega",
+      "Unificar los documentos con lo aprendido en los pilotos.",
+      "Hay plantillas vigentes y revisadas en una carpeta compartida, probadas en una operación real.",
+      [
+        "Unificar las plantillas de presupuesto, aceptación, acta de entrega y garantía.",
+        "Incorporar lo aprendido en los pilotos (exclusiones, condiciones de acceso, adecuaciones frecuentes).",
+        "Definir un catálogo de precios con costos actualizados y fecha de vigencia.",
+        "Hacer la revisión legal final de las plantillas.",
+        "Armar la carpeta compartida con las versiones vigentes y la regla de actualización.",
+        "Probar las plantillas en una operación real y corregir."
+      ]],
+    ["10.4", "I", "Amb", [],
+      "Definir el sistema de gestión",
+      "Elegir y configurar las herramientas para manejar leads, agenda, stock, obras y cobros.",
+      "Hay una herramienta elegida y configurada, con responsables y un ritual semanal definido.",
+      [
+        "Definir qué se necesita gestionar (leads, presupuestos, agenda de visitas, stock, obras, cobros, garantías).",
+        "Evaluar 2 o 3 herramientas simples (planilla compartida, CRM gratuito, app de agenda) por costo y facilidad de uso.",
+        "Elegir la herramienta, configurarla y cargar los datos de los pilotos.",
+        "Definir quién carga qué y cuándo.",
+        "Definir un ritual semanal de revisión entre socios (día, duración y agenda fija).",
+        "Definir copias de seguridad de los datos y consultar con un abogado la obligación de protección de datos personales de clientes."
+      ]],
+    ["10.5", "I", "Tec", ["10.1"],
+      "Plan de incorporación de técnicos y subcontratistas",
+      "Poder crecer sumando gente sin perder calidad ni responsabilidad.",
+      "Hay un esquema de contratación consultado con profesionales, un plan de capacitación y 2 o 3 candidatos evaluados.",
+      [
+        "Definir el perfil requerido (matrícula, experiencia, herramientas propias) y el esquema de contratación (en relación de dependencia, monotributo, por obra).",
+        "Consultar con contador y abogado las implicancias laborales y de seguros de cada esquema.",
+        "Definir cómo se capacita (protocolo, acompañamiento en las primeras obras) y cómo se evalúa.",
+        "Definir el pago por obra y el control de calidad.",
+        "Definir quién firma las obras y cómo se mantiene la responsabilidad.",
+        "Identificar 2 o 3 candidatos y hacerles una prueba paga.",
+        "Registrar el plan en la documentación de la tarea."
+      ]],
+    ["10.6", "C", "Amb", ["9.4"],
+      "Actualizar el modelo financiero con datos reales",
+      "Volver a decidir con números de verdad si escalar, ajustar o frenar.",
+      "Hay un modelo actualizado con costos, tiempos y conversiones reales, y una nueva decisión registrada.",
+      [
+        "Reemplazar los supuestos del modelo por costos, tiempos y conversiones reales de los pilotos.",
+        "Recalcular los tres escenarios y el punto de equilibrio.",
+        "Recalcular precios y márgenes, compararlos con la tarea 5.2 y ajustar si hace falta.",
+        "Calcular el costo de adquisición de cliente real por canal.",
+        "Recalcular el capital necesario para escalar.",
+        "Revisar si se mantiene la decisión de la tarea 4.7 o si cambia.",
+        "Registrar la nueva decisión (escalar, ajustar o frenar) en la bitácora."
+      ]],
+
+    /* ========================= ETAPA 11 ========================= */
+    ["11.1", "C", "Com", ["7.4", "10.6"],
+      "Ampliar alianzas con más concesionarias y marcas",
+      "Replicar el acuerdo piloto usando los resultados como prueba.",
+      "Hay un caso de éxito, una propuesta actualizada y nuevos acuerdos medidos por derivaciones.",
+      [
+        "Armar un caso de éxito de la primera alianza con datos de los pilotos (tiempos, satisfacción, volumen).",
+        "Actualizar la propuesta comercial con ese caso.",
+        "Contactar a la segunda ronda de concesionarias y a casas matrices o importadores para evaluar homologación.",
+        "Cerrar nuevos acuerdos y formalizarlos por escrito.",
+        "Definir un responsable de cuenta en cada concesionaria y una rutina de contacto mensual.",
+        "Medir derivaciones y conversión por alianza, y revisar las condiciones.",
+        "Registrar conclusiones en la documentación de la tarea."
+      ]],
+    ["11.2", "I", "Com", ["10.6"],
+      "Escalar los canales rentables",
+      "Invertir más donde el costo por cliente es bajo y recortar lo que no rinde.",
+      "Hay un presupuesto mensual con reglas de ajuste, un sistema de referidos activo y mediciones mensuales.",
+      [
+        "Calcular costo de adquisición y retorno por canal con los datos de las tareas 8.3 y 10.6.",
+        "Aumentar la inversión en los canales con mejor retorno y pausar los de peor.",
+        "Definir el presupuesto de marketing mensual y las reglas de ajuste.",
+        "Armar un sistema de referidos con incentivo definido.",
+        "Producir casos de éxito y testimonios con autorización de los clientes.",
+        "Medir mensualmente costo, conversión y retorno por canal.",
+        "Registrar conclusiones en la documentación de la tarea."
+      ]],
+    ["11.3", "I", "Amb", ["10.5"],
+      "Definir estructura de equipo y capacidad operativa",
+      "Saber cuántas instalaciones se pueden hacer con el equipo actual y cuándo sumar gente.",
+      "Hay una capacidad calculada, una demanda proyectada y un plan de contratación con puntos de decisión.",
+      [
+        "Calcular la capacidad actual (instalaciones por mes por técnico) con tiempos reales.",
+        "Proyectar la demanda de los próximos 6 a 12 meses según canales y alianzas.",
+        "Definir cuándo y con qué volumen se incorpora el primer técnico o ayudante, y quién coordina.",
+        "Definir roles administrativos (agenda, compras, facturación) y quién los hace.",
+        "Proyectar los costos de la estructura y verificarlos en el modelo financiero.",
+        "Definir un plan de contratación con puntos de decisión.",
+        "Registrar en la documentación de la tarea."
+      ]],
+    ["11.4", "S", "Amb", ["11.3"],
+      "Evaluar expansión geográfica y red de instaladores asociados",
+      "Decidir si conviene crecer a otras zonas y bajo qué esquema.",
+      "Hay una zona candidata evaluada, un esquema elegido y un piloto definido.",
+      [
+        "Elegir 1 o 2 zonas o ciudades candidatas según patentamientos y presencia de alianzas.",
+        "Evaluar esquemas: sucursal propia, instaladores asociados bajo protocolo, licencia.",
+        "Definir requisitos y control de calidad para asociados.",
+        "Definir cómo se reparte el margen y la responsabilidad frente al cliente.",
+        "Averiguar normativa y distribuidoras de cada zona.",
+        "Definir un piloto con un asociado.",
+        "Registrar la decisión en la documentación de la tarea."
+      ]],
+    ["11.5", "I", "Amb", [],
+      "Definir indicadores y tablero mensual de gestión",
+      "Medir lo importante para decidir con datos y no por intuición.",
+      "Hay un tablero con 8 a 10 indicadores, metas mensuales y una reunión mensual definida.",
+      [
+        "Elegir 8 a 10 indicadores (consultas, relevamientos, conversión, instalaciones, ticket medio, margen, tiempos, satisfacción, reclamos, caja).",
+        "Definir cómo se calcula cada uno y de dónde sale el dato.",
+        "Definir metas mensuales por indicador.",
+        "Armar un tablero simple en planilla y automatizar lo posible.",
+        "Definir una reunión mensual de revisión y cómo se registran las decisiones en la bitácora.",
+        "Registrar en la documentación de la tarea."
+      ]],
+
+    /* ========================= ETAPA 12 ========================= */
+    ["12.1", "C", "Amb", [],
+      "Investigar el marco legal de consorcios",
+      "Entender qué permisos y mayorías necesita un propietario de departamento para instalar carga, y qué rol podemos tener.",
+      "Hay una guía de una página sobre el camino legal del cliente de departamento, validada con un abogado.",
+      [
+        "Investigar qué dicen la ley de propiedad horizontal y el reglamento de copropiedad habitual sobre cocheras y obras en espacios comunes (a verificar con un abogado).",
+        "Averiguar qué mayorías y tipo de asamblea se requieren para aprobar instalaciones de carga en áreas comunes o en cocheras individuales.",
+        "Averiguar si hay normativa local o proyectos de ley sobre el derecho a instalar cargadores en edificios.",
+        "Distinguir cocheras individuales y comunes, y la responsabilidad del consorcio en cada caso.",
+        "Consultar con un abogado especialista en propiedad horizontal las vías posibles y los riesgos.",
+        "Averiguar cómo se asigna y cobra el consumo eléctrico en áreas comunes.",
+        "Armar la guía de una página sobre el camino legal del cliente de departamento.",
+        "Registrar fuentes y conclusiones en la documentación de la tarea."
+      ]],
+    ["12.2", "C", "Tec", ["3.2"],
+      "Estudiar soluciones de gestión de carga y balanceo dinámico",
+      "Entender cómo cargar varios vehículos en un edificio sin superar la potencia disponible.",
+      "Hay un diseño de referencia de un edificio hipotético con costo estimado y los sistemas relevados.",
+      [
+        "Investigar qué es y cómo funciona el balanceo dinámico de carga.",
+        "Relevar fabricantes y sistemas disponibles en el país o importables, con costos y soporte.",
+        "Relevar requisitos de comunicación y medición (protocolos, conectividad).",
+        "Evaluar casos tipo de edificio (cantidad de cocheras, potencia disponible) y qué escalas son viables.",
+        "Consultar con la distribuidora cómo se contrata potencia adicional para edificios.",
+        "Armar un diseño de referencia de un edificio hipotético y estimar su costo.",
+        "Registrar conclusiones en la documentación de la tarea."
+      ]],
+    ["12.3", "C", "Tec", [],
+      "Estudiar medición individual y asignación de consumo",
+      "Resolver cómo medir y cobrar el consumo de cada cochera.",
+      "Hay una comparación de 2 o 3 esquemas de medición y cobro con sus costos y requisitos.",
+      [
+        "Investigar opciones para medir el consumo por cochera (medidor en el cargador, medidores individuales, submedición).",
+        "Verificar requisitos normativos y de metrología para cobrar consumo (a verificar con la distribuidora).",
+        "Evaluar esquemas de cobro: expensas, prepago, facturación al usuario.",
+        "Evaluar el uso de los medidores integrados de los equipos de carga y su validez.",
+        "Evaluar medidor propio por cochera frente a servicio general.",
+        "Comparar costo y beneficio de 2 o 3 esquemas.",
+        "Registrar conclusiones en la documentación de la tarea."
+      ]],
+    ["12.4", "I", "Com", ["12.1", "12.2", "12.3"],
+      "Diseñar la propuesta comercial para administradores y consorcios",
+      "Preparar una oferta específica para edificios, con el camino de aprobación incluido.",
+      "Hay un paquete «edificio» y un kit para asambleas, probado con 2 o 3 administradores.",
+      [
+        "Redactar el paquete «edificio»: relevamiento, diseño, instalación preparada, gestión de carga y medición.",
+        "Diseñar el camino del cliente: pedido del propietario, informe al administrador, asamblea, ejecución.",
+        "Armar un modelo de presentación para asamblea, con costos, quién paga y cómo se recupera.",
+        "Armar un kit informativo para el administrador.",
+        "Probar la propuesta con 2 o 3 administradores (por ejemplo, los de la tarea 1.4) y recoger objeciones.",
+        "Definir un edificio piloto.",
+        "Registrar en la documentación de la tarea."
+      ]],
+    ["12.5", "I", "Com", [],
+      "Relevar necesidades de empresas, comercios y flotas",
+      "Entender qué necesitan los clientes corporativos y si el segmento justifica el esfuerzo.",
+      "Hay entre 5 y 8 entrevistas realizadas y una comparación de la oportunidad contra residencial y edificios.",
+      [
+        "Identificar segmentos (flotas de reparto, vehículos de gerencia, estacionamientos, shoppings, hoteles, concesionarias).",
+        "Entrevistar a entre 5 y 8 responsables de flota, compras o mantenimiento.",
+        "Preguntar qué cargan, dónde, con qué potencia, en qué horarios y quién decide.",
+        "Averiguar cómo contratan hoy (licitación, proveedor homologado).",
+        "Identificar requisitos de facturación, seguros y garantías.",
+        "Estimar el tamaño de la oportunidad y compararlo con residencial y edificios.",
+        "Registrar conclusiones en la documentación de la tarea."
+      ]],
+    ["12.6", "S", "Amb", [],
+      "Evaluar servicios recurrentes: monitoreo, mantenimiento y redes propias",
+      "Explorar ingresos recurrentes y modelos de operación propia, con sus requisitos legales.",
+      "Hay una evaluación de modelos recurrentes con inversión, retorno y condiciones para decidir si avanzar.",
+      [
+        "Investigar plataformas de monitoreo y gestión remota de cargadores y sus requisitos de integración.",
+        "Evaluar modelos de ingreso recurrente (mantenimiento, monitoreo, operación y cobro de energía).",
+        "Investigar la normativa sobre reventa de energía eléctrica a terceros (a verificar con un abogado y la distribuidora).",
+        "Estimar inversión y retorno de una red propia piloto.",
+        "Evaluar alianzas con estacionamientos, comercios o empresas con espacios para cargar.",
+        "Definir las condiciones para decidir avanzar.",
+        "Registrar conclusiones en la documentación de la tarea."
+      ]]
+  ]
+};
+
+
+const PRIO_MAP = { C: 'Crítica', I: 'Importante', S: 'Secundaria' };
+const RESP_MAP = { Com: 'Comercial', Tec: 'Técnico', Amb: 'Ambos' };
+const RESP_PREFIX = { C: 'Comercial', T: 'Técnico', A: 'Ambos' };
+
+/** Expande SEED_DATA a un estado completo. Los ids son determinísticos (t1-1, t1-1-s3…). */
+function buildSeedState() {
+  const idOf = (k) => 't' + k.replace('.', '-');
+  const etapas = SEED_DATA.etapas.map(([numero, nombre, objetivo, descripcion]) => ({
+    id: 'e' + numero, numero, nombre, objetivo, descripcion, orden: numero
+  }));
+  const contador = {};
+  const tareas = SEED_DATA.tareas.map(([k, p, r, deps, titulo, descripcion, dod, subs]) => {
+    const n = Number(k.split('.')[0]);
+    contador[n] = (contador[n] || 0) + 1;
+    return {
+      id: idOf(k), etapaId: 'e' + n, orden: contador[n], titulo, descripcion,
+      prioridad: PRIO_MAP[p], responsable: RESP_MAP[r], fechaLimite: '',
+      dependencias: deps.map(idOf), criterioTerminado: dod, origen: 'plan',
+      subtareas: subs.map((texto, i) => {
+        let resp = RESP_MAP[r];
+        const m = /^([CTA])\|/.exec(texto);
+        if (m) { resp = RESP_PREFIX[m[1]]; texto = texto.slice(2); }
+        return { id: idOf(k) + '-s' + (i + 1), titulo: texto, estado: 'Pendiente', responsable: resp, fechaLimite: '', notas: '' };
+      }),
+      documentacion: []
+    };
+  });
+  return {
+    schemaVersion: SCHEMA_VERSION,
+    config: { socios: { comercial: 'Comercial', tecnico: 'Técnico' }, moneda: 'ARS', formatoFecha: 'DD/MM/AAAA' },
+    objetivos: [
+      { id: 'o1', texto: 'Decidir si hay mercado: completar el go/no-go de mercado' },
+      { id: 'o2', texto: 'Cerrar el acuerdo de socios por escrito' },
+      { id: 'o3', texto: 'Definir la forma societaria e impositiva' }
+    ],
+    etapas, tareas
+  };
+}
+
+/* ================================ 3. ESTADO + VALIDACIÓN =================== */
+let S = null; // estado de la aplicación (única fuente de verdad)
+
+/** Devuelve una lista de errores (vacía si el estado es válido). No modifica nada. */
+function validateState(s) {
+  const err = [];
+  const add = (m) => { if (err.length < 15) err.push(m); };
+  if (!s || typeof s !== 'object' || Array.isArray(s)) return ['El contenido no es un objeto válido.'];
+  if (!Number.isInteger(s.schemaVersion)) add('Falta la versión de esquema.');
+  const c = s.config;
+  if (!c || !c.socios || !isStr(c.socios.comercial) || !isStr(c.socios.tecnico)) add('Falta la configuración de los socios.');
+  if (!Array.isArray(s.objetivos)) add('Faltan los objetivos.');
+  else s.objetivos.forEach((o, i) => { if (!o || !isStr(o.id) || !isStr(o.texto)) add('El objetivo ' + (i + 1) + ' no es válido.'); });
+  if (!Array.isArray(s.etapas) || !s.etapas.length) { add('Faltan las etapas.'); return err; }
+  if (!Array.isArray(s.tareas)) { add('Faltan las tareas.'); return err; }
+  const etapaIds = new Set();
+  s.etapas.forEach((e, i) => {
+    if (!e || !isStr(e.id) || !isStr(e.nombre) || !Number.isFinite(e.numero) || !Number.isFinite(e.orden)) add('La etapa ' + (i + 1) + ' no es válida.');
+    else if (etapaIds.has(e.id)) add('Etapa repetida: ' + e.id);
+    else etapaIds.add(e.id);
+  });
+  const tareaIds = new Set(s.tareas.map((t) => t && t.id));
+  const ids = new Set();
+  s.tareas.forEach((t, i) => {
+    const nom = 'La tarea ' + (i + 1) + (t && isStr(t.titulo) ? ' («' + t.titulo.slice(0, 40) + '»)' : '');
+    if (!t || !isStr(t.id) || !isStr(t.titulo)) return add(nom + ' no es válida.');
+    if (ids.has(t.id)) add('Tarea repetida: ' + t.id); ids.add(t.id);
+    if (!etapaIds.has(t.etapaId)) add(nom + ' apunta a una etapa inexistente.');
+    if (!Number.isFinite(t.orden)) add(nom + ' no tiene orden.');
+    if (!PRIORIDADES.includes(t.prioridad)) add(nom + ': prioridad inválida.');
+    if (!RESPONSABLES.includes(t.responsable)) add(nom + ': responsable inválido.');
+    if (!isStr(t.fechaLimite) || !Fecha.valida(t.fechaLimite)) add(nom + ': fecha límite inválida.');
+    if (!isStr(t.descripcion) || !isStr(t.criterioTerminado)) add(nom + ': faltan descripción o criterio de terminado.');
+    if (!Array.isArray(t.dependencias) || t.dependencias.some((d) => !tareaIds.has(d) || d === t.id)) add(nom + ': dependencias inválidas.');
+    if (!Array.isArray(t.subtareas)) return add(nom + ': faltan las subtareas.');
+    const sids = new Set();
+    t.subtareas.forEach((x) => {
+      if (!x || !isStr(x.id) || !isStr(x.titulo) || !ESTADOS.includes(x.estado) || !RESPONSABLES.includes(x.responsable) ||
+          !isStr(x.fechaLimite) || !Fecha.valida(x.fechaLimite) || !isStr(x.notas)) add(nom + ': hay una subtarea inválida.');
+      else if (sids.has(x.id)) add(nom + ': subtarea repetida ' + x.id);
+      else sids.add(x.id);
+    });
+    if (!Array.isArray(t.documentacion)) return add(nom + ': falta la documentación.');
+    t.documentacion.forEach((d) => {
+      if (!d || !isStr(d.id) || !TIPOS_DOC.includes(d.tipo) || !CERTEZAS.includes(d.certeza) || !isStr(d.contenido) ||
+          !isStr(d.autor) || !isStr(d.fecha) || !Fecha.valida(d.fecha) || (d.fuente != null && !isStr(d.fuente))) add(nom + ': hay una entrada de documentación inválida.');
+    });
+  });
+  // Dependencias circulares: nadie podría desbloquearse nunca.
+  if (!err.length) {
+    const deps = new Map(s.tareas.map((t) => [t.id, t.dependencias]));
+    const estado = new Map(); // 1 = visitando, 2 = listo
+    const visita = (id) => {
+      if (estado.get(id) === 2) return false;
+      if (estado.get(id) === 1) return true;
+      estado.set(id, 1);
+      const ciclo = deps.get(id).some(visita);
+      estado.set(id, 2);
+      return ciclo;
+    };
+    if (s.tareas.some((t) => visita(t.id))) add('Hay dependencias circulares entre tareas.');
+  }
+  return err;
+}
+
+/** ¿Agregar la dependencia «depId» a «tid» crearía un ciclo? */
+function creariaCiclo(state, tid, depId) {
+  const byId = new Map(state.tareas.map((t) => [t.id, t]));
+  const visto = new Set();
+  const alcanza = (id) => { // ¿desde depId se llega a tid siguiendo dependencias?
+    if (id === tid) return true;
+    if (visto.has(id)) return false;
+    visto.add(id);
+    const t = byId.get(id);
+    return !!t && t.dependencias.some(alcanza);
+  };
+  return alcanza(depId);
+}
+
+/* ================================ 4. CÁLCULO =============================== */
+const Calc = {
+  statsTarea(t) {
+    let comp = 0, proc = 0;
+    for (const s of t.subtareas) { if (s.estado === 'Completada') comp++; else if (s.estado === 'En proceso') proc++; }
+    const total = t.subtareas.length;
+    const st = { total, comp, proc, pend: total - comp - proc };
+    st.estado = total > 0 && comp === total ? 'Completada' : (proc > 0 || comp > 0 ? 'En proceso' : 'Pendiente');
+    return st;
+  },
+
+  /** Construye el modelo derivado completo. Se recalcula en cada render (es barato). */
+  model(state) {
+    const tareaById = new Map(), etapaById = new Map(), st = new Map(), et = new Map();
+    const orden = [...state.etapas].sort((a, b) => a.orden - b.orden);
+    orden.forEach((e) => { etapaById.set(e.id, e); et.set(e.id, { total: 0, comp: 0, proc: 0, pend: 0, tareas: [], completada: false }); });
+    state.tareas.forEach((t) => tareaById.set(t.id, t));
+    const total = { total: 0, comp: 0, proc: 0, pend: 0 };
+    for (const t of state.tareas) {
+      const s = this.statsTarea(t);
+      st.set(t.id, s);
+      const a = et.get(t.etapaId);
+      a.tareas.push(t);
+      for (const k of ['total', 'comp', 'proc', 'pend']) { a[k] += s[k]; total[k] += s[k]; }
+    }
+    let etapasCompletas = 0;
+    et.forEach((a) => {
+      a.tareas.sort((x, y) => x.orden - y.orden);
+      a.completada = a.total > 0 && a.comp === a.total; // solo cuando TODAS sus subtareas están completadas
+      if (a.completada) etapasCompletas++;
+    });
+    const bloq = new Map();
+    for (const t of state.tareas) {
+      bloq.set(t.id, t.dependencias.map((id) => tareaById.get(id)).filter((d) => d && st.get(d.id).estado !== 'Completada'));
+    }
+    return { state, etapas: orden, tareaById, etapaById, st, et, total, bloq, etapasCompletas };
+  },
+
+  /** Porcentaje para mostrar: nunca redondea hacia 100 si falta algo. */
+  fmtPct(comp, total) {
+    if (!total) return '0';
+    if (comp === total) return '100';
+    const p = (comp * 100) / total;
+    if (p > 0 && p < 10) return (Math.max(0.1, Math.floor(p * 10) / 10)).toString().replace('.', ',');
+    return String(Math.floor(p));
+  },
+
+  /**
+   * Próximas acciones: tareas no completadas y sin dependencias bloqueantes pendientes,
+   * ordenadas por prioridad (Crítica primero), luego por orden de etapa, luego por fecha límite más cercana.
+   */
+  proximasAcciones(M, n = 5) {
+    const ordEtapa = (t) => M.etapaById.get(t.etapaId).orden;
+    return M.state.tareas
+      .filter((t) => M.st.get(t.id).estado !== 'Completada' && M.bloq.get(t.id).length === 0)
+      .sort((a, b) =>
+        RANK_P[a.prioridad] - RANK_P[b.prioridad] ||
+        ordEtapa(a) - ordEtapa(b) ||
+        (a.fechaLimite || '9999-99-99').localeCompare(b.fechaLimite || '9999-99-99') ||
+        a.orden - b.orden)
+      .slice(0, n);
+  },
+
+  /** Todo lo que tiene fecha, agrupado. Las completadas quedan fuera salvo que se pidan. */
+  vencimientos(M, conCompletadas) {
+    const g = { vencidas: [], semana: [], proximas: [], sinFecha: [], completadas: [] };
+    const push = (it, completa) => {
+      if (completa) { if (conCompletadas) g.completadas.push(it); return; }
+      const d = Fecha.diff(it.fecha);
+      (d < 0 ? g.vencidas : d <= 6 ? g.semana : g.proximas).push(it);
+    };
+    for (const t of M.state.tareas) {
+      const completa = M.st.get(t.id).estado === 'Completada';
+      if (t.fechaLimite) push({ tipo: 'Tarea', t, fecha: t.fechaLimite }, completa);
+      else if (!completa) g.sinFecha.push({ tipo: 'Tarea', t, fecha: '' });
+      for (const s of t.subtareas) if (s.fechaLimite) push({ tipo: 'Subtarea', t, s, fecha: s.fechaLimite }, s.estado === 'Completada');
+    }
+    const cmp = (a, b) => a.fecha.localeCompare(b.fecha) || RANK_P[a.t.prioridad] - RANK_P[b.t.prioridad];
+    for (const k of ['vencidas', 'semana', 'proximas', 'completadas']) g[k].sort(cmp);
+    return g;
+  },
+
+  /** Entradas de la bitácora: certeza «Decisión tomada» o tipo «Conclusión». */
+  bitacora(M) {
+    const out = [];
+    for (const t of M.state.tareas) for (const d of t.documentacion) {
+      if (d.certeza === 'Decisión tomada' || d.tipo === 'Conclusión') out.push({ d, t });
+    }
+    return out.reverse().sort((a, b) => b.d.fecha.localeCompare(a.d.fecha));
+  }
+};
+
+/* ================================ 5. PERSISTENCIA ========================== */
+/** Migraciones: MIGRATIONS[n] convierte un estado de versión n a n+1. Ejemplo futuro:
+ *  MIGRATIONS[1] = (s) => { s.tareas.forEach(t => t.nuevoCampo = ''); s.schemaVersion = 2; return s; }; */
+const MIGRATIONS = {};
+
+function migrate(obj) {
+  let v = obj && obj.schemaVersion;
+  if (!Number.isInteger(v)) throw new Error('El archivo no indica su versión de esquema.');
+  if (v > SCHEMA_VERSION) throw new Error('Los datos fueron creados con una versión más nueva de la herramienta (v' + v + ').');
+  while (v < SCHEMA_VERSION) {
+    if (!MIGRATIONS[v]) throw new Error('No hay migración disponible desde la versión ' + v + '.');
+    obj = MIGRATIONS[v](obj);
+    v = obj.schemaVersion;
+  }
+  return obj;
+}
+
+const Persist = {
+  available() {
+    try { const k = '__evops_test__'; localStorage.setItem(k, '1'); localStorage.removeItem(k); return true; } catch (e) { return false; }
+  },
+  /** Lee el estado guardado. Si está corrupto, lo resguarda en una clave de backup y arranca con el plan original. */
+  load() {
+    let raw = null;
+    try {
+      raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return { state: buildSeedState(), fresh: true };
+      const obj = migrate(JSON.parse(raw));
+      const errs = validateState(obj);
+      if (errs.length) throw new Error(errs[0]);
+      return { state: obj, fresh: false };
+    } catch (e) {
+      if (raw) { try { localStorage.setItem(STORAGE_KEY + '-backup', raw); } catch (e2) { /* sin espacio: seguimos */ } }
+      return { state: buildSeedState(), fresh: !raw, error: raw ? e : null };
+    }
+  },
+  save(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); return true; } catch (e) { return false; }
+  },
+  loadPrefs() {
+    try { return JSON.parse(localStorage.getItem(PREFS_KEY)) || {}; } catch (e) { return {}; }
+  },
+  savePrefs(p) {
+    try { localStorage.setItem(PREFS_KEY, JSON.stringify(p)); } catch (e) { /* sin persistencia: ok */ }
+  },
+  /** Arma el archivo de exportación (el estado va dentro, sin tocar). */
+  buildExport(state) {
+    return { app: APP_ID, schemaVersion: SCHEMA_VERSION, exportedAt: new Date().toISOString(), state };
+  },
+  /** Interpreta un JSON importado. Devuelve { ok, state?, errors?, exportedAt? }. */
+  parseImport(obj) {
+    try {
+      let inner = null, exportedAt = null;
+      if (obj && obj.app === APP_ID && obj.state) { inner = obj.state; exportedAt = obj.exportedAt || null; }
+      else if (obj && Array.isArray(obj.etapas) && Array.isArray(obj.tareas)) inner = obj;
+      else return { ok: false, errors: ['El archivo no parece ser una exportación de esta herramienta.'] };
+      const state = migrate(inner);
+      const errors = validateState(state);
+      return errors.length ? { ok: false, errors } : { ok: true, state, exportedAt };
+    } catch (e) {
+      return { ok: false, errors: [e.message || 'No se pudo interpretar el archivo.'] };
+    }
+  }
+};
+
+/* ================================ 6. ACCIONES ============================== */
+/* Cada acción modifica S y devuelve; el guardado y el render los dispara quien llama (commit). */
+const findT = (tid) => S.tareas.find((t) => t.id === tid);
+const findS = (t, sid) => t.subtareas.find((x) => x.id === sid);
+
+const Actions = {
+  setTarea(tid, campo, valor) { const t = findT(tid); if (t) t[campo] = valor; },
+  setSub(tid, sid, campo, valor) { const t = findT(tid); const s = t && findS(t, sid); if (s) s[campo] = valor; },
+  setEstadoSub(tid, sid, estado) { const t = findT(tid); const s = t && findS(t, sid); if (s && ESTADOS.includes(estado)) s.estado = estado; },
+  addSub(tid, titulo) {
+    const t = findT(tid); if (!t) return null;
+    const s = { id: uid('s'), titulo, estado: 'Pendiente', responsable: t.responsable, fechaLimite: '', notas: '' };
+    t.subtareas.push(s); return s;
+  },
+  /** Devuelve { item, idx } para poder deshacer. */
+  delSub(tid, sid) {
+    const t = findT(tid); if (!t) return null;
+    const idx = t.subtareas.findIndex((x) => x.id === sid); if (idx < 0) return null;
+    return { item: t.subtareas.splice(idx, 1)[0], idx };
+  },
+  restoreSub(tid, rec) { const t = findT(tid); if (t) t.subtareas.splice(Math.min(rec.idx, t.subtareas.length), 0, rec.item); },
+  moveSub(tid, sid, dir) {
+    const t = findT(tid); if (!t) return;
+    const i = t.subtareas.findIndex((x) => x.id === sid), j = i + dir;
+    if (i < 0 || j < 0 || j >= t.subtareas.length) return;
+    [t.subtareas[i], t.subtareas[j]] = [t.subtareas[j], t.subtareas[i]];
+  },
+  addTarea(etapaId, { titulo, prioridad, responsable }) {
+    const orden = Math.max(0, ...S.tareas.filter((t) => t.etapaId === etapaId).map((t) => t.orden)) + 1;
+    const t = {
+      id: uid('t'), etapaId, orden, titulo, descripcion: '', prioridad, responsable, fechaLimite: '', dependencias: [],
+      criterioTerminado: '', origen: 'propia', subtareas: [], documentacion: []
+    };
+    S.tareas.push(t); return t;
+  },
+  delTarea(tid) {
+    S.tareas = S.tareas.filter((t) => t.id !== tid);
+    S.tareas.forEach((t) => { t.dependencias = t.dependencias.filter((d) => d !== tid); });
+  },
+  moveTarea(tid, dir) {
+    const t = findT(tid); if (!t) return;
+    const hermanas = S.tareas.filter((x) => x.etapaId === t.etapaId).sort((a, b) => a.orden - b.orden);
+    const i = hermanas.indexOf(t), j = i + dir;
+    if (j < 0 || j >= hermanas.length) return;
+    const o = hermanas[i].orden; hermanas[i].orden = hermanas[j].orden; hermanas[j].orden = o;
+  },
+  addDep(tid, depId) { const t = findT(tid); if (t && !t.dependencias.includes(depId) && !creariaCiclo(S, tid, depId)) t.dependencias.push(depId); },
+  delDep(tid, depId) { const t = findT(tid); if (t) t.dependencias = t.dependencias.filter((d) => d !== depId); },
+  saveDoc(tid, draft) {
+    const t = findT(tid); if (!t) return;
+    const base = {
+      tipo: draft.tipo, certeza: draft.certeza, contenido: draft.contenido.trim(),
+      fuente: draft.certeza === 'Investigado' ? draft.fuente.trim() : '', autor: draft.autor, fecha: draft.fecha
+    };
+    const ex = draft.id && t.documentacion.find((d) => d.id === draft.id);
+    if (ex) Object.assign(ex, base); else t.documentacion.push({ id: uid('d'), ...base });
+  },
+  delDoc(tid, did) {
+    const t = findT(tid); if (!t) return null;
+    const idx = t.documentacion.findIndex((d) => d.id === did); if (idx < 0) return null;
+    return { item: t.documentacion.splice(idx, 1)[0], idx };
+  },
+  restoreDoc(tid, rec) { const t = findT(tid); if (t) t.documentacion.splice(Math.min(rec.idx, t.documentacion.length), 0, rec.item); },
+  addObjetivo(texto) { S.objetivos.push({ id: uid('o'), texto }); },
+  setObjetivo(oid, texto) { const o = S.objetivos.find((x) => x.id === oid); if (o) o.texto = texto; },
+  delObjetivo(oid) { S.objetivos = S.objetivos.filter((o) => o.id !== oid); },
+  setSocios(comercial, tecnico) { S.config.socios.comercial = comercial; S.config.socios.tecnico = tecnico; }
+};
+
+/* ================================ 7. VISTAS (HTML) ========================= */
+const ico = (d) => '<svg class="ico" viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + d + '</svg>';
+const ICON = {
+  pend: ico('<circle cx="8" cy="8" r="5.5"/>'),
+  proc: ico('<circle cx="8" cy="8" r="5.5"/><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor" stroke="none"/>'),
+  comp: ico('<circle cx="8" cy="8" r="5.5"/><path d="m5.6 8.2 1.7 1.7 3.1-3.5"/>'),
+  check: ico('<path d="m3.5 8.5 3 3 6-7"/>'),
+  lock: ico('<rect x="3.5" y="7" width="9" height="6.5" rx="1.5"/><path d="M5.5 7V5.5a2.5 2.5 0 0 1 5 0V7"/>'),
+  cal: ico('<rect x="2.5" y="3.5" width="11" height="10" rx="1.5"/><path d="M2.5 6.5h11M5.5 2v3M10.5 2v3"/>'),
+  chev: ico('<path d="m4 6 4 4 4-4"/>'),
+  plus: ico('<path d="M8 3v10M3 8h10"/>'),
+  x: ico('<path d="m4 4 8 8M12 4l-8 8"/>'),
+  up: ico('<path d="M8 13V3M4 7l4-4 4 4"/>'),
+  down: ico('<path d="M8 3v10M4 9l4 4 4-4"/>'),
+  trash: ico('<path d="M3 4.5h10M6.5 4.5V3h3v1.5M4.5 4.5l.6 8.5h5.8l.6-8.5"/>'),
+  note: ico('<path d="M3.5 3h9v6.5l-3.5 3.5h-5.5z"/><path d="M9 13v-3.5h3.5"/>'),
+  sun: ico('<circle cx="8" cy="8" r="2.8"/><path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1"/>'),
+  moon: ico('<path d="M13 9.5A5.5 5.5 0 0 1 6.5 3a5.5 5.5 0 1 0 6.5 6.5z"/>'),
+  auto: ico('<circle cx="8" cy="8" r="5.5"/><path d="M8 2.5v11" /><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor" stroke="none"/>'),
+  dots: ico('<circle cx="3.5" cy="8" r=".6" fill="currentColor"/><circle cx="8" cy="8" r=".6" fill="currentColor"/><circle cx="12.5" cy="8" r=".6" fill="currentColor"/>'),
+  bolt: '<svg class="ico" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true" focusable="false"><path d="M9.3 1.5 3.5 9h3.8l-.6 5.5L12.5 7H8.7z"/></svg>',
+  alert: ico('<path d="M8 2 1.8 13h12.4z"/><path d="M8 6.5v3M8 11.3v.1"/>')
+};
+
+const respLabel = (r) => (r === 'Comercial' ? S.config.socios.comercial : r === 'Técnico' ? S.config.socios.tecnico : 'Ambos');
+const prioBadge = (p) => '<span class="badge p-' + SLUG_P[p] + '">' + esc(p) + '</span>';
+const estadoBadge = (e) => '<span class="badge s-' + SLUG_E[e] + '">' + ICON[SLUG_E[e]] + esc(e) + '</span>';
+const certBadge = (c) => '<span class="badge c-' + SLUG_C[c] + '">' + esc(c) + '</span>';
+const respChip = (r) => '<span class="chip" title="Responsable: ' + esc(respLabel(r)) + '">' + esc(respLabel(r)) + '</span>';
+
+/** Opciones de <select>. Cada item puede ser 'valor' o ['valor', 'Etiqueta']. */
+function opts(lista, sel, vacio) {
+  const o = vacio !== undefined ? ['<option value=""' + (sel === '' ? ' selected' : '') + '>' + esc(vacio) + '</option>'] : [];
+  for (const it of lista) {
+    const [v, l] = Array.isArray(it) ? it : [it, it];
+    o.push('<option value="' + esc(v) + '"' + (v === sel ? ' selected' : '') + '>' + esc(l) + '</option>');
+  }
+  return o.join('');
+}
+const respOpts = (sel) => opts([['Comercial', respLabel('Comercial')], ['Técnico', respLabel('Técnico')], ['Ambos', 'Ambos']], sel);
+
+function bar(st, lg) {
+  const c = st.total ? (st.comp * 100) / st.total : 0;
+  const p = st.total ? (st.proc * 100) / st.total : 0;
+  return '<div class="bar' + (lg ? ' lg' : '') + '" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + Math.floor(c) +
+    '" aria-label="' + st.comp + ' de ' + st.total + ' subtareas completadas"><i class="c" style="width:' + c.toFixed(2) + '%"></i><i class="p" style="width:' + p.toFixed(2) + '%"></i></div>';
+}
+
+/** Convierte texto plano en HTML seguro con enlaces http(s) clickeables. */
+function linkify(texto) {
+  return esc(texto).replace(/(https?:\/\/[^\s<>"'&]+(?:&amp;[^\s<>"'&]+)*)/g, (u) => '<a href="' + u + '" target="_blank" rel="noopener noreferrer">' + u + '</a>');
+}
+
+const dueChip = (fecha, completa) => {
+  if (!fecha) return '';
+  const d = Fecha.diff(fecha);
+  const cls = !completa && d < 0 ? ' over' : !completa && d <= 6 ? ' warn' : '';
+  return '<span class="chip' + cls + '">' + ICON.cal + Fecha.fmt(fecha) + (completa ? '' : ' · ' + Fecha.rel(fecha)) + '</span>';
+};
+const blockedChip = (M, t) => {
+  const b = M.bloq.get(t.id);
+  if (!b.length) return '';
+  return '<span class="chip warn" title="' + esc('Bloqueada por: ' + b.map((x) => x.titulo).join(' · ')) + '">' + ICON.lock + 'Bloqueada por ' + b.length + ' ' + plural(b.length, 'tarea', 'tareas') + '</span>';
+};
+
+/* ---------- 7.1 Resumen ---------- */
+function viewResumen(M) {
+  const T = M.total;
+  const pct = Calc.fmtPct(T.comp, T.total);
+  const C = 2 * Math.PI * 56;
+  const arco = T.total ? (C * T.comp) / T.total : 0;
+  const next = Calc.proximasAcciones(M, 5);
+  const V = Calc.vencimientos(M, false);
+  const prox14 = [...V.semana, ...V.proximas].filter((i) => Fecha.diff(i.fecha) <= 14);
+
+  const rowTarea = (t, i) =>
+    '<button type="button" class="row" data-act="open-task" data-tid="' + esc(t.id) + '" data-fk="rs-' + esc(t.id) + '">' +
+      '<span class="rank" aria-hidden="true">' + (i + 1) + '</span>' +
+      '<span><span class="r-title">' + esc(t.titulo) + '</span><span class="r-meta">' + prioBadge(t.prioridad) +
+        '<span class="chip">Etapa ' + M.etapaById.get(t.etapaId).numero + '</span>' + respChip(t.responsable) + dueChip(t.fechaLimite, false) + '</span></span>' +
+    '</button>';
+
+  const rowVenc = (it) => {
+    const over = Fecha.diff(it.fecha) < 0;
+    return '<button type="button" class="row' + (over ? ' over' : '') + '" data-act="open-task" data-tid="' + esc(it.t.id) + '" data-fk="rv-' + esc((it.s || it.t).id) + '">' +
+      '<span class="vdate"><b>' + Fecha.corta(it.fecha) + '</b>' + esc(Fecha.rel(it.fecha)) + '</span>' +
+      '<span><span class="r-title">' + esc(it.s ? it.s.titulo : it.t.titulo) + '</span><span class="r-meta"><span class="chip">' + (it.s ? 'Subtarea de «' + esc(it.t.titulo) + '»' : 'Tarea') + '</span></span></span></button>';
+  };
+
+  const hero =
+    '<section class="card hero" aria-labelledby="h-avance">' +
+      '<div class="ring" role="img" aria-label="Avance total: ' + pct + ' por ciento"><svg viewBox="0 0 132 132" aria-hidden="true"><circle class="trk" cx="66" cy="66" r="56"/>' + (arco > 0 ? '<circle class="prg" cx="66" cy="66" r="56" stroke-dasharray="' + arco.toFixed(1) + ' ' + C.toFixed(1) + '"/>' : '') + '</svg>' +
+        '<div class="num"><span>' + pct + '%<small>avance total</small></span></div></div>' +
+      '<div><h2 id="h-avance">' + T.comp + ' de ' + T.total + ' subtareas completadas</h2>' +
+        '<p class="muted">' + M.etapasCompletas + ' de ' + M.etapas.length + ' ' + plural(M.etapasCompletas, 'etapa completada', 'etapas completadas') + ' · ' + S.tareas.length + ' tareas en el plan</p>' +
+        '<div class="stats">' +
+          '<div class="stat"><b>' + T.pend + '</b><span><i class="dotc" style="background:var(--pend)"></i>Pendientes</span></div>' +
+          '<div class="stat"><b>' + T.proc + '</b><span><i class="dotc" style="background:var(--proc)"></i>En proceso</span></div>' +
+          '<div class="stat"><b>' + T.comp + '</b><span><i class="dotc" style="background:var(--comp)"></i>Completadas</span></div>' +
+        '</div></div></section>';
+
+  const acciones =
+    '<section class="card" aria-labelledby="h-next"><div class="card-h"><h2 id="h-next">Próximas acciones recomendadas</h2></div>' +
+      (next.length ? '<div>' + next.map(rowTarea).join('') + '</div>' : '<p class="empty">No quedan tareas desbloqueadas pendientes.</p>') +
+      '<p class="hint muted" style="font-size:12.5px;margin:10px 4px 0">Orden: prioridad, luego etapa, luego fecha límite. No incluye tareas que esperan a otra.</p></section>';
+
+  const venc =
+    '<section class="card" aria-labelledby="h-venc"><div class="card-h"><h2 id="h-venc">Vencimientos</h2><a href="#vencimientos" class="hint">Ver todos</a></div>' +
+      (V.vencidas.length ? '<p class="sub-h over" style="margin-top:0">' + ICON.alert + ' Vencidas (' + V.vencidas.length + ')</p>' + V.vencidas.slice(0, 5).map(rowVenc).join('') + (V.vencidas.length > 5 ? '<p class="hint muted" style="margin:4px 10px">y ' + (V.vencidas.length - 5) + ' más…</p>' : '') : '') +
+      '<p class="sub-h"' + (V.vencidas.length ? '' : ' style="margin-top:0"') + '>Próximos 14 días (' + prox14.length + ')</p>' +
+      (prox14.length ? prox14.slice(0, 6).map(rowVenc).join('') + (prox14.length > 6 ? '<p class="hint muted" style="margin:4px 10px">y ' + (prox14.length - 6) + ' más…</p>' : '') : '<p class="empty">Nada con fecha en los próximos 14 días. Cargá fechas límite en las tareas y subtareas.</p>') +
+    '</section>';
+
+  const objetivos =
+    '<section class="card" aria-labelledby="h-obj"><div class="card-h"><h2 id="h-obj">Objetivos principales del momento</h2><span class="hint">Editables · ' + esc(S.config.socios.comercial) + ' y ' + esc(S.config.socios.tecnico) + '</span></div>' +
+      '<ul class="goals">' + S.objetivos.map((o) =>
+        '<li><span class="bullet" aria-hidden="true"></span><label class="sr-only" for="obj-' + esc(o.id) + '">Objetivo</label>' +
+        '<input type="text" id="obj-' + esc(o.id) + '" value="' + esc(o.texto) + '" data-bind="obj:texto" data-oid="' + esc(o.id) + '" data-fk="obj-' + esc(o.id) + '">' +
+        '<button type="button" class="icon-btn" data-act="obj-del" data-oid="' + esc(o.id) + '" aria-label="Quitar objetivo">' + ICON.x + '</button></li>').join('') + '</ul>' +
+      (S.objetivos.length ? '' : '<p class="empty">Todavía no definieron objetivos.</p>') +
+      '<form class="add-line" data-form="obj"><label class="sr-only" for="obj-new">Nuevo objetivo</label><input type="text" id="obj-new" name="texto" placeholder="Agregar un objetivo…" autocomplete="off" data-fk="obj-new"><button class="btn" type="submit">' + ICON.plus + 'Agregar</button></form></section>';
+
+  const mapa =
+    '<section aria-labelledby="h-map"><div class="card-h"><h2 id="h-map">Mapa de etapas</h2></div><div class="map">' +
+      M.etapas.map((e) => {
+        const a = M.et.get(e.id);
+        return '<button type="button" class="tile' + (a.completada ? ' done' : '') + '" data-act="goto-etapa" data-eid="' + esc(e.id) + '" data-fk="tile-' + esc(e.id) + '" aria-label="Etapa ' + e.numero + ': ' + esc(e.nombre) + ', ' + Calc.fmtPct(a.comp, a.total) + ' por ciento">' +
+          '<span class="tn"><span>Etapa ' + e.numero + '</span>' + (a.completada ? '<span>' + ICON.check + '</span>' : '') + '</span>' +
+          '<span class="tt">' + esc(e.nombre) + '</span>' +
+          '<span class="tp">' + bar(a) + '<span>' + Calc.fmtPct(a.comp, a.total) + '%</span></span></button>';
+      }).join('') + '</div></section>';
+
+  return '<div class="wrap stack"><div class="page-head"><h1>Resumen</h1><p class="lead">Dónde estamos y qué conviene hacer ahora.</p></div>' +
+    hero + '<div class="grid2">' + acciones + venc + '</div>' + objetivos + mapa + '</div>';
+}
+
+/* ---------- 7.2 Etapas ---------- */
+function matchTarea(t, M, f, q) {
+  if (f.prioridad && t.prioridad !== f.prioridad) return false;
+  if (f.responsable && t.responsable !== f.responsable) return false;
+  if (f.estado) {
+    const est = f.estado === 'Bloqueada' ? (M.bloq.get(t.id).length > 0 && M.st.get(t.id).estado !== 'Completada') : M.st.get(t.id).estado === f.estado;
+    if (!est) return false;
+  }
+  if (q) {
+    const hay = norm([t.titulo, t.descripcion, t.criterioTerminado, ...t.subtareas.map((s) => s.titulo + ' ' + s.notas), ...t.documentacion.map((d) => d.contenido + ' ' + d.fuente)].join(' \n '));
+    if (!hay.includes(q)) return false;
+  }
+  return true;
+}
+
+function tareaRow(t, M) {
+  const s = M.st.get(t.id);
+  return '<button type="button" class="trow" data-act="open-task" data-tid="' + esc(t.id) + '" data-fk="task-' + esc(t.id) + '">' +
+    '<span><span class="t-title">' + esc(t.titulo) + '</span><span class="t-meta">' + prioBadge(t.prioridad) + respChip(t.responsable) +
+      (t.origen === 'propia' ? '<span class="chip">Propia</span>' : '') + dueChip(t.fechaLimite, s.estado === 'Completada') + blockedChip(M, t) +
+      (s.estado === 'Completada' ? '<span class="chip" style="color:var(--comp);font-weight:600">' + ICON.check + 'Completada</span>' : '') + '</span></span>' +
+    '<span class="t-prog">' + bar(s) + '<span class="t-cnt"><span>' + s.comp + '/' + s.total + ' subtareas</span>' + (s.proc ? '<span>' + s.proc + ' en proceso</span>' : '') + '</span></span></button>';
+}
+
+function etapasListHtml(M) {
+  const f = ui.filtros, q = norm(f.q.trim());
+  const filtrando = !!(q || f.prioridad || f.responsable || f.estado);
+  const out = [];
+  for (const e of M.etapas) {
+    const a = M.et.get(e.id);
+    const tareas = filtrando ? a.tareas.filter((t) => matchTarea(t, M, f, q)) : a.tareas;
+    if (filtrando && !tareas.length) continue;
+    const abierta = filtrando || ui.expanded.has(e.id);
+    out.push(
+      '<section class="etapa' + (a.completada ? ' is-done' : '') + '" id="etapa-' + esc(e.id) + '">' +
+      '<h2 class="etapa-h"><button type="button" class="etapa-btn" data-act="toggle-etapa" data-eid="' + esc(e.id) + '" data-fk="etapa-' + esc(e.id) + '" aria-expanded="' + abierta + '" aria-controls="eb-' + esc(e.id) + '">' +
+        '<span class="e-num" aria-hidden="true">' + (a.completada ? ICON.check : e.numero) + '</span>' +
+        '<span><span class="e-name">' + e.numero + '. ' + esc(e.nombre) + (a.completada ? ' · completada' : '') + '</span><span class="e-obj">' + esc(e.objetivo) + '</span></span>' +
+        '<span class="e-prog">' + bar(a) + '<span class="e-cnt"><span>' + a.comp + '/' + a.total + ' subtareas</span><span>' + Calc.fmtPct(a.comp, a.total) + '%</span></span></span>' +
+        '<span class="chev">' + ICON.chev + '</span></button></h2>' +
+      '<div class="etapa-body" id="eb-' + esc(e.id) + '"' + (abierta ? '' : ' hidden') + '>' +
+        '<p class="etapa-desc">' + esc(e.descripcion) + '</p>' +
+        (tareas.length ? tareas.map((t) => tareaRow(t, M)).join('') : '<p class="empty">Esta etapa todavía no tiene tareas.</p>') +
+        '<button type="button" class="btn sm etapa-add" data-act="new-task" data-eid="' + esc(e.id) + '">' + ICON.plus + 'Agregar tarea propia</button>' +
+      '</div></section>');
+  }
+  return out.length ? '<div class="etapas">' + out.join('') + '</div>' : '<p class="empty card">Ninguna tarea coincide con los filtros.</p>';
+}
+
+function viewEtapas(M) {
+  const f = ui.filtros;
+  return '<div class="wrap"><div class="page-head"><h1>Etapas</h1><p class="lead">Las 12 etapas del plan, con el avance de cada tarea. Hacé clic en una tarea para ver y editar su detalle.</p></div>' +
+    '<div class="toolbar" role="search">' +
+      '<div class="field grow"><label for="f-q">Buscar</label><input type="search" id="f-q" data-filter="q" data-fk="f-q" value="' + esc(f.q) + '" placeholder="Tarea, subtarea, nota o documentación…" autocomplete="off"></div>' +
+      '<div class="field"><label for="f-p">Prioridad</label><select id="f-p" data-filter="prioridad" data-fk="f-p">' + opts(PRIORIDADES, f.prioridad, 'Todas') + '</select></div>' +
+      '<div class="field"><label for="f-r">Responsable</label><select id="f-r" data-filter="responsable" data-fk="f-r">' + opts([['Comercial', respLabel('Comercial')], ['Técnico', respLabel('Técnico')], ['Ambos', 'Ambos']], f.responsable, 'Todos') + '</select></div>' +
+      '<div class="field"><label for="f-e">Estado</label><select id="f-e" data-filter="estado" data-fk="f-e">' + opts([...ESTADOS, 'Bloqueada'], f.estado, 'Todos') + '</select></div>' +
+      '<div class="toolbar-actions"><button type="button" class="btn ghost sm" data-act="clear-filters">Limpiar</button><button type="button" class="btn ghost sm" data-act="expand-all">Expandir todo</button><button type="button" class="btn ghost sm" data-act="collapse-all">Contraer todo</button></div>' +
+    '</div><div id="etapasList">' + etapasListHtml(M) + '</div></div>';
+}
+
+/* ---------- 7.3 Vencimientos ---------- */
+function viewVencimientos(M) {
+  const V = Calc.vencimientos(M, ui.vencCompletadas);
+  const row = (it) => {
+    const over = it.fecha && Fecha.diff(it.fecha) < 0 && !it.done;
+    const titulo = it.s ? it.s.titulo : it.t.titulo;
+    return '<button type="button" class="row' + (over ? ' over' : '') + (it.done ? ' done' : '') + '" data-act="open-task" data-tid="' + esc(it.t.id) + '" data-fk="v-' + esc((it.s || it.t).id) + '">' +
+      (it.fecha ? '<span class="vdate"><b>' + Fecha.fmt(it.fecha) + '</b>' + (it.done ? 'completada' : esc(Fecha.rel(it.fecha))) + '</span>' : '<span class="vdate"><b>—</b>sin fecha</span>') +
+      '<span><span class="r-title">' + esc(titulo) + '</span><span class="r-meta"><span class="chip">' + (it.s ? 'Subtarea · ' + esc(it.t.titulo) : 'Tarea · Etapa ' + M.etapaById.get(it.t.etapaId).numero) + '</span>' +
+        prioBadge(it.t.prioridad) + respChip((it.s || it.t).responsable) + '</span></span></button>';
+  };
+  const grupo = (id, titulo, items, vacio, over) =>
+    '<section class="vgroup" aria-labelledby="g-' + id + '"><h2 id="g-' + id + '">' + titulo + '<span class="count' + (over && items.length ? ' over' : '') + '">' + items.length + '</span></h2>' +
+    '<div class="card">' + (items.length ? items.map(row).join('') : '<p class="empty">' + vacio + '</p>') + '</div></section>';
+  const comp = V.completadas.map((i) => Object.assign({ done: true }, i));
+  return '<div class="wrap"><div class="page-head"><h1>Vencimientos</h1><p class="lead">Todo lo que tiene fecha límite, en orden cronológico. «Sin fecha» lista solo tareas, no subtareas.</p></div>' +
+    '<div class="toolbar"><label class="chip" style="gap:8px"><input type="checkbox" data-filter="vencCompletadas" data-fk="v-comp"' + (ui.vencCompletadas ? ' checked' : '') + '> Incluir completadas</label></div>' +
+    grupo('venc', 'Vencidas', V.vencidas, 'No hay nada vencido.', true) +
+    grupo('sem', 'Esta semana <span class="muted" style="font-weight:400;margin-left:8px">próximos 7 días</span>', V.semana, 'Nada vence en los próximos 7 días.') +
+    grupo('prox', 'Próximas', V.proximas, 'No hay vencimientos más adelante.') +
+    grupo('sin', 'Sin fecha', V.sinFecha, 'Todas las tareas pendientes tienen fecha.') +
+    (ui.vencCompletadas ? grupo('comp', 'Completadas', comp, 'Ninguna tarea o subtarea con fecha está completada.') : '') + '</div>';
+}
+
+/* ---------- 7.4 Bitácora ---------- */
+function viewBitacora(M) {
+  const todas = Calc.bitacora(M);
+  const q = norm(ui.bitQ.trim());
+  const lista = todas.filter(({ d, t }) => {
+    if (ui.bitFiltro === 'Decisiones' && d.certeza !== 'Decisión tomada') return false;
+    if (ui.bitFiltro === 'Conclusiones' && d.tipo !== 'Conclusión') return false;
+    return !q || norm(d.contenido + ' ' + d.fuente + ' ' + t.titulo + ' ' + d.autor).includes(q);
+  });
+  const chip = (n) => '<button type="button" class="fchip" data-act="bit-filter" data-v="' + n + '" aria-pressed="' + (ui.bitFiltro === n) + '">' + n + '</button>';
+  return '<div class="wrap"><div class="page-head"><h1>Bitácora de decisiones</h1><p class="lead">La memoria estratégica del negocio: todas las entradas marcadas como «Decisión tomada» o de tipo «Conclusión», de todas las tareas.</p></div>' +
+    '<div class="toolbar"><div class="chips" role="group" aria-label="Filtrar por tipo">' + ['Todas', 'Decisiones', 'Conclusiones'].map(chip).join('') + '</div>' +
+      '<div class="field grow"><label for="b-q">Buscar</label><input type="search" id="b-q" data-filter="bitQ" data-fk="b-q" value="' + esc(ui.bitQ) + '" placeholder="Buscar en decisiones y conclusiones…" autocomplete="off"></div></div>' +
+    '<div id="bitList">' + bitListHtml(lista, M, todas.length) + '</div></div>';
+}
+function bitListHtml(lista, M, totalTodas) {
+  if (!lista.length) return '<p class="empty card">' + (totalTodas ? 'Ninguna entrada coincide con el filtro.' : 'Todavía no hay decisiones ni conclusiones. Se arman solas: en el detalle de cualquier tarea, agregá una entrada con certeza «Decisión tomada» o de tipo «Conclusión».') + '</p>';
+  return lista.map(({ d, t }) =>
+    '<article class="entry"><div class="entry-h"><strong style="color:var(--text)">' + Fecha.fmt(d.fecha) + '</strong>' + certBadge(d.certeza) + '<span class="badge s-pend">' + esc(d.tipo) + '</span><span>' + esc(d.autor) + '</span></div>' +
+    '<div class="entry-body">' + linkify(d.contenido) + '</div>' + (d.certeza === 'Investigado' && d.fuente ? '<div class="entry-src">Fuente: ' + linkify(d.fuente) + '</div>' : '') +
+    '<div class="entry-f"><span>Origen:</span><button type="button" class="linklike" data-act="open-task" data-tid="' + esc(t.id) + '" data-fk="b-' + esc(d.id) + '">' + esc(t.titulo) + '</button><span>· Etapa ' + M.etapaById.get(t.etapaId).numero + '</span></div></article>').join('');
+}
+
+/* ---------- 7.5 Panel de detalle de tarea ---------- */
+function panelHtml(t, M) {
+  const s = M.st.get(t.id);
+  const e = M.etapaById.get(t.etapaId);
+  const bl = M.bloq.get(t.id);
+  const dependientes = S.tareas.filter((x) => x.dependencias.includes(t.id));
+  const idx = M.et.get(t.etapaId).tareas.indexOf(t);
+  const nTareas = M.et.get(t.etapaId).tareas.length;
+  const k = esc(t.id);
+
+  // Dependencias
+  const candidatas = S.tareas.filter((x) => x.id !== t.id && !t.dependencias.includes(x.id) && !creariaCiclo(S, t.id, x.id));
+  const depOpts = M.etapas.map((et) => {
+    const l = candidatas.filter((x) => x.etapaId === et.id).sort((a, b) => a.orden - b.orden);
+    return l.length ? '<optgroup label="' + esc(et.numero + '. ' + et.nombre) + '">' + l.map((x) => '<option value="' + esc(x.id) + '">' + esc(x.titulo) + '</option>').join('') + '</optgroup>' : '';
+  }).join('');
+  const deps =
+    (t.dependencias.length ? '<ul class="deps">' + t.dependencias.map((id) => {
+      const d = M.tareaById.get(id); const ds = M.st.get(id);
+      return '<li><span class="d-t"><button type="button" class="linklike" data-act="dep-open" data-tid="' + esc(id) + '">' + esc(d.titulo) + '</button></span>' + estadoBadge(ds.estado) +
+        '<button type="button" class="icon-btn" data-act="dep-del" data-dep="' + esc(id) + '" data-fk="depdel-' + esc(id) + '" aria-label="Quitar dependencia: ' + esc(d.titulo) + '">' + ICON.x + '</button></li>';
+    }).join('') + '</ul>' : '<p class="muted">Esta tarea no depende de ninguna otra.</p>') +
+    '<form class="sub-add" data-form="dep"><label class="sr-only" for="dep-sel">Agregar dependencia</label><select id="dep-sel" name="dep" data-fk="dep-sel"><option value="">Agregar dependencia…</option>' + depOpts + '</select><button class="btn" type="submit">Agregar</button></form>' +
+    (dependientes.length ? '<p class="muted" style="margin-top:10px;font-size:13px">Bloquea a: ' + dependientes.map((d) => '<button type="button" class="linklike" data-act="dep-open" data-tid="' + esc(d.id) + '">' + esc(d.titulo) + '</button>').join(' · ') + '</p>' : '');
+
+  // Subtareas
+  const subs = t.subtareas.map((x, i) => {
+    const abierto = ui.subOpen.has(x.id);
+    const sid = esc(x.id);
+    const seg = ESTADOS.map((est) => '<button type="button" class="s-' + SLUG_E[est] + '" data-act="sub-estado" data-sid="' + sid + '" data-v="' + est + '" data-fk="se-' + sid + '-' + SLUG_E[est] + '" aria-pressed="' + (x.estado === est) + '" aria-label="' + est + '" title="' + est + '">' + ICON[SLUG_E[est]] + '</button>').join('');
+    const resumen = [x.responsable !== t.responsable ? respChip(x.responsable) : '', x.fechaLimite ? dueChip(x.fechaLimite, x.estado === 'Completada') : '', x.notas ? '<span class="chip" title="Tiene notas">' + ICON.note + 'Notas</span>' : ''].join('');
+    return '<li class="sub' + (x.estado === 'Completada' ? ' is-comp' : '') + '">' +
+      '<div class="sub-main"><div class="seg" role="group" aria-label="Estado de la subtarea">' + seg + '</div>' +
+        '<div><label class="sr-only" for="st-' + sid + '">Título de la subtarea</label><textarea class="sub-title auto" id="st-' + sid + '" rows="1" data-bind="sub:titulo" data-tid="' + k + '" data-sid="' + sid + '" data-fk="st-' + sid + '" data-enter="blur">' + esc(x.titulo) + '</textarea></div></div>' +
+      '<div class="sub-tools">' + resumen + '<span class="grow"></span>' +
+        '<button type="button" class="btn ghost sm" data-act="sub-det" data-sid="' + sid + '" data-fk="sd-' + sid + '" aria-expanded="' + abierto + '">Detalles ' + ICON.chev + '</button>' +
+        '<button type="button" class="icon-btn" data-act="sub-up" data-sid="' + sid + '" data-fk="su-' + sid + '" aria-label="Subir subtarea"' + (i === 0 ? ' disabled' : '') + '>' + ICON.up + '</button>' +
+        '<button type="button" class="icon-btn" data-act="sub-down" data-sid="' + sid + '" data-fk="sw-' + sid + '" aria-label="Bajar subtarea"' + (i === t.subtareas.length - 1 ? ' disabled' : '') + '>' + ICON.down + '</button>' +
+        '<button type="button" class="icon-btn" data-act="sub-del" data-sid="' + sid + '" aria-label="Eliminar subtarea">' + ICON.trash + '</button></div>' +
+      '<div class="sub-det"' + (abierto ? '' : ' hidden') + '>' +
+        '<div class="field"><label for="sr-' + sid + '">Responsable</label><select id="sr-' + sid + '" data-bind="sub:responsable" data-tid="' + k + '" data-sid="' + sid + '">' + respOpts(x.responsable) + '</select></div>' +
+        '<div class="field"><label for="sf-' + sid + '">Fecha límite</label><input type="date" id="sf-' + sid + '" value="' + esc(x.fechaLimite) + '" data-bind="sub:fechaLimite" data-tid="' + k + '" data-sid="' + sid + '"></div>' +
+        '<div class="field full"><label for="sn-' + sid + '">Notas</label><textarea id="sn-' + sid + '" rows="2" data-bind="sub:notas" data-tid="' + k + '" data-sid="' + sid + '" placeholder="Qué se hizo, con quién se habló, qué falta…">' + esc(x.notas) + '</textarea></div></div></li>';
+  }).join('');
+
+  // Documentación
+  const docs = t.documentacion.filter((d) => ui.docFiltro === 'Todos' || d.tipo === ui.docFiltro);
+  const cuenta = (tipo) => t.documentacion.filter((d) => d.tipo === tipo).length;
+  const docChips = ['Todos', ...TIPOS_DOC].map((tp) => '<button type="button" class="fchip" data-act="doc-filter" data-v="' + tp + '" aria-pressed="' + (ui.docFiltro === tp) + '">' + tp + ' (' + (tp === 'Todos' ? t.documentacion.length : cuenta(tp)) + ')</button>').join('');
+  const docList = docs.length ? docs.map((d) =>
+    '<article class="entry"><div class="entry-h"><span class="badge s-pend">' + esc(d.tipo) + '</span>' + certBadge(d.certeza) + '<span>' + Fecha.fmt(d.fecha) + ' · ' + esc(d.autor) + '</span></div>' +
+    '<div class="entry-body">' + linkify(d.contenido) + '</div>' + (d.certeza === 'Investigado' && d.fuente ? '<div class="entry-src"><strong>Fuente:</strong> ' + linkify(d.fuente) + '</div>' : '') +
+    '<div class="entry-f"><button type="button" class="linklike" data-act="doc-edit" data-did="' + esc(d.id) + '" data-fk="de-' + esc(d.id) + '">Editar</button><button type="button" class="linklike" style="color:var(--crit)" data-act="doc-del" data-did="' + esc(d.id) + '">Eliminar</button></div></article>').join('')
+    : '<p class="empty">' + (t.documentacion.length ? 'No hay entradas de este tipo.' : 'Todavía no hay documentación. Registrá acá lo que investiguen, decidan o concluyan.') + '</p>';
+
+  const dr = ui.docDraft;
+  const autores = [S.config.socios.comercial, S.config.socios.tecnico];
+  if (dr && !autores.includes(dr.autor)) autores.push(dr.autor);
+  const docForm = dr ?
+    '<form class="doc-form" data-form="doc" novalidate><h4 class="lbl" style="font-size:14px;color:var(--text)">' + (dr.id ? 'Editar entrada' : 'Nueva entrada') + '</h4>' +
+      '<div class="two"><div class="field"><label for="dd-tipo">Tipo</label><select id="dd-tipo" data-draft="tipo">' + opts(TIPOS_DOC, dr.tipo) + '</select></div>' +
+      '<div class="field"><label for="dd-cert">Nivel de certeza <span aria-hidden="true">*</span></label><select id="dd-cert" data-draft="certeza" data-fk="dd-cert" required aria-required="true">' + opts(CERTEZAS, dr.certeza, 'Elegí un nivel…') + '</select></div></div>' +
+      '<div class="field" id="dd-fuente-w"' + (dr.certeza === 'Investigado' ? '' : ' hidden') + '><label for="dd-fuente">Fuente <span aria-hidden="true">*</span></label><input type="text" id="dd-fuente" data-draft="fuente" data-fk="dd-fuente" value="' + esc(dr.fuente) + '" placeholder="Dónde se obtuvo el dato (organismo, persona, enlace)"></div>' +
+      '<div class="field"><label for="dd-cont">Contenido <span aria-hidden="true">*</span></label><textarea id="dd-cont" rows="4" data-draft="contenido" data-fk="dd-cont" required aria-required="true">' + esc(dr.contenido) + '</textarea></div>' +
+      '<div class="two"><div class="field"><label for="dd-autor">Autor</label><select id="dd-autor" data-draft="autor">' + opts(autores, dr.autor) + '</select></div>' +
+      '<div class="field"><label for="dd-fecha">Fecha</label><input type="date" id="dd-fecha" data-draft="fecha" value="' + esc(dr.fecha) + '"></div></div>' +
+      (ui.docError ? '<p class="form-error" role="alert">' + esc(ui.docError) + '</p>' : '') +
+      '<div class="doc-actions"><button type="button" class="btn ghost" data-act="doc-cancel">Cancelar</button><button type="submit" class="btn primary">Guardar entrada</button></div></form>'
+    : '<button type="button" class="btn" data-act="doc-new" data-fk="doc-new">' + ICON.plus + 'Agregar entrada</button>';
+
+  return '<div class="panel-head"><div class="crumb">Etapa ' + e.numero + ' · ' + esc(e.nombre) + '</div>' +
+      '<button type="button" class="icon-btn" data-act="close-panel" aria-label="Cerrar detalle" data-fk="close-panel">' + ICON.x + '</button></div>' +
+    '<div class="panel-body" id="panelBody">' +
+      '<div><label class="sr-only" for="pt-t">Título de la tarea</label><textarea class="title-input auto" id="pt-t" rows="1" data-bind="tarea:titulo" data-tid="' + k + '" data-enter="blur">' + esc(t.titulo) + '</textarea>' +
+        '<div class="tags" style="margin-top:8px">' + estadoBadge(s.estado) + (t.origen === 'propia' ? '<span class="badge s-pend">Tarea propia</span>' : '') +
+          (bl.length ? '<span class="chip warn">' + ICON.lock + 'Bloqueada por ' + bl.length + ' ' + plural(bl.length, 'tarea', 'tareas') + ' pendiente' + (bl.length === 1 ? '' : 's') + '</span>' : '') + '</div></div>' +
+      '<div class="prog-line">' + bar(s, true) + '<span><strong style="color:var(--text)">' + Calc.fmtPct(s.comp, s.total) + '%</strong> · ' + s.comp + ' de ' + s.total + ' ' + plural(s.total, 'subtarea completada', 'subtareas completadas') + (s.proc ? ' · ' + s.proc + ' en proceso' : '') + '</span></div>' +
+      '<div class="meta-grid">' +
+        '<div class="field"><label for="pt-p">Prioridad</label><select id="pt-p" data-bind="tarea:prioridad" data-tid="' + k + '">' + opts(PRIORIDADES, t.prioridad) + '</select></div>' +
+        '<div class="field"><label for="pt-r">Responsable</label><select id="pt-r" data-bind="tarea:responsable" data-tid="' + k + '">' + respOpts(t.responsable) + '</select></div>' +
+        '<div class="field"><label for="pt-f">Fecha límite</label><input type="date" id="pt-f" value="' + esc(t.fechaLimite) + '" data-bind="tarea:fechaLimite" data-tid="' + k + '"></div></div>' +
+      '<div class="field"><label for="pt-d">Descripción</label><textarea id="pt-d" rows="3" data-bind="tarea:descripcion" data-tid="' + k + '" placeholder="Qué implica esta tarea">' + esc(t.descripcion) + '</textarea></div>' +
+      '<div class="field"><label for="pt-c">Criterio de terminado</label><textarea id="pt-c" rows="2" data-bind="tarea:criterioTerminado" data-tid="' + k + '" placeholder="Cómo sabemos que esta tarea está realmente terminada">' + esc(t.criterioTerminado) + '</textarea></div>' +
+      '<section aria-labelledby="h-deps"><div class="p-sec-h"><h3 id="h-deps">Dependencias</h3></div>' + deps + '</section>' +
+      '<section aria-labelledby="h-subs"><div class="p-sec-h"><h3 id="h-subs">Subtareas (' + s.comp + '/' + s.total + ')</h3></div>' +
+        (t.subtareas.length ? '<ol>' + subs + '</ol>' : '<p class="muted">Esta tarea todavía no tiene subtareas.</p>') +
+        '<form class="sub-add" data-form="sub"><label class="sr-only" for="sub-new">Nueva subtarea</label><input type="text" id="sub-new" name="titulo" placeholder="Agregar subtarea…" autocomplete="off" data-fk="sub-new"><button class="btn" type="submit">' + ICON.plus + 'Agregar</button></form></section>' +
+      '<section aria-labelledby="h-docs"><div class="p-sec-h"><h3 id="h-docs">Documentación</h3></div>' +
+        '<div class="chips" role="group" aria-label="Filtrar por tipo" style="margin-bottom:12px">' + docChips + '</div>' + docList + docForm + '</section>' +
+      '<div class="danger-zone"><div class="tags"><button type="button" class="btn sm" data-act="task-up" data-fk="task-up"' + (idx <= 0 ? ' disabled' : '') + '>' + ICON.up + 'Subir en la etapa</button><button type="button" class="btn sm" data-act="task-down" data-fk="task-down"' + (idx >= nTareas - 1 ? ' disabled' : '') + '>' + ICON.down + 'Bajar</button></div>' +
+        '<button type="button" class="btn danger sm" data-act="task-del">' + ICON.trash + 'Eliminar tarea</button></div>' +
+    '</div>';
+}
+
+/* ---------- 7.6 Encabezado ---------- */
+function headerHtml(M) {
+  const T = M.total;
+  const temaIco = ui.theme === 'light' ? ICON.sun : ui.theme === 'dark' ? ICON.moon : ICON.auto;
+  const temaTxt = ui.theme === 'light' ? 'claro' : ui.theme === 'dark' ? 'oscuro' : 'automático';
+  const sv = ui.save;
+  const saveTxt = sv.state === 'error' ? 'No se pudo guardar' : sv.state === 'saving' ? 'Guardando…' : sv.at ? 'Guardado ' + Fecha.hora(sv.at) : 'Todo guardado';
+  return '<div class="wrap top-in">' +
+    '<a class="brand" href="#resumen"><span class="brand-logo">' + ICON.bolt + '</span><span class="brand-t"><span class="brand-full">Centro de </span>Operaciones</span></a>' +
+    '<nav class="nav" aria-label="Secciones">' + VISTAS.map(([id, n]) => '<a href="#' + id + '"' + (ui.view === id ? ' aria-current="page"' : '') + '>' + n + '</a>').join('') + '</nav>' +
+    '<div class="top-right">' +
+      '<span class="save ' + (sv.state === 'error' ? 'is-err' : 'is-ok') + '" id="saveStatus" role="status">' + (sv.state === 'error' ? ICON.alert : ICON.check) + '<span>' + saveTxt + '</span></span>' +
+      '<button type="button" class="icon-btn" data-act="theme" data-fk="theme" aria-label="Tema: ' + temaTxt + '. Cambiar tema" title="Tema: ' + temaTxt + '">' + temaIco + '</button>' +
+      '<button type="button" class="icon-btn" data-act="menu" data-fk="menu" aria-haspopup="true" aria-expanded="' + ui.menuOpen + '" aria-label="Menú de datos" style="padding:0 10px;gap:4px;display:inline-flex;align-items:center">Datos ' + ICON.chev + '</button>' +
+      (ui.menuOpen ? '<div class="menu" role="menu" aria-label="Datos">' +
+        '<button type="button" role="menuitem" data-act="export">Exportar JSON</button><button type="button" role="menuitem" data-act="import">Importar JSON…</button>' +
+        '<button type="button" role="menuitem" data-act="config">Configuración y socios</button><hr>' +
+        '<button type="button" role="menuitem" class="danger" data-act="reset">Restablecer plan original…</button></div>' : '') +
+    '</div></div>';
+}
+
+/* ================================ 8. INTERFAZ ============================== */
+const ui = {
+  view: 'resumen', taskId: null, opener: null, expanded: new Set(['e1']),
+  filtros: { q: '', prioridad: '', responsable: '', estado: '' },
+  subOpen: new Set(), docFiltro: 'Todos', docDraft: null, docError: '',
+  bitFiltro: 'Todas', bitQ: '', vencCompletadas: false, menuOpen: false, stale: false,
+  theme: 'auto', ultimoAutor: '', save: { state: 'saved', at: null }
+};
+const $ = (sel, root) => (root || document).querySelector(sel);
+const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
+
+/* ---------- 8.1 Render ---------- */
+function captureFocus() {
+  const a = document.activeElement;
+  if (!a || !a.dataset || !a.dataset.fk) return null;
+  return { fk: a.dataset.fk, s: a.selectionStart, e: a.selectionEnd };
+}
+function restoreFocus(c) {
+  if (!c) return;
+  const el = document.querySelector('[data-fk="' + String(c.fk).replace(/"/g, '\\"') + '"]');
+  if (!el || el.disabled) return;
+  el.focus({ preventScroll: true });
+  try { if (c.s != null) el.setSelectionRange(c.s, c.e); } catch (e) { /* tipos sin selección */ }
+}
+function autoGrow(el) { el.style.height = 'auto'; el.style.height = el.scrollHeight + 2 + 'px'; }
+
+function renderHeader(M) { $('#top').innerHTML = headerHtml(M); }
+function renderMain(M) {
+  const v = { resumen: viewResumen, etapas: viewEtapas, vencimientos: viewVencimientos, bitacora: viewBitacora }[ui.view] || viewResumen;
+  $('#main').innerHTML = v(M);
+}
+function renderPanel(M) {
+  const panel = $('#panel');
+  const t = ui.taskId && S.tareas.find((x) => x.id === ui.taskId);
+  if (!t) return;
+  const sc = $('#panelBody') ? $('#panelBody').scrollTop : 0;
+  const pendiente = $('#sub-new') ? $('#sub-new').value : ''; // lo que se estaba tipeando en «nueva subtarea»
+  panel.innerHTML = panelHtml(t, M || Calc.model(S));
+  if (pendiente && $('#sub-new')) $('#sub-new').value = pendiente;
+  panel.setAttribute('aria-label', 'Detalle de la tarea: ' + t.titulo);
+  $$('textarea.auto', panel).forEach(autoGrow);
+  if ($('#panelBody')) $('#panelBody').scrollTop = sc;
+}
+function renderAll() {
+  const foco = captureFocus();
+  const M = Calc.model(S);
+  renderHeader(M);
+  renderMain(M);
+  if (ui.taskId) renderPanel(M);
+  restoreFocus(foco);
+}
+
+/** Cambios estructurales: guardan y re-renderizan. */
+function commit() { saveSoon(); renderAll(); }
+/** Ediciones de texto/fecha: guardan sin re-renderizar (así no se pierde el foco ni se rompe un clic en curso). */
+function commitQuiet() { saveSoon(); ui.stale = true; }
+
+/* ---------- 8.2 Guardado con feedback ---------- */
+let saveTimer = null;
+function setSaveStatus(state) {
+  ui.save.state = state;
+  if (state === 'saved') ui.save.at = new Date();
+  const el = $('#saveStatus'); if (!el) return;
+  el.className = 'save ' + (state === 'error' ? 'is-err' : 'is-ok');
+  el.innerHTML = (state === 'error' ? ICON.alert : ICON.check) + '<span>' + (state === 'error' ? 'No se pudo guardar' : state === 'saving' ? 'Guardando…' : 'Guardado ' + Fecha.hora(ui.save.at)) + '</span>';
+  if (state === 'saved') { void el.offsetWidth; el.classList.add('is-flash'); }
+}
+function saveSoon() {
+  setSaveStatus('saving');
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(flushSave, 250);
+}
+function flushSave() {
+  if (saveTimer == null) return;
+  clearTimeout(saveTimer); saveTimer = null;
+  const ok = Persist.save(S);
+  setSaveStatus(ok ? 'saved' : 'error');
+  if (!ok) toast('No se pudo guardar en este navegador. Exportá un JSON para no perder los cambios.');
+}
+
+/* ---------- 8.3 Toasts y diálogos ---------- */
+function toast(msg, accion) {
+  const cont = $('#toasts');
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.innerHTML = '<span>' + esc(msg) + '</span>' + (accion ? '<button type="button">' + esc(accion.label) + '</button>' : '');
+  cont.appendChild(el);
+  const quitar = () => el.remove();
+  if (accion) el.querySelector('button').addEventListener('click', () => { accion.fn(); quitar(); });
+  setTimeout(quitar, accion ? 8000 : 3800);
+}
+
+/** Diálogo modal genérico. Resuelve { value, data } (value null si se canceló). */
+function showDialog({ title, bodyHtml, buttons, validate }) {
+  return new Promise((resolve) => {
+    const d = $('#dlg');
+    d.innerHTML = '<div class="dlg-in"><h2 id="dlgTitle">' + esc(title) + '</h2><div class="dlg-body">' + bodyHtml + '</div>' +
+      '<p class="form-error" id="dlgErr" role="alert" hidden></p><div class="dlg-actions">' +
+      buttons.map((b) => '<button type="button" class="btn ' + (b.kind || '') + '" data-dv="' + esc(b.value) + '">' + esc(b.label) + '</button>').join('') + '</div></div>';
+    let result = { value: null, data: {} };
+    const datos = () => { const o = {}; $$('[name]', d).forEach((i) => { o[i.name] = i.value; }); return o; };
+    const onClick = (ev) => {
+      if (ev.target === d) return d.close();
+      const b = ev.target.closest('[data-dv]'); if (!b) return;
+      const value = b.dataset.dv, data = datos();
+      if (value !== 'cancel' && validate) {
+        const err = validate(value, data);
+        if (err) { const p = $('#dlgErr', d); p.textContent = err; p.hidden = false; return; }
+      }
+      result = { value: value === 'cancel' ? null : value, data };
+      d.close();
+    };
+    const onKey = (ev) => {
+      if (ev.key === 'Enter' && ev.target.tagName === 'INPUT') { ev.preventDefault(); const p = $('.btn.primary, .btn.solid', d); if (p) p.click(); }
+    };
+    d.addEventListener('click', onClick);
+    d.addEventListener('keydown', onKey);
+    d.addEventListener('close', () => { d.removeEventListener('click', onClick); d.removeEventListener('keydown', onKey); resolve(result); }, { once: true });
+    d.showModal();
+    const first = $('input, select, textarea', d) || $('.btn.primary, .btn.solid', d);
+    if (first) first.focus();
+  });
+}
+async function confirmDialog({ title, bodyHtml, ok, kind }) {
+  const r = await showDialog({ title, bodyHtml, buttons: [{ label: 'Cancelar', value: 'cancel' }, { label: ok, value: 'ok', kind: kind || 'primary' }] });
+  return r.value === 'ok';
+}
+
+/* ---------- 8.4 Panel: abrir y cerrar ---------- */
+function openTask(id, opener) {
+  const panel = $('#panel');
+  if (!S.tareas.some((t) => t.id === id)) return;
+  const cambia = ui.taskId !== id;
+  ui.taskId = id;
+  if (opener && !panel.open) ui.opener = opener;
+  if (cambia) { ui.docDraft = null; ui.docError = ''; ui.docFiltro = 'Todos'; ui.subOpen = new Set(); }
+  renderPanel();
+  if (!panel.open) panel.showModal();
+  $$('textarea.auto', panel).forEach(autoGrow); // recién visible el panel se puede medir el alto real
+  if (cambia && $('#panelBody')) $('#panelBody').scrollTop = 0;
+}
+function closePanel() { const p = $('#panel'); if (p.open) p.close(); }
+function onPanelClosed() {
+  ui.taskId = null; ui.docDraft = null; ui.docError = '';
+  if (ui.stale) { ui.stale = false; renderAll(); }
+  if (ui.opener) { const el = document.querySelector('[data-fk="' + ui.opener + '"]'); if (el) el.focus({ preventScroll: true }); }
+}
+
+/* ---------- 8.5 Tema ---------- */
+function applyTheme() {
+  const r = document.documentElement;
+  if (ui.theme === 'auto') r.removeAttribute('data-theme'); else r.setAttribute('data-theme', ui.theme);
+}
+function savePrefs() { Persist.savePrefs({ theme: ui.theme, ultimoAutor: ui.ultimoAutor }); }
+
+/* ---------- 8.6 Datos: exportar / importar / configuración / reset ---------- */
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(Persist.buildExport(S), null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'ev-ops-' + Fecha.hoy() + '.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
+  toast('Exportación lista: ' + a.download);
+}
+const leerArchivo = (file) => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result)); r.onerror = () => rej(r.error); r.readAsText(file); });
+const contar = (st) => ({ tareas: st.tareas.length, subs: st.tareas.reduce((n, t) => n + t.subtareas.length, 0), comp: st.tareas.reduce((n, t) => n + t.subtareas.filter((x) => x.estado === 'Completada').length, 0), docs: st.tareas.reduce((n, t) => n + t.documentacion.length, 0) });
+
+async function importFile(file) {
+  let obj;
+  try { obj = JSON.parse(await leerArchivo(file)); }
+  catch (e) { return showDialog({ title: 'No se pudo importar', bodyHtml: '<p>El archivo no es un JSON válido.</p>', buttons: [{ label: 'Entendido', value: 'ok', kind: 'primary' }] }); }
+  const r = Persist.parseImport(obj);
+  if (!r.ok) {
+    return showDialog({ title: 'No se pudo importar', bodyHtml: '<p>El archivo no pasó la validación. No se modificó nada.</p><ul>' + r.errors.map((x) => '<li>' + esc(x) + '</li>').join('') + '</ul>', buttons: [{ label: 'Entendido', value: 'ok', kind: 'primary' }] });
+  }
+  const nuevo = contar(r.state), actual = contar(S);
+  const cuando = r.exportedAt ? new Date(r.exportedAt).toLocaleString('es-AR') : 'fecha desconocida';
+  const res = await showDialog({
+    title: 'Importar y reemplazar todo',
+    bodyHtml: '<p>Archivo: <strong>' + esc(file.name) + '</strong><br>Exportado: ' + esc(cuando) + '</p>' +
+      '<p><strong>Trae:</strong> ' + nuevo.tareas + ' tareas, ' + nuevo.subs + ' subtareas (' + nuevo.comp + ' completadas), ' + nuevo.docs + ' entradas de documentación.<br>' +
+      '<strong>Tenés ahora:</strong> ' + actual.tareas + ' tareas, ' + actual.subs + ' subtareas (' + actual.comp + ' completadas), ' + actual.docs + ' entradas.</p>' +
+      '<p>Al confirmar, <strong>se reemplaza todo lo que hay en este navegador</strong>. Esto no se puede deshacer, salvo que antes guardes una copia.</p>',
+    buttons: [{ label: 'Cancelar', value: 'cancel' }, { label: 'Guardar copia y reemplazar', value: 'backup' }, { label: 'Reemplazar', value: 'ok', kind: 'danger solid' }]
+  });
+  if (!res.value) return;
+  if (res.value === 'backup') exportJSON();
+  S = r.state; ui.taskId = null; closePanel(); ui.docDraft = null;
+  saveSoon(); flushSave(); renderAll();
+  toast('Datos importados correctamente.');
+}
+
+async function openConfig() {
+  const r = await showDialog({
+    title: 'Configuración',
+    bodyHtml: '<div class="field"><label for="cfg-c">Nombre del socio comercial</label><input type="text" id="cfg-c" name="comercial" value="' + esc(S.config.socios.comercial) + '" autocomplete="off"></div>' +
+      '<div class="field"><label for="cfg-t">Nombre del socio técnico</label><input type="text" id="cfg-t" name="tecnico" value="' + esc(S.config.socios.tecnico) + '" autocomplete="off"></div>' +
+      '<p class="muted" style="font-size:13px">Moneda: <strong>' + esc(S.config.moneda) + '</strong> · Formato de fecha: <strong>' + esc(S.config.formatoFecha) + '</strong></p>',
+    buttons: [{ label: 'Cancelar', value: 'cancel' }, { label: 'Guardar', value: 'ok', kind: 'primary' }],
+    validate: (v, d) => (!d.comercial.trim() || !d.tecnico.trim() ? 'Ambos nombres son obligatorios.' : d.comercial.trim().toLowerCase() === d.tecnico.trim().toLowerCase() ? 'Los nombres tienen que ser distintos.' : '')
+  });
+  if (r.value === 'ok') { Actions.setSocios(r.data.comercial.trim(), r.data.tecnico.trim()); commit(); toast('Configuración guardada.'); }
+}
+
+async function resetPlan() {
+  const uno = await showDialog({
+    title: 'Restablecer plan original',
+    bodyHtml: '<p>Vas a <strong>borrar todo lo que cargaron</strong>: estados de subtareas, fechas, notas, documentación, tareas propias, objetivos y nombres de socios. El plan vuelve a su versión inicial.</p><p>Te recomendamos exportar una copia antes.</p>',
+    buttons: [{ label: 'Cancelar', value: 'cancel' }, { label: 'Exportar copia primero', value: 'export' }, { label: 'Continuar', value: 'ok', kind: 'danger' }]
+  });
+  if (!uno.value) return;
+  if (uno.value === 'export') exportJSON();
+  const dos = await showDialog({
+    title: 'Confirmación final',
+    bodyHtml: '<p>Esta acción no se puede deshacer. Para continuar, escribí <strong>RESTABLECER</strong> en el campo.</p><div class="field"><label for="rs-w">Palabra de confirmación</label><input type="text" id="rs-w" name="palabra" autocomplete="off"></div>',
+    buttons: [{ label: 'Cancelar', value: 'cancel' }, { label: 'Restablecer todo', value: 'ok', kind: 'danger solid' }],
+    validate: (v, d) => (d.palabra.trim().toUpperCase() === 'RESTABLECER' ? '' : 'Escribí RESTABLECER para continuar.')
+  });
+  if (dos.value !== 'ok') return;
+  S = buildSeedState(); closePanel(); ui.expanded = new Set(['e1']); ui.filtros = { q: '', prioridad: '', responsable: '', estado: '' };
+  saveSoon(); flushSave(); renderAll();
+  toast('Plan original restablecido.');
+}
+
+/* ---------- 8.7 Acciones de la interfaz (data-act) ---------- */
+function irA(vista) { if (location.hash !== '#' + vista) location.hash = vista; else route(); }
+function refreshEtapasList() { const c = $('#etapasList'); if (c) c.innerHTML = etapasListHtml(Calc.model(S)); }
+
+const ACT = {
+  'open-task': (el) => openTask(el.dataset.tid, el),
+  'dep-open': (el) => openTask(el.dataset.tid),
+  'close-panel': () => closePanel(),
+  'theme': () => { ui.theme = { auto: 'light', light: 'dark', dark: 'auto' }[ui.theme]; applyTheme(); savePrefs(); renderHeader(Calc.model(S)); restoreFocus({ fk: 'theme' }); },
+  'menu': () => { ui.menuOpen = !ui.menuOpen; renderHeader(Calc.model(S)); restoreFocus({ fk: 'menu' }); },
+  'export': () => { ui.menuOpen = false; renderHeader(Calc.model(S)); exportJSON(); },
+  'import': () => { ui.menuOpen = false; renderHeader(Calc.model(S)); const f = $('#fileImport'); f.value = ''; f.click(); },
+  'config': () => { ui.menuOpen = false; renderHeader(Calc.model(S)); openConfig(); },
+  'reset': () => { ui.menuOpen = false; renderHeader(Calc.model(S)); resetPlan(); },
+  'goto-etapa': (el) => { ui.expanded.add(el.dataset.eid); ui.pendingScroll = el.dataset.eid; irA('etapas'); },
+  'toggle-etapa': (el) => {
+    const id = el.dataset.eid;
+    if (ui.expanded.has(id)) ui.expanded.delete(id); else ui.expanded.add(id);
+    const abierta = ui.expanded.has(id) || !!(ui.filtros.q || ui.filtros.prioridad || ui.filtros.responsable || ui.filtros.estado);
+    el.setAttribute('aria-expanded', abierta);
+    const body = $('#eb-' + id); if (body) body.hidden = !abierta;
+  },
+  'expand-all': () => { ui.expanded = new Set(S.etapas.map((e) => e.id)); refreshEtapasList(); },
+  'collapse-all': () => { ui.expanded = new Set(); refreshEtapasList(); },
+  'clear-filters': () => { ui.filtros = { q: '', prioridad: '', responsable: '', estado: '' }; renderAll(); },
+  'new-task': async (el) => {
+    const eid = el.dataset.eid, e = S.etapas.find((x) => x.id === eid);
+    const r = await showDialog({
+      title: 'Nueva tarea en «' + e.nombre + '»',
+      bodyHtml: '<div class="field"><label for="nt-t">Título</label><input type="text" id="nt-t" name="titulo" autocomplete="off"></div>' +
+        '<div class="field"><label for="nt-p">Prioridad</label><select id="nt-p" name="prioridad">' + opts(PRIORIDADES, 'Importante') + '</select></div>' +
+        '<div class="field"><label for="nt-r">Responsable</label><select id="nt-r" name="responsable">' + respOpts('Ambos') + '</select></div>',
+      buttons: [{ label: 'Cancelar', value: 'cancel' }, { label: 'Crear tarea', value: 'ok', kind: 'primary' }],
+      validate: (v, d) => (d.titulo.trim() ? '' : 'Poné un título para la tarea.')
+    });
+    if (r.value !== 'ok') return;
+    const t = Actions.addTarea(eid, { titulo: r.data.titulo.trim(), prioridad: r.data.prioridad, responsable: r.data.responsable });
+    ui.expanded.add(eid);
+    commit(); openTask(t.id, null);
+    setTimeout(() => { const i = $('#sub-new'); if (i) i.focus(); }, 60);
+  },
+  'sub-estado': (el) => { Actions.setEstadoSub(ui.taskId, el.dataset.sid, el.dataset.v); commit(); },
+  'sub-det': (el) => { const id = el.dataset.sid; if (ui.subOpen.has(id)) ui.subOpen.delete(id); else ui.subOpen.add(id); renderPanel(); restoreFocus({ fk: 'sd-' + id }); },
+  'sub-up': (el) => { Actions.moveSub(ui.taskId, el.dataset.sid, -1); commit(); },
+  'sub-down': (el) => { Actions.moveSub(ui.taskId, el.dataset.sid, 1); commit(); },
+  'sub-del': (el) => {
+    const tid = ui.taskId, rec = Actions.delSub(tid, el.dataset.sid); if (!rec) return;
+    commit();
+    toast('Subtarea eliminada', { label: 'Deshacer', fn: () => { Actions.restoreSub(tid, rec); commit(); } });
+  },
+  'dep-del': (el) => { Actions.delDep(ui.taskId, el.dataset.dep); commit(); },
+  'doc-filter': (el) => { ui.docFiltro = el.dataset.v; renderPanel(); },
+  'doc-new': () => {
+    ui.docDraft = { id: null, tipo: 'Nota', certeza: '', fuente: '', contenido: '', autor: ultimoAutorValido(), fecha: Fecha.hoy() };
+    ui.docError = ''; renderPanel(); restoreFocus({ fk: 'dd-cont' });
+    const f = $('#dd-cont'); if (f) f.scrollIntoView({ block: 'center' });
+  },
+  'doc-edit': (el) => {
+    const t = findT(ui.taskId), d = t.documentacion.find((x) => x.id === el.dataset.did); if (!d) return;
+    ui.docDraft = { id: d.id, tipo: d.tipo, certeza: d.certeza, fuente: d.fuente || '', contenido: d.contenido, autor: d.autor, fecha: d.fecha };
+    ui.docError = ''; renderPanel(); restoreFocus({ fk: 'dd-cont' });
+    const f = $('#dd-cont'); if (f) f.scrollIntoView({ block: 'center' });
+  },
+  'doc-cancel': () => { ui.docDraft = null; ui.docError = ''; renderPanel(); restoreFocus({ fk: 'doc-new' }); },
+  'doc-del': (el) => {
+    const tid = ui.taskId, rec = Actions.delDoc(tid, el.dataset.did); if (!rec) return;
+    commit();
+    toast('Entrada eliminada', { label: 'Deshacer', fn: () => { Actions.restoreDoc(tid, rec); commit(); } });
+  },
+  'task-up': () => { Actions.moveTarea(ui.taskId, -1); commit(); },
+  'task-down': () => { Actions.moveTarea(ui.taskId, 1); commit(); },
+  'task-del': async () => {
+    const t = findT(ui.taskId); if (!t) return;
+    const extra = t.origen === 'plan' ? '<p>Es una tarea del plan original: se puede recuperar con «Restablecer plan original», pero eso borra todo lo demás.</p>' : '';
+    const dep = S.tareas.filter((x) => x.dependencias.includes(t.id)).length;
+    const ok = await confirmDialog({
+      title: 'Eliminar tarea',
+      bodyHtml: '<p>Se elimina <strong>' + esc(t.titulo) + '</strong> con sus ' + t.subtareas.length + ' subtareas y ' + t.documentacion.length + ' entradas de documentación.' + (dep ? ' Otras ' + dep + ' ' + plural(dep, 'tarea dependía', 'tareas dependían') + ' de esta y quedará' + (dep === 1 ? '' : 'n') + ' sin esa dependencia.' : '') + '</p>' + extra,
+      ok: 'Eliminar tarea', kind: 'danger solid'
+    });
+    if (!ok) return;
+    Actions.delTarea(t.id); closePanel(); ui.stale = false; commit(); toast('Tarea eliminada.');
+  },
+  'obj-del': (el) => { Actions.delObjetivo(el.dataset.oid); commit(); },
+  'bit-filter': (el) => { ui.bitFiltro = el.dataset.v; renderAll(); }
+};
+function ultimoAutorValido() {
+  const a = [S.config.socios.comercial, S.config.socios.tecnico];
+  return a.includes(ui.ultimoAutor) ? ui.ultimoAutor : a[0];
+}
+
+/* ---------- 8.8 Eventos delegados ---------- */
+function onClick(ev) {
+  const el = ev.target.closest('[data-act]');
+  if (ui.menuOpen && !ev.target.closest('.top-right')) { ui.menuOpen = false; renderHeader(Calc.model(S)); }
+  if (ev.target === $('#panel')) return closePanel(); // clic en el fondo oscuro
+  if (el && ACT[el.dataset.act]) ACT[el.dataset.act](el, ev);
+}
+
+function onChange(ev) {
+  const el = ev.target;
+  if (el.id === 'fileImport') { const f = el.files && el.files[0]; if (f) importFile(f); return; }
+  if (!el.dataset.bind) return;
+  const [kind, campo] = el.dataset.bind.split(':');
+  let v = el.value;
+  if (kind === 'tarea') {
+    const t = findT(el.dataset.tid); if (!t) return;
+    if (campo === 'titulo') { v = v.replace(/\s+/g, ' ').trim(); if (!v) { el.value = t.titulo; autoGrow(el); return toast('El título no puede quedar vacío.'); } el.value = v; }
+    Actions.setTarea(t.id, campo, v);
+  } else if (kind === 'sub') {
+    const t = findT(el.dataset.tid), s = t && findS(t, el.dataset.sid); if (!s) return;
+    if (campo === 'titulo') { v = v.replace(/\s+/g, ' ').trim(); if (!v) { el.value = s.titulo; autoGrow(el); return toast('El título no puede quedar vacío.'); } el.value = v; }
+    Actions.setSub(t.id, s.id, campo, v);
+  } else if (kind === 'obj') {
+    v = v.trim();
+    if (!v) { const o = S.objetivos.find((x) => x.id === el.dataset.oid); el.value = o ? o.texto : ''; return; }
+    Actions.setObjetivo(el.dataset.oid, v);
+  }
+  commitQuiet();
+}
+
+function onInput(ev) {
+  const el = ev.target;
+  if (el.matches('textarea.auto')) autoGrow(el);
+  if (el.dataset.filter) {
+    const k = el.dataset.filter;
+    if (k === 'vencCompletadas') { ui.vencCompletadas = el.checked; return renderAll(); }
+    if (k === 'bitQ') { ui.bitQ = el.value; const M = Calc.model(S); const todas = Calc.bitacora(M); const q = norm(ui.bitQ.trim()); const lista = todas.filter(({ d, t }) => (ui.bitFiltro === 'Todas' || (ui.bitFiltro === 'Decisiones' ? d.certeza === 'Decisión tomada' : d.tipo === 'Conclusión')) && (!q || norm(d.contenido + ' ' + d.fuente + ' ' + t.titulo + ' ' + d.autor).includes(q))); $('#bitList').innerHTML = bitListHtml(lista, M, todas.length); return; }
+    ui.filtros[k] = el.value;
+    refreshEtapasList();
+  }
+  if (el.dataset.draft && ui.docDraft) {
+    ui.docDraft[el.dataset.draft] = el.value;
+    if (el.dataset.draft === 'certeza') { const w = $('#dd-fuente-w'); if (w) w.hidden = el.value !== 'Investigado'; }
+  }
+}
+
+function onSubmit(ev) {
+  const form = ev.target.closest('form[data-form]'); if (!form) return;
+  ev.preventDefault();
+  const tipo = form.dataset.form;
+  if (tipo === 'sub') {
+    const inp = form.elements.titulo, v = inp.value.replace(/\s+/g, ' ').trim(); if (!v) return inp.focus();
+    Actions.addSub(ui.taskId, v); commit(); restoreFocus({ fk: 'sub-new' });
+  } else if (tipo === 'obj') {
+    const inp = form.elements.texto, v = inp.value.trim(); if (!v) return inp.focus();
+    Actions.addObjetivo(v); commit(); restoreFocus({ fk: 'obj-new' });
+  } else if (tipo === 'dep') {
+    const v = form.elements.dep.value; if (!v) return form.elements.dep.focus();
+    Actions.addDep(ui.taskId, v); commit(); restoreFocus({ fk: 'dep-sel' });
+  } else if (tipo === 'doc') {
+    const d = ui.docDraft; if (!d) return;
+    let err = '', foco = '';
+    if (!d.certeza) { err = 'Elegí el nivel de certeza: es obligatorio.'; foco = 'dd-cert'; }
+    else if (d.certeza === 'Investigado' && !d.fuente.trim()) { err = 'Una entrada «Investigado» necesita indicar la fuente.'; foco = 'dd-fuente'; }
+    else if (!d.contenido.trim()) { err = 'Escribí el contenido de la entrada.'; foco = 'dd-cont'; }
+    else if (!Fecha.valida(d.fecha) || !d.fecha) { err = 'La fecha no es válida.'; foco = 'dd-fecha'; }
+    if (err) { ui.docError = err; renderPanel(); return restoreFocus({ fk: foco }); }
+    Actions.saveDoc(ui.taskId, d);
+    ui.ultimoAutor = d.autor; savePrefs();
+    ui.docDraft = null; ui.docError = ''; commit(); restoreFocus({ fk: 'doc-new' });
+    toast('Entrada guardada.');
+  }
+}
+
+function onKeydown(ev) {
+  const el = ev.target;
+  if (ev.key === 'Enter' && !ev.shiftKey && el.dataset && el.dataset.enter === 'blur') { ev.preventDefault(); el.blur(); }
+  if (ev.key === 'Escape' && ui.menuOpen) { ui.menuOpen = false; renderHeader(Calc.model(S)); restoreFocus({ fk: 'menu' }); }
+}
+
+/* ---------- 8.9 Ruteo por hash ---------- */
+function route() {
+  const v = (location.hash || '').replace('#', '');
+  ui.view = VISTAS.some(([id]) => id === v) ? v : 'resumen';
+  renderAll();
+  document.title = VISTAS.find(([id]) => id === ui.view)[1] + ' · Centro de Operaciones';
+  if (ui.pendingScroll) {
+    const el = document.getElementById('etapa-' + ui.pendingScroll); ui.pendingScroll = null;
+    if (el) { el.scrollIntoView({ block: 'start' }); const b = el.querySelector('.etapa-btn'); if (b) b.focus({ preventScroll: true }); }
+  } else window.scrollTo(0, 0);
+}
+
+/* ================================ 9. ARRANQUE ============================== */
+function boot() {
+  const prefs = Persist.loadPrefs();
+  ui.theme = ['auto', 'light', 'dark'].includes(prefs.theme) ? prefs.theme : 'auto';
+  ui.ultimoAutor = prefs.ultimoAutor || '';
+  applyTheme();
+
+  const r = Persist.load();
+  S = r.state;
+  if (!Persist.available()) {
+    $('#banner').innerHTML = '<div class="banner"><div class="wrap">Tu navegador no permite guardar datos (¿modo privado o bloqueo de almacenamiento?). Podés trabajar, pero exportá el JSON antes de cerrar la pestaña.</div></div>';
+  }
+  if (r.error) setTimeout(() => toast('Los datos guardados estaban dañados: se cargó el plan original y se resguardó una copia en el navegador.'), 400);
+  else if (r.fresh) flushSaveFresh();
+
+  document.addEventListener('click', onClick);
+  document.addEventListener('change', onChange);
+  document.addEventListener('input', onInput);
+  document.addEventListener('submit', onSubmit);
+  document.addEventListener('keydown', onKeydown);
+  $('#panel').addEventListener('close', onPanelClosed);
+  window.addEventListener('hashchange', route);
+  window.addEventListener('pagehide', flushSave);
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') flushSave(); });
+  window.addEventListener('storage', (ev) => { // cambios hechos desde otra pestaña del mismo navegador
+    if (ev.key !== STORAGE_KEY || !ev.newValue) return;
+    try { const o = migrate(JSON.parse(ev.newValue)); if (!validateState(o).length) { S = o; renderAll(); toast('Se actualizó con cambios hechos en otra pestaña.'); } } catch (e) { /* se ignora */ }
+  });
+  route();
+}
+/** Primera visita: guarda el plan inicial para que quede persistido desde el comienzo. */
+function flushSaveFresh() { Persist.save(S); }
+
+if (typeof document === 'undefined') {
+  // Entorno de pruebas (Node): se exponen las partes puras, sin tocar el DOM.
+  globalThis.__EVOPS__ = { buildSeedState, validateState, Calc, Persist, Actions, migrate, creariaCiclo, getState: () => S, setState: (s) => { S = s; }, Fecha, SEED_DATA, CONST: { STORAGE_KEY, SCHEMA_VERSION } };
+} else if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
+</script>
+</body>
+</html>
