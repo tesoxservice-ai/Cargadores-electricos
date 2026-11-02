@@ -1,5 +1,8 @@
 node_modules/
 .vercel/
 .claude/
+.data/
+.env
+.env.*
 .DS_Store
 Thumbs.db

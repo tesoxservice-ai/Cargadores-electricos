@@ -110,6 +110,9 @@ main:focus { outline: none; }
 .save.is-ok .ico { color: var(--comp); }
 .save.is-flash { color: var(--comp); }
 .save.is-err { color: var(--crit); font-weight: 600; }
+button.save { border: 0; background: transparent; font: inherit; height: 36px; border-radius: 8px; cursor: pointer; }
+button.save:hover { background: var(--surface-2); }
+.save.is-warn { color: var(--imp); font-weight: 600; }
 .icon-btn { display: inline-grid; place-items: center; min-width: 36px; height: 36px; padding: 0 8px; border: 1px solid transparent; background: transparent; border-radius: 8px; color: var(--text-2); transition: background var(--t), color var(--t), border-color var(--t); }
 .icon-btn:hover { background: var(--surface-2); color: var(--text); }
 .menu { position: absolute; right: 0; top: 44px; min-width: 244px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); padding: 6px; z-index: 40; }
@@ -142,7 +145,7 @@ main { padding: 30px 0 64px; }
 
 .field { display: grid; gap: 5px; min-width: 0; }
 .field > label, .lbl { font-size: 12.5px; font-weight: 600; color: var(--text-2); }
-input[type="text"], input[type="search"], input[type="date"], select, textarea {
+input[type="text"], input[type="search"], input[type="date"], input[type="password"], select, textarea {
   width: 100%; padding: 8px 10px; border: 1px solid var(--border-strong); border-radius: 8px; background: var(--surface); color: var(--text);
   transition: border-color var(--t), box-shadow var(--t), background var(--t);
 }
@@ -188,8 +191,9 @@ select { appearance: none; -webkit-appearance: none; padding-right: 30px; backgr
    5. RESUMEN
    ========================================================================== */
 .stack { display: grid; gap: 18px; }
-.grid2 { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; align-items: start; }
-.hero { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+.stack > *, .grid2 > * { min-width: 0; }
+.hero { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 28px; align-items: center; }
 .ring { position: relative; width: 132px; height: 132px; }
 .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
 .ring circle { fill: none; stroke-width: 10; }
@@ -204,11 +208,12 @@ select { appearance: none; -webkit-appearance: none; padding-right: 30px; backgr
 .stat span { font-size: 12.5px; color: var(--text-2); display: inline-flex; align-items: center; gap: 5px; }
 .stat .dotc { width: 8px; height: 8px; border-radius: 50%; }
 
-.row { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; width: 100%; text-align: left; padding: 10px 10px; border: 0; border-radius: 9px; background: transparent; transition: background var(--t); }
+.row { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: start; width: 100%; text-align: left; padding: 10px 10px; border: 0; border-radius: 9px; background: transparent; transition: background var(--t); }
 .row:hover { background: var(--surface-2); }
 .row + .row { margin-top: 1px; }
 .row .rank { width: 22px; height: 22px; border-radius: 50%; background: var(--surface-2); display: grid; place-items: center; font-size: 12px; font-weight: 650; color: var(--text-2); margin-top: 1px; }
-.row .r-title { display: block; font-weight: 550; line-height: 1.35; }
+.row .r-title { display: block; font-weight: 550; line-height: 1.35; overflow-wrap: anywhere; }
+.row .chip, .t-meta .chip { white-space: normal; }
 .row .r-meta { display: flex; flex-wrap: wrap; gap: 4px 10px; align-items: center; margin-top: 4px; }
 .row .when { min-width: 22px; margin-top: 1px; color: var(--text-3); }
 .row.over .when { color: var(--crit); }
@@ -255,10 +260,10 @@ select { appearance: none; -webkit-appearance: none; padding-right: 30px; backgr
 .etapa-btn[aria-expanded="true"] .chev { transform: rotate(180deg); }
 .etapa-body { border-top: 1px solid var(--border); padding: 6px 10px 14px; }
 .etapa-desc { color: var(--text-2); font-size: 14px; padding: 10px 8px 6px; max-width: 80ch; }
-.trow { display: grid; grid-template-columns: 1fr 170px; gap: 18px; align-items: center; width: 100%; text-align: left; padding: 11px 8px; border: 0; border-radius: 9px; background: transparent; transition: background var(--t); }
+.trow { display: grid; grid-template-columns: minmax(0, 1fr) 170px; gap: 18px; align-items: center; width: 100%; text-align: left; padding: 11px 8px; border: 0; border-radius: 9px; background: transparent; transition: background var(--t); }
 .trow:hover { background: var(--surface-2); }
 .trow + .trow { border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent); border-top-left-radius: 0; border-top-right-radius: 0; }
-.t-title { display: block; font-weight: 540; line-height: 1.35; }
+.t-title { display: block; font-weight: 540; line-height: 1.35; overflow-wrap: anywhere; }
 .t-meta { display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; margin-top: 5px; }
 .t-prog { display: grid; gap: 5px; font-size: 12.5px; color: var(--text-2); }
 .t-prog .t-cnt { display: flex; justify-content: space-between; }
@@ -294,7 +299,8 @@ dialog::backdrop { background: var(--backdrop); animation: fade 200ms ease; }
 dialog.panel { margin: 0 0 0 auto; padding: 0; border: 0; width: min(680px, 100vw); max-width: 100vw; height: 100dvh; max-height: 100dvh; background: var(--surface); box-shadow: var(--shadow); overflow: hidden; }
 dialog.panel[open] { animation: slide 200ms ease; display: flex; flex-direction: column; }
 .panel-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px 12px 22px; border-bottom: 1px solid var(--border); flex: none; }
-.crumb { font-size: 13px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.crumb { flex: 1; min-width: 0; font-size: 13px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.panel-head .icon-btn { flex: none; }
 .panel-body { overflow-y: auto; padding: 20px 22px 40px; flex: 1; display: grid; gap: 24px; align-content: start; overscroll-behavior: contain; }
 .title-input { font-size: 21px; font-weight: 650; letter-spacing: -.02em; line-height: 1.3; border-color: transparent !important; background: transparent; padding: 6px 8px; margin: 0 -8px; resize: none; }
 .title-input:hover { border-color: var(--border) !important; }
@@ -360,8 +366,11 @@ dialog.dlg[open] { animation: pop 180ms ease; }
 /* ==========================================================================
    9. RESPONSIVE
    ========================================================================== */
+@media (max-width: 1040px) {
+  #saveStatus span { display: none; } /* en pantallas medianas queda solo el tilde; la nube conserva su texto */
+}
 @media (max-width: 900px) {
-  .grid2 { grid-template-columns: 1fr; }
+  .grid2 { grid-template-columns: minmax(0, 1fr); }
   .map { grid-template-columns: repeat(3, 1fr); }
   .etapa-btn { grid-template-columns: auto 1fr auto; }
   .e-prog { grid-column: 2 / 3; grid-row: 2; }
@@ -376,13 +385,14 @@ dialog.dlg[open] { animation: pop 180ms ease; }
   .nav { order: 3; width: 100%; margin: 0 -4px; }
   .brand-full { display: none; }
   .save span { display: none; }
-  .hero { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .save.sync { padding: 0 6px; }
+  .hero { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; }
   .ring { width: 116px; height: 116px; }
   .map { grid-template-columns: repeat(2, 1fr); }
   .toolbar .field { width: calc(50% - 5px); }
   .toolbar .field.grow { flex-basis: 100%; width: 100%; }
   .toolbar-actions { margin-left: 0; width: 100%; }
-  .trow { grid-template-columns: 1fr; gap: 8px; }
+  .trow { grid-template-columns: minmax(0, 1fr); gap: 8px; }
   .etapa-btn { padding: 13px 14px; gap: 12px; }
   .meta-grid { grid-template-columns: 1fr; }
   .sub-det, .doc-form .two, .doc-form .three, .sub-main { grid-template-columns: 1fr; }
@@ -392,6 +402,17 @@ dialog.dlg[open] { animation: pop 180ms ease; }
   dialog.panel { width: 100vw; }
   .stats { gap: 8px; }
   .stat b { font-size: 20px; }
+}
+@media (pointer: coarse) {
+  .btn { min-height: 42px; }
+  .btn.sm { min-height: 40px; }
+  .icon-btn { min-width: 42px; height: 42px; }
+  .seg button { width: 40px; height: 40px; }
+  .nav a { padding: 10px 14px; }
+  .card-h a { display: inline-block; padding: 10px 6px; }
+  .linklike { display: inline-block; padding: 9px 2px; }
+  .deps .d-t .linklike { padding: 6px 0; }
+  .fchip { padding: 9px 14px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 1ms !important; transition-duration: 1ms !important; }
@@ -416,6 +437,7 @@ dialog.dlg[open] { animation: pop 180ms ease; }
  * CENTRO DE OPERACIONES — carga para vehículos eléctricos (Argentina)
  * Un solo archivo, sin dependencias. Organización del código:
  *   0. Constantes          5. Persistencia (localStorage, export/import, migración)
+ *                          5b. Sincronización con la nube (opcional, API /api/state)
  *   1. Utilidades          6. Acciones (mutaciones del estado)
  *   2. Plan precargado     7. Vistas (HTML puro a partir del estado)
  *   3. Estado + validación 8. Interfaz (render, diálogos, eventos)
@@ -1723,6 +1745,181 @@ const Persist = {
   }
 };
 
+/* ================================ 5b. SINCRONIZACIÓN CON LA NUBE =========== */
+/* La app sigue funcionando 100 % local (localStorage). Si existe la API /api/state (Vercel + base de datos),
+ * además sincroniza: sube cada cambio y baja los hechos desde otra computadora.
+ *   · «rev» es el número de revisión de la nube; meta.rev es la última que ESTE navegador vio.
+ *   · meta.dirty = hay cambios locales todavía no subidos.
+ *   · Nunca se pisan cambios en silencio: si ambos lados cambiaron, se le pregunta al usuario. */
+const SYNC_KEY = 'ev-ops-v1-sync';
+const SYNC_POLL_MS = 60000;
+const SYNC_RETRY_MS = 20000;
+
+const Sync = {
+  mode: 'init',   // init (todavía no se sabe) | off (no hay API) | unconfigured | locked (falta contraseña) | online
+  net: 'idle',    // idle | syncing | pending (subida pendiente) | error
+  detail: '',
+  meta: { rev: 0, dirty: false, pass: '' },
+  version: 0,     // sube con cada guardado local: permite saber si hubo cambios mientras se subía
+  timer: null,
+  conflictLater: false,
+  asking: false,
+  q: Promise.resolve(),
+  hooks: {
+    getState: () => null, isModified: () => false, adopt() {}, canAdopt: () => true,
+    askPassword: async () => null, askConflict: async () => 'later', status() {}, notify() {}
+  },
+
+  loadMeta() {
+    let m = null;
+    try { m = JSON.parse(localStorage.getItem(SYNC_KEY)); } catch (e) { /* sin meta guardada */ }
+    if (m && Number.isInteger(m.rev)) this.meta = { rev: m.rev, dirty: !!m.dirty, pass: isStr(m.pass) ? m.pass : '' };
+    else this.meta = { rev: 0, dirty: this.hooks.isModified(), pass: '' }; // datos previos a la nube cuentan como cambios sin subir
+  },
+  saveMeta() { try { localStorage.setItem(SYNC_KEY, JSON.stringify(this.meta)); } catch (e) { /* sin persistencia */ } },
+  set(mode, net, detail) {
+    if (mode) this.mode = mode;
+    if (net) this.net = net;
+    if (detail !== undefined) this.detail = detail;
+    this.hooks.status();
+  },
+  /** Serializa las operaciones de red: nunca hay dos a la vez. */
+  enqueue(fn) {
+    const p = this.q.then(fn).catch((e) => { console.error('[sync]', e); this.set(null, 'error'); });
+    this.q = p;
+    return p;
+  },
+
+  /** status 0 = sin conexión. */
+  async api(method, body) {
+    const ctl = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const t = setTimeout(() => { if (ctl) ctl.abort(); }, 20000);
+    try {
+      const headers = { 'Content-Type': 'application/json' };
+      if (this.meta.pass) headers.Authorization = 'Bearer ' + this.meta.pass;
+      const res = await fetch('/api/state', { method, headers, body: body ? JSON.stringify(body) : undefined, cache: 'no-store', signal: ctl ? ctl.signal : undefined });
+      let json = null;
+      try { json = await res.json(); } catch (e) { /* respuesta sin JSON (por ejemplo, un 404 de hosting estático) */ }
+      return { status: res.status, json };
+    } catch (e) {
+      return { status: 0, json: null };
+    } finally {
+      clearTimeout(t);
+    }
+  },
+
+  async init() {
+    this.loadMeta();
+    if (typeof location !== 'undefined' && location.protocol === 'file:') return this.set('off', 'idle');
+    return this.enqueue(() => this.pull(true));
+  },
+
+  /** Trae la versión de la nube y la reconcilia con la local. */
+  async pull(interactive) {
+    this.set(null, 'syncing');
+    return this.afterGet(await this.api('GET'), interactive);
+  },
+
+  /** forzar: bajar la versión de la nube aunque el usuario esté editando (primera conexión o sincronización a pedido). */
+  async afterGet(r, interactive, forzar = interactive) {
+    const nuestra = !!(r.json && r.json.app === 'ev-ops');
+    if (r.status === 0) return this.set(this.mode === 'init' ? 'init' : null, 'error');
+    if (!nuestra || r.status === 404 || r.status === 405 || r.status === 501) return this.set('off', 'idle');
+    if (r.status === 503) return this.set('unconfigured', 'idle', r.json.message || '');
+    if (r.status === 401) {
+      this.set('locked', 'idle');
+      if (!interactive || this.asking) return;
+      this.asking = true;
+      try {
+        const pass = await this.hooks.askPassword(this.meta.pass ? 'La contraseña guardada ya no es válida.' : 'Ingresá la contraseña de tu centro de operaciones para sincronizar con la nube.');
+        if (!pass) return;
+        this.meta.pass = pass; this.saveMeta();
+      } finally { this.asking = false; }
+      const r2 = await this.api('GET');
+      if (r2.status === 401) { this.meta.pass = ''; this.saveMeta(); this.hooks.notify('Contraseña incorrecta.'); return this.set('locked', 'idle'); }
+      return this.afterGet(r2, false, true);
+    }
+    if (r.status !== 200 || !r.json.ok) return this.set(null, 'error');
+    this.set('online', 'idle');
+    return this.reconcile(r.json, forzar);
+  },
+
+  async reconcile(remote, forzar) {
+    if (remote.state == null) { this.meta.rev = 0; this.saveMeta(); return this.push(); } // nube vacía: se sube lo local
+    if (remote.rev === this.meta.rev) return this.meta.dirty ? this.push() : this.set(null, 'idle');
+    if (!this.meta.dirty) return this.adopt(remote, forzar);
+    return this.conflict(remote);
+  },
+
+  /** Reemplaza lo local por lo de la nube. */
+  adopt(remote, forzar) {
+    let state;
+    try { state = migrate(remote.state); } catch (e) { return this.fail('La versión de la nube es de otra versión de la herramienta.'); }
+    if (validateState(state).length) return this.fail('Los datos de la nube no pasaron la validación.');
+    if (!forzar && !this.hooks.canAdopt()) return this.set(null, 'idle'); // se está editando: se reintenta en el próximo ciclo
+    this.hooks.adopt(state);
+    this.meta.rev = remote.rev; this.meta.dirty = false; this.saveMeta();
+    this.set(null, 'idle');
+    this.hooks.notify('Se cargó la última versión guardada en la nube.');
+  },
+  fail(msg) { this.set(null, 'error', msg); this.hooks.notify(msg); },
+
+  async conflict(remote) {
+    if (this.conflictLater) return this.set(null, 'pending');
+    const eleccion = await this.hooks.askConflict(remote);
+    if (eleccion === 'cloud') return this.adopt(remote, true);
+    if (eleccion === 'mine') { this.meta.rev = remote.rev; this.saveMeta(); return this.push(); }
+    this.conflictLater = true; // «decidir después»: no se vuelve a preguntar hasta sincronizar a mano
+    this.set(null, 'pending');
+  },
+
+  async push() {
+    if (this.mode !== 'online') return;
+    const v = this.version;
+    this.set(null, 'syncing');
+    const r = await this.api('PUT', { baseRev: this.meta.rev, state: this.hooks.getState() });
+    if (r.status === 200 && r.json && r.json.ok) {
+      this.meta.rev = r.json.rev;
+      if (v === this.version) this.meta.dirty = false; // si hubo cambios mientras se subía, queda pendiente
+      this.saveMeta();
+      if (this.meta.dirty) { this.set(null, 'pending'); this.schedulePush(); } else this.set(null, 'idle');
+      return;
+    }
+    if (r.status === 409) return this.afterGet(await this.api('GET'), false); // alguien guardó antes: se reconcilia
+    if (r.status === 401) return this.afterGet(r, true);
+    if (r.status === 413) { this.set(null, 'error', 'Los datos superan el tamaño máximo de la nube.'); return this.hooks.notify('Los datos superan el tamaño máximo de la nube. Exportá un JSON para no perderlos.'); }
+    this.set(null, 'pending'); // sin conexión u otro error: se reintenta
+    this.schedulePush(SYNC_RETRY_MS);
+  },
+
+  schedulePush(delay) {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => this.enqueue(() => this.push()), delay == null ? 1500 : delay);
+  },
+
+  /** Lo llama el guardado local cada vez que persiste un cambio. */
+  markDirty() {
+    this.version++;
+    this.meta.dirty = true;
+    this.saveMeta();
+    if (this.mode === 'online') { this.set(null, 'pending'); this.schedulePush(); }
+  },
+
+  /** Sincronización a pedido (botón) o periódica (manual = false). */
+  now(manual) {
+    if (manual) this.conflictLater = false;
+    return this.enqueue(async () => {
+      if (!manual && (this.mode === 'off' || this.mode === 'unconfigured' || this.mode === 'locked')) return;
+      return this.pull(!!manual);
+    });
+  },
+
+  olvidarContrasena() {
+    this.meta.pass = ''; this.saveMeta();
+    if (this.mode === 'online') this.set('locked', 'idle');
+  }
+};
+
 /* ================================ 6. ACCIONES ============================== */
 /* Cada acción modifica S y devuelve; el guardado y el render los dispara quien llama (commit). */
 const findT = (tid) => S.tareas.find((t) => t.id === tid);
@@ -1813,6 +2010,7 @@ const ICON = {
   auto: ico('<circle cx="8" cy="8" r="5.5"/><path d="M8 2.5v11" /><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor" stroke="none"/>'),
   dots: ico('<circle cx="3.5" cy="8" r=".6" fill="currentColor"/><circle cx="8" cy="8" r=".6" fill="currentColor"/><circle cx="12.5" cy="8" r=".6" fill="currentColor"/>'),
   bolt: '<svg class="ico" viewBox="0 0 16 16" width="14" height="14" fill="currentColor" aria-hidden="true" focusable="false"><path d="M9.3 1.5 3.5 9h3.8l-.6 5.5L12.5 7H8.7z"/></svg>',
+  cloud: ico('<path d="M4.6 12.5a3 3 0 0 1-.4-5.97 4 4 0 0 1 7.6-.6 3.3 3.3 0 0 1 .2 6.57z"/>'),
   alert: ico('<path d="M8 2 1.8 13h12.4z"/><path d="M8 6.5v3M8 11.3v.1"/>')
 };
 
@@ -2131,6 +2329,19 @@ function panelHtml(t, M) {
 }
 
 /* ---------- 7.6 Encabezado ---------- */
+/** Texto, color y ayuda del indicador de nube según el estado de Sync. */
+function syncView() {
+  const m = Sync.mode, n = Sync.net;
+  if (m === 'off') return { label: 'Solo local', cls: '', title: 'Los datos se guardan solo en este navegador (no hay nube conectada).' };
+  if (m === 'unconfigured') return { label: 'Nube sin configurar', cls: 'is-warn', title: Sync.detail || 'Falta terminar la configuración de la nube en el servidor.' };
+  if (m === 'locked') return { label: 'Conectar nube', cls: 'is-warn', title: 'Falta la contraseña para sincronizar con la nube. Hacé clic para ingresarla.' };
+  if (m === 'init') return { label: n === 'error' ? 'Sin conexión' : 'Nube…', cls: n === 'error' ? 'is-warn' : '', title: n === 'error' ? 'No se pudo consultar la nube. Se reintenta solo.' : 'Consultando la nube…' };
+  if (n === 'syncing') return { label: 'Sincronizando…', cls: '', title: 'Sincronizando con la nube.' };
+  if (n === 'pending') return { label: 'Pendiente de subir', cls: 'is-warn', title: 'Hay cambios guardados en este equipo que todavía no están en la nube.' };
+  if (n === 'error') return { label: 'Error de nube', cls: 'is-err', title: Sync.detail || 'Hubo un error al sincronizar. Hacé clic para reintentar.' };
+  return { label: 'Nube al día', cls: 'is-ok', title: 'Todo está guardado en la nube.' };
+}
+const syncHtml = () => ICON.cloud + '<span>' + esc(syncView().label) + '</span>';
 function headerHtml(M) {
   const T = M.total;
   const temaIco = ui.theme === 'light' ? ICON.sun : ui.theme === 'dark' ? ICON.moon : ICON.auto;
@@ -2142,11 +2353,14 @@ function headerHtml(M) {
     '<nav class="nav" aria-label="Secciones">' + VISTAS.map(([id, n]) => '<a href="#' + id + '"' + (ui.view === id ? ' aria-current="page"' : '') + '>' + n + '</a>').join('') + '</nav>' +
     '<div class="top-right">' +
       '<span class="save ' + (sv.state === 'error' ? 'is-err' : 'is-ok') + '" id="saveStatus" role="status">' + (sv.state === 'error' ? ICON.alert : ICON.check) + '<span>' + saveTxt + '</span></span>' +
+      '<button type="button" class="save sync ' + syncView().cls + '" id="syncStatus" data-act="sync" data-fk="sync" title="' + esc(syncView().title) + '">' + syncHtml() + '</button>' +
       '<button type="button" class="icon-btn" data-act="theme" data-fk="theme" aria-label="Tema: ' + temaTxt + '. Cambiar tema" title="Tema: ' + temaTxt + '">' + temaIco + '</button>' +
       '<button type="button" class="icon-btn" data-act="menu" data-fk="menu" aria-haspopup="true" aria-expanded="' + ui.menuOpen + '" aria-label="Menú de datos" style="padding:0 10px;gap:4px;display:inline-flex;align-items:center">Datos ' + ICON.chev + '</button>' +
       (ui.menuOpen ? '<div class="menu" role="menu" aria-label="Datos">' +
         '<button type="button" role="menuitem" data-act="export">Exportar JSON</button><button type="button" role="menuitem" data-act="import">Importar JSON…</button>' +
-        '<button type="button" role="menuitem" data-act="config">Configuración y socios</button><hr>' +
+        '<button type="button" role="menuitem" data-act="config">Configuración y socios</button>' +
+        '<button type="button" role="menuitem" data-act="sync">Sincronizar con la nube ahora</button>' +
+        (Sync.meta.pass ? '<button type="button" role="menuitem" data-act="sync-forget">Olvidar contraseña de la nube</button>' : '') + '<hr>' +
         '<button type="button" role="menuitem" class="danger" data-act="reset">Restablecer plan original…</button></div>' : '') +
     '</div></div>';
 }
@@ -2228,6 +2442,7 @@ function flushSave() {
   clearTimeout(saveTimer); saveTimer = null;
   const ok = Persist.save(S);
   setSaveStatus(ok ? 'saved' : 'error');
+  Sync.markDirty(); // sube el cambio a la nube (si hay nube conectada)
   if (!ok) toast('No se pudo guardar en este navegador. Exportá un JSON para no perder los cambios.');
 }
 
@@ -2251,6 +2466,12 @@ function showDialog({ title, bodyHtml, buttons, validate }) {
       '<p class="form-error" id="dlgErr" role="alert" hidden></p><div class="dlg-actions">' +
       buttons.map((b) => '<button type="button" class="btn ' + (b.kind || '') + '" data-dv="' + esc(b.value) + '">' + esc(b.label) + '</button>').join('') + '</div></div>';
     let result = { value: null, data: {} };
+    let hecho = false;
+    const terminar = () => { // se resuelve una sola vez, ya sea por un botón o por Esc / clic afuera
+      if (hecho) return; hecho = true;
+      d.removeEventListener('click', onClick); d.removeEventListener('keydown', onKey);
+      resolve(result);
+    };
     const datos = () => { const o = {}; $$('[name]', d).forEach((i) => { o[i.name] = i.value; }); return o; };
     const onClick = (ev) => {
       if (ev.target === d) return d.close();
@@ -2261,14 +2482,14 @@ function showDialog({ title, bodyHtml, buttons, validate }) {
         if (err) { const p = $('#dlgErr', d); p.textContent = err; p.hidden = false; return; }
       }
       result = { value: value === 'cancel' ? null : value, data };
-      d.close();
+      d.close(); terminar();
     };
     const onKey = (ev) => {
       if (ev.key === 'Enter' && ev.target.tagName === 'INPUT') { ev.preventDefault(); const p = $('.btn.primary, .btn.solid', d); if (p) p.click(); }
     };
     d.addEventListener('click', onClick);
     d.addEventListener('keydown', onKey);
-    d.addEventListener('close', () => { d.removeEventListener('click', onClick); d.removeEventListener('keydown', onKey); resolve(result); }, { once: true });
+    d.addEventListener('close', terminar, { once: true });
     d.showModal();
     const first = $('input, select, textarea', d) || $('.btn.primary, .btn.solid', d);
     if (first) first.focus();
@@ -2334,7 +2555,7 @@ async function importFile(file) {
     bodyHtml: '<p>Archivo: <strong>' + esc(file.name) + '</strong><br>Exportado: ' + esc(cuando) + '</p>' +
       '<p><strong>Trae:</strong> ' + nuevo.tareas + ' tareas, ' + nuevo.subs + ' subtareas (' + nuevo.comp + ' completadas), ' + nuevo.docs + ' entradas de documentación.<br>' +
       '<strong>Tenés ahora:</strong> ' + actual.tareas + ' tareas, ' + actual.subs + ' subtareas (' + actual.comp + ' completadas), ' + actual.docs + ' entradas.</p>' +
-      '<p>Al confirmar, <strong>se reemplaza todo lo que hay en este navegador</strong>. Esto no se puede deshacer, salvo que antes guardes una copia.</p>',
+      '<p>Al confirmar, <strong>se reemplaza todo lo que hay en este navegador</strong>' + (Sync.mode === 'online' ? ' <strong>y también lo guardado en la nube</strong>' : '') + '. Esto no se puede deshacer, salvo que antes guardes una copia.</p>',
     buttons: [{ label: 'Cancelar', value: 'cancel' }, { label: 'Guardar copia y reemplazar', value: 'backup' }, { label: 'Reemplazar', value: 'ok', kind: 'danger solid' }]
   });
   if (!res.value) return;
@@ -2359,7 +2580,7 @@ async function openConfig() {
 async function resetPlan() {
   const uno = await showDialog({
     title: 'Restablecer plan original',
-    bodyHtml: '<p>Vas a <strong>borrar todo lo que cargaron</strong>: estados de subtareas, fechas, notas, documentación, tareas propias, objetivos y nombres de socios. El plan vuelve a su versión inicial.</p><p>Te recomendamos exportar una copia antes.</p>',
+    bodyHtml: '<p>Vas a <strong>borrar todo lo que cargaron</strong>: estados de subtareas, fechas, notas, documentación, tareas propias, objetivos y nombres de socios. El plan vuelve a su versión inicial.</p><p>Te recomendamos exportar una copia antes.</p>' + (Sync.mode === 'online' ? '<p><strong>También se restablece lo guardado en la nube.</strong></p>' : ''),
     buttons: [{ label: 'Cancelar', value: 'cancel' }, { label: 'Exportar copia primero', value: 'export' }, { label: 'Continuar', value: 'ok', kind: 'danger' }]
   });
   if (!uno.value) return;
@@ -2374,6 +2595,36 @@ async function resetPlan() {
   S = buildSeedState(); closePanel(); ui.expanded = new Set(['e1']); ui.filtros = { q: '', prioridad: '', responsable: '', estado: '' };
   saveSoon(); flushSave(); renderAll();
   toast('Plan original restablecido.');
+}
+
+/* ---------- 8.6b Sincronización: indicador y diálogos ---------- */
+function updateSyncStatus() {
+  const el = $('#syncStatus'); if (!el) return;
+  const v = syncView();
+  el.className = 'save sync ' + v.cls; el.title = v.title; el.innerHTML = syncHtml();
+}
+async function askSyncPassword(mensaje) {
+  const r = await showDialog({
+    title: 'Conectar con la nube',
+    bodyHtml: '<p>' + esc(mensaje) + '</p><div class="field"><label for="sy-p">Contraseña</label><input type="password" id="sy-p" name="pass" autocomplete="current-password"></div>' +
+      '<p class="muted" style="font-size:13px">Se guarda en este navegador para no pedírtela cada vez. Podés olvidarla desde el menú Datos.</p>',
+    buttons: [{ label: 'Ahora no', value: 'cancel' }, { label: 'Conectar', value: 'ok', kind: 'primary' }],
+    validate: (v, d) => (d.pass ? '' : 'Escribí la contraseña.')
+  });
+  return r.value === 'ok' ? r.data.pass : null;
+}
+async function askSyncConflict(remote) {
+  const mio = contar(S), nube = contar(remote.state);
+  const cuando = remote.savedAt ? new Date(remote.savedAt).toLocaleString('es-AR') : 'fecha desconocida';
+  const r = await showDialog({
+    title: 'Hay cambios en la nube y en este equipo',
+    bodyHtml: '<p>La versión de la nube cambió (guardada el <strong>' + esc(cuando) + '</strong>) y en este equipo también hay cambios sin subir. Hay que elegir cuál conservar; la otra se pierde salvo que guardes una copia.</p>' +
+      '<p><strong>Nube:</strong> ' + nube.subs + ' subtareas (' + nube.comp + ' completadas), ' + nube.docs + ' entradas de documentación.<br>' +
+      '<strong>Este equipo:</strong> ' + mio.subs + ' subtareas (' + mio.comp + ' completadas), ' + mio.docs + ' entradas de documentación.</p>',
+    buttons: [{ label: 'Decidir después', value: 'cancel' }, { label: 'Usar la nube', value: 'cloud' }, { label: 'Usar la nube y guardar copia de lo mío', value: 'cloud-backup' }, { label: 'Usar la de este equipo', value: 'mine', kind: 'danger' }]
+  });
+  if (r.value === 'cloud-backup') { exportJSON(); return 'cloud'; }
+  return r.value || 'later';
 }
 
 /* ---------- 8.7 Acciones de la interfaz (data-act) ---------- */
@@ -2460,6 +2711,12 @@ const ACT = {
     Actions.delTarea(t.id); closePanel(); ui.stale = false; commit(); toast('Tarea eliminada.');
   },
   'obj-del': (el) => { Actions.delObjetivo(el.dataset.oid); commit(); },
+  'sync': () => {
+    if (Sync.mode === 'unconfigured') return showDialog({ title: 'La nube todavía no está configurada', bodyHtml: '<p>' + esc(Sync.detail || 'Falta terminar la configuración en el servidor.') + '</p><p>Seguí los pasos de «Sincronización con la nube» del README y volvé a abrir la página.</p>', buttons: [{ label: 'Entendido', value: 'ok', kind: 'primary' }] });
+    if (Sync.mode === 'off') return toast('Esta copia no tiene nube: se abrió como archivo o el servidor no tiene la API. Los datos quedan solo en este navegador.');
+    Sync.now(true);
+  },
+  'sync-forget': () => { ui.menuOpen = false; Sync.olvidarContrasena(); renderHeader(Calc.model(S)); toast('Se olvidó la contraseña en este equipo. Para volver a sincronizar tendrás que ingresarla.'); },
   'bit-filter': (el) => { ui.bitFiltro = el.dataset.v; renderAll(); }
 };
 function ultimoAutorValido() {
@@ -2588,13 +2845,30 @@ function boot() {
     try { const o = migrate(JSON.parse(ev.newValue)); if (!validateState(o).length) { S = o; renderAll(); toast('Se actualizó con cambios hechos en otra pestaña.'); } } catch (e) { /* se ignora */ }
   });
   route();
+
+  // Nube: se conectan los ganchos de interfaz y se arranca la sincronización (si existe /api/state).
+  Sync.hooks = {
+    getState: () => S,
+    isModified: () => JSON.stringify(S) !== JSON.stringify(buildSeedState()),
+    canAdopt: () => !$('#dlg').open && !(document.activeElement && /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement.tagName)),
+    adopt: (st) => {
+      S = st; Persist.save(S);
+      if (ui.taskId && !S.tareas.some((t) => t.id === ui.taskId)) closePanel();
+      renderAll();
+    },
+    askPassword: askSyncPassword, askConflict: askSyncConflict, status: updateSyncStatus, notify: toast
+  };
+  Sync.init();
+  setInterval(() => { if (document.visibilityState === 'visible') Sync.now(false); }, SYNC_POLL_MS);
+  window.addEventListener('online', () => Sync.now(false));
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') Sync.now(false); });
 }
 /** Primera visita: guarda el plan inicial para que quede persistido desde el comienzo. */
 function flushSaveFresh() { Persist.save(S); }
 
 if (typeof document === 'undefined') {
   // Entorno de pruebas (Node): se exponen las partes puras, sin tocar el DOM.
-  globalThis.__EVOPS__ = { buildSeedState, validateState, Calc, Persist, Actions, migrate, creariaCiclo, getState: () => S, setState: (s) => { S = s; }, Fecha, SEED_DATA, CONST: { STORAGE_KEY, SCHEMA_VERSION } };
+  globalThis.__EVOPS__ = { Sync, SYNC_KEY, buildSeedState, validateState, Calc, Persist, Actions, migrate, creariaCiclo, getState: () => S, setState: (s) => { S = s; }, Fecha, SEED_DATA, CONST: { STORAGE_KEY, SCHEMA_VERSION } };
 } else if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', boot);
 } else {
